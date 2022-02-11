@@ -21,7 +21,7 @@
             </div>
             <div class="bottom_box">
                 <div>
-                    <span>아이디가 없으신가요?</span><a href="signup">회원가입</a>
+                    <span>아이디가 없으신가요?</span>&nbsp;<a href="signup">Signup</a>
                 </div>
             </div>
         </div>
