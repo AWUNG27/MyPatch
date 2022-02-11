@@ -1,4 +1,4 @@
-package com.mypatch.www.member.dto;
+package com.mypatch.www.member.domain;
 
 
 import java.util.Date;

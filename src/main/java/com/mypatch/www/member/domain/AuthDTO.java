@@ -1,4 +1,4 @@
-package com.mypatch.www.member.dto;
+package com.mypatch.www.member.domain;
 
 public class AuthDTO {
 	private String member_id;
