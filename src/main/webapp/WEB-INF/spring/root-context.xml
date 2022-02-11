@@ -40,7 +40,7 @@
       <property name="dataSource" ref="dataSource"/>
    </bean>
    <tx:annotation-driven/>
-   <context:component-scan base-package="kr.co.makkan"/>
+   <context:component-scan base-package="com.mypatch.www"/>
    <mybatis-spring:scan base-package="com.mypatch.www.member.mapper"/>
    <mybatis-spring:scan base-package="com.mypatch.www.board.mapper"/>
    <task:annotation-driven/>
