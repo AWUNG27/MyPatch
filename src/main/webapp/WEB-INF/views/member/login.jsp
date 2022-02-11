@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
+<section id="container">
     <div id="main_container">
+
         <div class="form_container">
             <div class="form">
                 <h1 class="sprite_insta_big_logo title"></h1>
@@ -19,11 +21,17 @@
             </div>
             <div class="bottom_box">
                 <div>
-                    <span>아이디가 없으신가요?</span><a href="#">회원가입</a>
+                    <span>아이디가 없으신가요?</span><a href="signup">회원가입</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 </body>
+
+<script>
+$(document).ready(function() {
+
+});
+</script>
 </html>

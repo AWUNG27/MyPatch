@@ -38,17 +38,12 @@
 </head>
 <body>
 
-
-<section id="container">
-
-
-
     <header id="header">
         <section class="h_inner">
 
             <h1 class="logo">
-                <a href="index.html">
-                    <div class="sprite_insta_icon"></div>
+                <a href="/">
+                    <div class="sprite_insta_icon">Joinus</div>
                     <div>
                         <div class="sprite_write_logo"></div>
                     </div>
@@ -66,10 +61,10 @@
 
 
             <div class="right_icons">
-                <a href="new_post.html"><div class="sprite_camera_icon"></div></a>
-                <a href="login.html"><div class="sprite_compass_icon"></div></a>
-                <a href="follow.html"><div class="sprite_heart_icon_outline"></div></a>
-                <a href="profile.html"><div class="sprite_user_icon_outline"></div></a>
+                <a href=""><div class="sprite_camera_icon">글쓰기</div></a>
+                <a href="/member/login"><div class="sprite_compass_icon">로그인</div></a>
+                <a href=""><div class="sprite_heart_icon_outline">팔로우</div></a>
+                <a href=""><div class="sprite_user_icon_outline">프로필</div></a>
             </div>
         </section>
     </header>
