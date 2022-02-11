@@ -21,7 +21,7 @@
 	<section class="py-4">
 	  <div class="container">
 	    <div class="row d-flex align-items-center justify-content-center">
-	      <div style="max-width:420px;">
+	      <div style="max-width:500px; width:400px;">
 	        <form action="#" class="bg-white border py-4 px-5" method="get">
 	          <div class="text-center mb-3">
 	            <i class="fab fa-bootstrap fa-5x text-secondary mb-2"></i>
@@ -30,16 +30,19 @@
 	            </p>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input class="form-control" name="email" placeholder="Mobile Number or Email" required="" type="email" /><label>Mobile Number or Email</label>
+	            <input class="form-control" name="email" placeholder="Email" type="email" /><label>Email</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input class="form-control" name="fullname" placeholder="Full Name" required="" type="text" /><label>Full Name</label>
+	            <input class="form-control" name="fullname" placeholder="Name" type="text" /><label>Name</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input class="form-control" name="username" placeholder="Username" required="" type="text" /><label>Username</label>
+	            <input class="form-control" name="username" placeholder="Nickname" type="text" /><label>Nickname</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input class="form-control" name="password" placeholder="Password" required="" type="password" /><label>Password</label>
+	            <input class="form-control" name="password" placeholder="Password" type="password" /><label>Password</label>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input class="form-control" name="password2" placeholder="Password" type="password" /><label>Password check</label>
 	          </div>
 	          <div class="mb-2">
 	            <button class="btn btn-primary fw-bold w-100 bg-gradient" href="#" type="submit">Sign Up</button>
@@ -60,6 +63,10 @@
 </body>
 
 <script>
+var regBlank = /\s/g; //공백
+var regName = /[가-힣]{2,6}$/; //이름 한글 2~6자
+var regPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/; //대,소문자 특문 숫자 1건 이상 포함 8~20자
+
 $(document).ready(function() {
 	
 });
