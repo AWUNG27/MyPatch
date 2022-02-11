@@ -43,7 +43,7 @@
 
             <h1 class="logo">
                 <a href="/">
-                    <div class="sprite_insta_icon">Joinus</div>
+                    <img alt="#" src="/resources/image/logo.png" style="width:150px;">
                     <div>
                         <div class="sprite_write_logo"></div>
                     </div>
