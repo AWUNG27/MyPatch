@@ -32,9 +32,9 @@
    </security:http>
    
    <!-- DB연동 -->
-       <!-- <security:authentication-manager>
+       <security:authentication-manager>
           <security:authentication-provider ref="userLoginAuthenticationProvider">
           </security:authentication-provider>
-       </security:authentication-manager> -->
+       </security:authentication-manager>
 
 </beans>
