@@ -64,11 +64,33 @@
 
 
             <div class="right_icons">
-                <a href=""><div class="sprite_camera_icon">글쓰기</div></a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#regist"><i class="sprite_camera_icon">글쓰기</i></a>
                 <a href="/member/login"><div class="sprite_compass_icon">로그인</div></a>
                 <a href=""><div class="sprite_heart_icon_outline">팔로우</div></a>
                 <a href=""><div class="sprite_user_icon_outline">프로필</div></a>
             </div>
         </section>
     </header>
+    <!-- The Board Regist Modal -->
+		<div class="modal" id="regist">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title text-center">게시글 작성</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+					<!-- Modal Body -->
+					<div class="modal-body">
+						로그아웃 하시려면 '로그아웃' 버튼을 눌러주세요.
+					</div>
+						
+					<form action="/logout" method="post">
+						
+					</form>
+				</div>
+			</div>
+		</div>
 <script src="/resources/js/insta.js"></script>
