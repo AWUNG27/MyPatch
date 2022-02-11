@@ -8,6 +8,9 @@
       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
       
    <!-- 단방향 암호화 객체 -->
+   <bean id="userLoginSuccessHandler" class="com.mypatch.www.security.UserLoginSuccessHandler"/>
+   <bean id="userLoginFailHandler" class="com.mypatch.www.security.UserLoginFailHandler"/>
+   <bean id="userLoginAuthenticationProvider" class="com.mypatch.www.security.UserLoginAuthenticationProvider"/>
    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
    <security:http auto-config="true" use-expressions="true">
       <!-- security 4.x 버전부터 csrf필터 자동 적용 .. true시 비활성화-->
@@ -19,16 +22,16 @@
       <!-- 익명의 사용자만 회원가입가능 -->
       <!-- <security:intercept-url pattern="/term" access="isAnonymous()"/> -->
       
-       <!-- <security:form-login   
+      <security:form-login   
          username-parameter="id" 
          password-parameter="pw"
          login-processing-url="/loginConfirm" 
          login-page="/loginForm" 
          authentication-success-handler-ref="userLoginSuccessHandler"
-         authentication-failure-handler-ref="userLoginFailHandler" /> -->
+         authentication-failure-handler-ref="userLoginFailHandler" />
       
-      <!-- <security:logout logout-url="/logout" logout-success-url="/" 
-         invalidate-session="true" delete-cookies="true"/> -->
+      <security:logout logout-url="/logout" logout-success-url="/" 
+         invalidate-session="true" delete-cookies="true"/>
    </security:http>
    
    <!-- DB연동 -->
