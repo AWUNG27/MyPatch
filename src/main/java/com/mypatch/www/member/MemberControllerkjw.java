@@ -19,5 +19,9 @@ public class MemberControllerkjw {
 	public void signup() {
 	}
 	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public void profile() {
+	}
+	
 	
 }
