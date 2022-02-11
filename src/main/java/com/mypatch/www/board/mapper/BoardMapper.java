@@ -1,5 +1,5 @@
 package com.mypatch.www.board.mapper;
 
-public class BoardMapper {
+public interface BoardMapper {
 
 }
