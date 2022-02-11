@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mypatch.www.member.mapper.MemberMapper">
+	<resultMap type="com.mypatch.www.member.domain.MemberDTO" id="memberMap">
+		<id property="member_id" column="member_id"/>
+		<result property="member_pwd" column="member_pwd"/>
+		<result property="member_name" column="member_name"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	<resultMap type="com.mypatch.www.member.domain.AuthDTO" id="authMap">
+		<result property="member_id" column="member_id"/>
+		<result property="auth_rank" column="auth_rank"/>
+	</resultMap>
+	<select id="selectUser" resultMap="memberMap">
+		select joinus_member.member_id, joinus_member.member_pwd, joinus_member.member_name, 
+			   joinus_auth.member_id, joinus_auth.auth_rank
+		from joinus_member
+			left outer join joinus_auth
+			on joinus_member.member_id = joinus_auth.member_id
+		where joinus_member.member_id = #{member_id}
+	</select>
+</mapper>
