@@ -3,6 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mypatch.www.member.mapper.MemberMapper">
+	<insert id="insertMemberAuth">
+		insert into JOINUS_AUTH
+		VALUES(#{member_id},'ROLE_MEMBER')
+	</insert>
+	<insert id="insertMember">
+		insert into JOINUS_MEMBER
+		VALUES(#{member_id},#{member_name},#{member_pwd},'N',#{member_nick},sysdate)
+	</insert>
+	<select id="chkNick" resultType="string">
+		select member_nick
+		from joinus_member
+		where member_nick = #{member_nick}
+	</select>
+	<select id="chkEmail" resultType="string">
+		select member_id
+		from joinus_member
+		where member_id = #{member_id}
+	</select>
 	<resultMap type="com.mypatch.www.member.domain.MemberDTO" id="memberMap">
 		<id property="member_id" column="member_id"/>
 		<result property="member_pwd" column="member_pwd"/>
