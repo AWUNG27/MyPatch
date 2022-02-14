@@ -3,7 +3,6 @@
 <%@ include file="../include/header.jsp" %>
 <link rel="stylesheet" href="/resources/css/profile.css">
     <div id="main_container">
-
         <section class="b_inner">
 
             <div class="hori_cont">
@@ -12,7 +11,6 @@
                         <img src="imgs/thumb.jpeg" alt="착한호랑이">
                     </div>
                 </div>
-
                 <div class="detail">
                     <div class="top">
                         <div class="user_name">KindTiger</div>
@@ -21,24 +19,10 @@
                     </div>
 
                     <ul class="middle">
-                        <li>
-                            <span>게시물</span>
-                            3
-                        </li>
-                        <li>
-                            <span>팔로워</span>
-                            3
-                        </li>
-                        <li>
-                            <span>팔로우</span>
-                            3
-                        </li>
+                        <li><span>게시물</span>3</li>
+                        <li><span>팔로워</span>3</li>
+                        <li><span>팔로우</span>3</li>
                     </ul>
-                    <p class="about">
-                        <span class="nick_name">kindtigerrr</span>
-                        <span class="book_mark">bookmark</span>
-                    </p>
-
                 </div>
             </div>
 
@@ -46,66 +30,8 @@
                 <div class="pic">
                     <a href="#"><img src="imgs/img_section/img01.jpg" alt=""></a>
                 </div>
-                <div class="pic">
-                    <a href="#"><img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
             </div>
-
-
-            <div class="bookmark_contents contents_container">
-                <div class="pic">
-                    <a href="#"><img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"><img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img03.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img01.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-                <div class="pic">
-                    <a href="#"> <img src="imgs/img_section/img02.jpg" alt=""></a>
-                </div>
-            </div>
-
-
-
-
+            
         </section>
     </div>
 </body>
