@@ -94,7 +94,15 @@
 
             <div class="right_icons">
                 <a href="#" data-bs-toggle="modal" data-bs-target="#modal"><i class="sprite_camera_icon">글쓰기</i></a>
-                <a href="/member/login"><div class="sprite_compass_icon">로그인</div></a>
+                <sec:authorize access="isAnonymous()">
+	                <a href="/member/login"><div class="sprite_compass_icon">로그인</div></a>
+                </sec:authorize>                
+                <sec:authorize access="isAuthenticated()">
+	                <a href="javascript:logoutConfirm(logoutAction);"><div class="sprite_compass_icon">로그아웃</div></a>
+			        <form action="/logout" name="logoutAction" method="post">
+						<sec:csrfInput/>
+					</form>
+                </sec:authorize>                
                 <a href=""><div class="sprite_heart_icon_outline">팔로우</div></a>
                 <a href=""><div class="sprite_user_icon_outline">프로필</div></a>
             </div>
@@ -139,6 +147,12 @@
 		</div>
 <script src="/resources/js/insta.js"></script>
 <script type="text/javascript">
+function logoutConfirm(logoutAction) {
+	var x = confirm('로그아웃 하시겠습니까?');
+	if (x) {
+		logoutAction.submit();
+	}
+}
 
 $(document).ready(function() {
 	
