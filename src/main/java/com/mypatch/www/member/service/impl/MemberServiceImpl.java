@@ -1,5 +1,8 @@
 package com.mypatch.www.member.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +34,23 @@ public class MemberServiceImpl implements IMemberService{
 		int authResult = mapper.insertMemberAuth(mDto.getMember_id());
 		int result = memberResult+authResult;
 		return result;
+	}
+	
+	@Override
+	public void follow(String member_id, String member_nick) {
+				
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("member_id", member_id);		
+		paramMap.put("member_nick", member_nick);		
+		mapper.follow(paramMap);
+	}
+	
+	@Override
+	public void unfollow(String member_nick, String member_id) {
+		
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("member_nick", member_nick);
+		paramMap.put("member_id", member_id);
+		mapper.unfollow(paramMap);
 	}
 }
