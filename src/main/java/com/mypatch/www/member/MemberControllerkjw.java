@@ -18,7 +18,4 @@ public class MemberControllerkjw {
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public void signup() {
 	}
-
-	
-	
 }
