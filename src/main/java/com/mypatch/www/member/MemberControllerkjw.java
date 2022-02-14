@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/member")
 public class MemberControllerkjw {
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	public void login() {
 	}
 	

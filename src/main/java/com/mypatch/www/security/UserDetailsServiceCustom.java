@@ -30,7 +30,6 @@ public class UserDetailsServiceCustom implements UserDetailsService{
 		MemberDTO mDto = mapper.selectUser(username);
 		//최종 리턴객체 .. DB에서 불러온 사용자의 정보를 set -> 완전한 UserDetails객체를 리턴해야만 작동
 		UserDetailsDTO userDetail = new UserDetailsDTO();
-		
 		if (mDto == null) {
 			return null;
 		} else {

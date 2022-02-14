@@ -32,7 +32,7 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler{
 			
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/loginForm");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/member/login");
 		dispatcher.forward(request, response);
 		
 	}
