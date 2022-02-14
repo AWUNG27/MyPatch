@@ -61,5 +61,6 @@ public class MemberControllerjsh {
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public void profile(String member_id) {
 		log.info("My page..");
+		
 	}
 }
