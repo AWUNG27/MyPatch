@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mypatch.www.member.domain.MemberDTO;
 import com.mypatch.www.member.service.IMemberService;
@@ -51,5 +52,9 @@ public class MemberControllerjsh {
 			return new ResponseEntity<String>("system error!!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<String>("success",HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public void profile() {
 	}
 }
