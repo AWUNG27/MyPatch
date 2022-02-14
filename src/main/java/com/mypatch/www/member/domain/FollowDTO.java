@@ -6,5 +6,5 @@ import lombok.Data;
 public class FollowDTO {
 
 	private String member_id;
-	private String member_nick; 
+	private String member_nick;
 }
