@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,11 +56,5 @@ public class MemberControllerjsh {
 			return new ResponseEntity<String>("system error!!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<String>("success",HttpStatus.OK);
-	}
-	
-	//내 프로필 페이지 이동
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public void profile(String member_id) {
-		log.info("My page..");
 	}
 }
