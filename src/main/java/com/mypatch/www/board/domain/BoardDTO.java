@@ -1,6 +1,7 @@
 package com.mypatch.www.board.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,5 +13,5 @@ public class BoardDTO {
 	private String board_content;
 	private Date board_date;
 	
-	
+	private List<BoardAttachDTO> bList;
 }
