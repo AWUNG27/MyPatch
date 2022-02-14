@@ -39,6 +39,7 @@
 		where member.member_id = #{userid}
 	</select>
 	
+
 	<select id="profileread" resultType="com.mypatch.www.board.domain.BoardDTO">
 		SELECT *
 		FROM joinus_boardattach A,
@@ -53,4 +54,15 @@
 			 BETWEEN 1 AND 5) B
 		WHERE A.board_num = B.board_num
 	</select>
+
+	<insert id="follow">
+		insert into joinus_follow
+		VALUES(#{member_id},#{member_nick})
+	</insert>
+	
+	<delete id="unfollow">
+		delete from joinus_follow
+		where member_nick=#{member_nick}
+		and member_id=#{member_id}
+	</delete>
 </mapper>

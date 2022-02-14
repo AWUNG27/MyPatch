@@ -21,7 +21,21 @@ public class MemberControllerpjm {
 	@GetMapping("/follow")
 	public void follow(String member_id, String member_nick) {
 		
-		log.info("follow............"); 
+		log.info("follow............");
+				
+	}
+	
+	// 언팔로우
+	@GetMapping("/unfollow")
+	public void unfollow(String member_id, String member_nick) {
 		
+		log.info("unfollow............");
+		
+	}
+	
+	@GetMapping("/other_profile")
+	public void otherProfile() {
+		
+		log.info("follow............");		
 	}
 }
