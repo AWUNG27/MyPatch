@@ -98,7 +98,7 @@ margin-right: 5px;
 
             <div class="right_icons">
             	<div>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#modal"><img src="/resources/image/write.png"></a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modal" id="boardRegist"><img src="/resources/image/write.png"></a>
                 </div>
                 <sec:authorize access="isAnonymous()">
 	                <div><a href="/member/login"><img src="/resources/image/login.png"></a></div>
@@ -122,14 +122,20 @@ margin-right: 5px;
 					
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<div class="col-1">
-							<p style="text-align: center;">뒤로</p>
+						<div class="col-1" style="display: none;"> 
+							<button style="margin: auto; border: 0; outline: 0; background-color: transparent;">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+  									<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+								</svg>
+							</button>
 						</div>
 						<div class="col-10">
 							<h4 class="modal-title" style="text-align: center;">새 게시물 만들기</h4>
 						</div>
-						<div class="col-1">
-							<p style="text-align: center;">대음</p>
+						<div class="col-1" style="display: none;">
+							<button style="margin: auto; font-size: 14px; border: 0; outline: 0; background-color: transparent;">
+								다음
+							</button>
 						</div>
 					</div>
 					
@@ -163,6 +169,8 @@ margin-right: 5px;
 <script type="text/javascript">
 
 	var fileList = []; //파일 정보를 담아 둘 배열
+	
+	
 	$(function() {
 		
 		console.log(fileList);
@@ -182,6 +190,7 @@ margin-right: 5px;
 			var files = e.originalEvent.dataTransfer.files;
 	        if(files != null && files != undefined){
 	            var tag = "";
+	            var sgr = "";
 	            for(i=0; i<files.length; i++){
 	                var f = files[i];
 	                fileList.push(f);
@@ -195,10 +204,15 @@ margin-right: 5px;
 	                            "<span class='clear'></span>" +
 	                        "</div>";
 	            }
-	            $(this).append(tag);
+	            
+	            
+	            
+	            $("#modal-body").append(tag);
 	        }
-		}); 
+		});
 		 
+		
+		
 	});
 	
 function logoutConfirm(logoutAction) {
