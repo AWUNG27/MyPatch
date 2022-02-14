@@ -108,9 +108,16 @@ margin-right: 5px;
 			        <form action="/logout" name="logoutAction" method="post">
 						<sec:csrfInput/>
 					</form>
-                </sec:authorize>                
+                </sec:authorize>
                 <div><a href=""><img src="/resources/image/follow.png"></a></div>
-                <div><a href="/member/profile"><img src="/resources/image/profile.png"></a></div>
+				<!-- 익명회원 접근시 -->
+                <sec:authorize access="isAnonymous()">
+	                <div><a href="javascript:isUser()"><img src="/resources/image/profile.png"></a></div>                
+                </sec:authorize>
+                <!-- 인증회원 접근시 -->
+                <sec:authorize access="isAuthenticated()">
+	                <div><a href="/member/profile?member_id=${user.username}"><img src="/resources/image/profile.png"></a></div>                
+                </sec:authorize>
             </div>
         </section>
     </header>
@@ -206,6 +213,11 @@ function logoutConfirm(logoutAction) {
 	if (x) {
 		logoutAction.submit();
 	}
+}
+
+function isUser() {
+	alert("로그인이 필요한 서비스 입니다.");
+	location.href="/member/login";
 }
 
 </script>
