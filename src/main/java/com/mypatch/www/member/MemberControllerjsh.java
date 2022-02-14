@@ -1,5 +1,8 @@
 package com.mypatch.www.member;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +57,9 @@ public class MemberControllerjsh {
 		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
 	
+	//내 프로필 페이지 이동
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public void profile() {
+	public void profile(String member_id) {
+		log.info("My page..");
 	}
 }
