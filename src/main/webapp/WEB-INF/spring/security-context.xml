@@ -26,7 +26,7 @@
          username-parameter="id" 
          password-parameter="pw"
          login-processing-url="/loginConfirm" 
-         login-page="/loginForm" 
+         login-page="/member/login" 
          authentication-success-handler-ref="userLoginSuccessHandler"
          authentication-failure-handler-ref="userLoginFailHandler" />
       
