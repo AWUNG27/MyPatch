@@ -21,7 +21,7 @@ public class MemberControllerpjm {
 	@GetMapping("/follow")
 	public void follow(String member_id, String member_nick) {
 		
-		log.info("follow...........");
+		log.info("follow............");
 		
 	}
 }
