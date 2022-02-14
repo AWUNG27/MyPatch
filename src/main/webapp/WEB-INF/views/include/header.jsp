@@ -122,7 +122,15 @@ margin-right: 5px;
 					
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<h4 class="modal-title">새 게시물 만들기</h4>
+						<div class="col-1">
+							<p style="text-align: center;">뒤로</p>
+						</div>
+						<div class="col-10">
+							<h4 class="modal-title" style="text-align: center;">새 게시물 만들기</h4>
+						</div>
+						<div class="col-1">
+							<p style="text-align: center;">대음</p>
+						</div>
 					</div>
 					
 					<!-- Modal Body -->
@@ -153,6 +161,46 @@ margin-right: 5px;
 		</div>
 <script src="/resources/js/insta.js"></script>
 <script type="text/javascript">
+
+	var fileList = []; //파일 정보를 담아 둘 배열
+	$(function() {
+		
+		console.log(fileList);
+		// 드래그 & 드랍
+		$("#modal").on("dragenter", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}).on("dragover", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}).on("dragleave", function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}).on("drop", function(e) {
+			e.preventDefault();
+			
+			var files = e.originalEvent.dataTransfer.files;
+	        if(files != null && files != undefined){
+	            var tag = "";
+	            for(i=0; i<files.length; i++){
+	                var f = files[i];
+	                fileList.push(f);
+	                var fileName = f.name;
+	                var fileSize = f.size / 1024 / 1024;
+	                fileSize = fileSize < 1 ? fileSize.toFixed(3) : fileSize.toFixed(1);
+	                tag += 
+	                        "<div class='fileList'>" +
+	                            "<span class='fileName'>"+fileName+"</span>" +
+	                            "<span class='fileSize'>"+fileSize+" MB</span>" +
+	                            "<span class='clear'></span>" +
+	                        "</div>";
+	            }
+	            $(this).append(tag);
+	        }
+		}); 
+		 
+	});
+	
 function logoutConfirm(logoutAction) {
 	var x = confirm('로그아웃 하시겠습니까?');
 	if (x) {
@@ -160,8 +208,4 @@ function logoutConfirm(logoutAction) {
 	}
 }
 
-$(document).ready(function() {
-	
-
-});
 </script>
