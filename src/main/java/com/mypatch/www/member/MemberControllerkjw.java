@@ -19,6 +19,11 @@ public class MemberControllerkjw {
 	public void signup() {
 	}
 
-	
+	//내 프로필 페이지 이동
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public void profile(String member_id) {
+		log.info("My page..");
+		
+	}
 	
 }

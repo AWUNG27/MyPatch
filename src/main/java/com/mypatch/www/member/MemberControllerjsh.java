@@ -57,4 +57,5 @@ public class MemberControllerjsh {
 		}
 		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
+
 }
