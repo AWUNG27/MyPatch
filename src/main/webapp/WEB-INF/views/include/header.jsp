@@ -197,7 +197,7 @@ margin-right: 5px;
 	            }
 	            $(this).append(tag);
 	        }
-		});
+		}); 
 		 
 	});
 	
