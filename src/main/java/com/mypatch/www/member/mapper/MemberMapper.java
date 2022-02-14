@@ -17,6 +17,6 @@ public interface MemberMapper {
 	
 	public List<BoardDTO> profileread(String member_id);
 
-  public void follow(Map<String, String> paramMap);
+	public void follow(Map<String, String> paramMap);
 	public void unfollow(Map<String, String> paramMap);
 }
