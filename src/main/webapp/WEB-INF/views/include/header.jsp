@@ -110,7 +110,7 @@ margin-right: 5px;
 					</form>
                 </sec:authorize>                
                 <div><a href=""><img src="/resources/image/follow.png"></a></div>
-                <div><a href=""><img src="/resources/image/profile.png"></a></div>
+                <div><a href="/member/profile"><img src="/resources/image/profile.png"></a></div>
             </div>
         </section>
     </header>
