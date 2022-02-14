@@ -13,6 +13,7 @@ public class BoardController {
 	
 	private String uploadPath = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload";
 	
+	@GetMapping("/read")
 	public String board_read() {
 		return null;
 	}
@@ -21,4 +22,12 @@ public class BoardController {
 	public String like() {
 		return null;
 	}
+	
+	
+	@GetMapping("/fileUpload")
+	public void uploadForm() {
+		
+		log.info("fileUpload");
+	}
+	
 }
