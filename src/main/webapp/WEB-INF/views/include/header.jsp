@@ -35,15 +35,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     
 	<!-- Jcrop CSS -->
-	<link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">
+	<!-- <link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css"> -->
     <!-- Jcrop JS -->
-    <script src="https://unpkg.com/jcrop"></script>
+    <!-- <script src="https://unpkg.com/jcrop"></script> -->
     
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/common.css">
     <link rel="stylesheet" href="/resources/css/style.css">
     <link rel="stylesheet" href="/resources/css/login.css">
     <link rel="shortcut icon" href="imgs/instagram.png">
+    
+    <meta name="_csrf" content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 </head>
 <style type="text/css">
@@ -167,13 +170,12 @@ margin-right: 5px;
 						
 							<h2>사진과 동영상을 여기에 끌어다 놓으세요</h2>
 						
-							<!-- <form action="/board/fileUpload" method="post" enctype="multipart/form-data" role="prsentation"> -->
-							<div class="uploadDiv">
+							<form action="/board/fileUpload" method="post" enctype="multipart/form-data" role="prsentation">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<input accept="image/jpeg,image/png,image/heic,image/heif,video/mp4,video/quicktime" 
-									   id="addFile" name="uploadFile" multiple type="file" style="display: none;">
+									   id="addFile" name="uploadFile" multiple type="file" style="display: none;"/>
 								<label class="select-button" for="addFile">컴퓨터에서 선택</label>
-							</div>
-							
+							</form>
 						</div>
 					</div>
 				</div>
@@ -188,12 +190,14 @@ margin-right: 5px;
 	var csrfTokenValue = "${_csrf.token}";
 	console.log(csrfHeaderName);
 	console.log(csrfTokenValue);
+	
 	$(document).ajaxSend(function(e, xhr, options){
 		xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 	});
 	
 	var fileList = []; //파일 정보를 담아 둘 배열
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	//var maxSize = 10485760; // 10MB
 	var title = $("#title");
 	
 	$(function() {
@@ -219,15 +223,21 @@ margin-right: 5px;
 			// add File Data to formData
 			for(var i = 0; i < files.length; i++){
 				
+			if (!checkExtension(files[i].name)) {
+					return false;
+				}
+				
 				formData.append("uploadFile", files[i]);
 				
 			}
 			
-			$.ajax({
-				
+			$.ajax({		
 				url: '/board/fileUpload',
 				processData: false,
 				contentType: false,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				 },
 				data: formData,
 				type: 'POST',
 				success: function(result) {
@@ -238,7 +248,9 @@ margin-right: 5px;
 		});
 		
 		console.log(fileList);
-		// 드래그 & 드랍
+		
+		
+		// 드래그 & 드랍 *수정 필요함!
 		$("#modal").on("dragenter", function(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -250,6 +262,11 @@ margin-right: 5px;
 			e.stopPropagation();
 		}).on("drop", function(e) {
 			e.preventDefault();
+			
+			var formData = new FormData();
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+			console.log(files);
 			
 			var files = e.originalEvent.dataTransfer.files;
 	 
@@ -282,7 +299,21 @@ margin-right: 5px;
 	            $("#modal-body").append(tag);
 	            
 	        }
-	        uploadImgFilePrinted("#addFile");
+	        
+	        $.ajax({		
+				url: '/board/fileUpload',
+				processData: false,
+				contentType: false,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				 },
+				data: formData,
+				type: 'POST',
+				success: function(result) {
+					alert("업로드 성공~");
+				}
+			}); // end $.ajax
+			
 		});
 		 
 		
@@ -295,8 +326,10 @@ function checkExtension(fileName) {
 	
 	if(regex.test(fileName)) {
 		alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+		return false;
 	}
 	
+	return true;
 }	
 	
 function logoutConfirm(logoutAction) {
