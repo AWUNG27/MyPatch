@@ -34,6 +34,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     
+	<!-- Jcrop CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/jcrop/dist/jcrop.css">
+    <!-- Jcrop JS -->
+    <script src="https://unpkg.com/jcrop"></script>
+    
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/common.css">
     <link rel="stylesheet" href="/resources/css/style.css">
@@ -72,6 +77,7 @@ width: 35px;
 margin-left: 5px;
 margin-right: 5px;
 }
+
 </style>
 <body>
     <header id="header">
@@ -129,7 +135,7 @@ margin-right: 5px;
 					
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<div class="col-1" style="display: none;"> 
+						<div class="col-1" id="modalLeft" style="display: none;"> 
 							<button style="margin: auto; border: 0; outline: 0; background-color: transparent;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
   									<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
@@ -137,9 +143,9 @@ margin-right: 5px;
 							</button>
 						</div>
 						<div class="col-10">
-							<h4 class="modal-title" style="text-align: center;">새 게시물 만들기</h4>
+							<h4 class="modal-title" id="title" style="text-align: center;">새 게시물 만들기</h4>
 						</div>
-						<div class="col-1" style="display: none;">
+						<div class="col-1" id="modalRight" style="display: none;">
 							<button style="margin: auto; font-size: 14px; border: 0; outline: 0; background-color: transparent;">
 								다음
 							</button>
@@ -161,24 +167,75 @@ margin-right: 5px;
 						
 							<h2>사진과 동영상을 여기에 끌어다 놓으세요</h2>
 						
-						
-							<form action="/board/fileUpload" method="post" enctype="multipart/form-data" role="prsentation">
+							<!-- <form action="/board/fileUpload" method="post" enctype="multipart/form-data" role="prsentation"> -->
+							<div class="uploadDiv">
 								<input accept="image/jpeg,image/png,image/heic,image/heif,video/mp4,video/quicktime" 
-									   id="addFile" multiple type="file" style="display:none;">
+									   id="addFile" name="uploadFile" multiple type="file" style="display: none;">
 								<label class="select-button" for="addFile">컴퓨터에서 선택</label>
-							</form>
+							</div>
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
 <script src="/resources/js/insta.js"></script>
 <script type="text/javascript">
-
-	var fileList = []; //파일 정보를 담아 둘 배열
 	
+	//Ajax spring security header..
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	console.log(csrfHeaderName);
+	console.log(csrfTokenValue);
+	$(document).ajaxSend(function(e, xhr, options){
+		xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+	});
+	
+	var fileList = []; //파일 정보를 담아 둘 배열
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	var title = $("#title");
 	
 	$(function() {
+		
+		$("#addFile").change(function() {
+			
+			var str = "";
+			
+			str += "<h4 class='modal-title' id='title' style='text-align: center;'>" +
+				  "자르기" +
+				   "</h4>";
+			
+			title.html(str);
+			
+			$("#modalLeft").removeAttr('style');
+			$("#modalRight").removeAttr('style');
+
+			var formData = new FormData();
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+			console.log(files);
+			
+			// add File Data to formData
+			for(var i = 0; i < files.length; i++){
+				
+				formData.append("uploadFile", files[i]);
+				
+			}
+			
+			$.ajax({
+				
+				url: '/board/fileUpload',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				success: function(result) {
+					alert("업로드 성공~");
+				}
+			}); // end $.ajax
+	        
+		});
 		
 		console.log(fileList);
 		// 드래그 & 드랍
@@ -195,9 +252,10 @@ margin-right: 5px;
 			e.preventDefault();
 			
 			var files = e.originalEvent.dataTransfer.files;
+	 
 	        if(files != null && files != undefined){
 	            var tag = "";
-	            var sgr = "";
+	            var str = "";
 	            for(i=0; i<files.length; i++){
 	                var f = files[i];
 	                fileList.push(f);
@@ -205,22 +263,41 @@ margin-right: 5px;
 	                var fileSize = f.size / 1024 / 1024;
 	                fileSize = fileSize < 1 ? fileSize.toFixed(3) : fileSize.toFixed(1);
 	                tag += 
-	                        "<div class='fileList'>" +
+	                        "<div class='fileList' style='display: none;'>" +
 	                            "<span class='fileName'>"+fileName+"</span>" +
 	                            "<span class='fileSize'>"+fileSize+" MB</span>" +
 	                            "<span class='clear'></span>" +
 	                        "</div>";
 	            }
 	            
-	            
+	            str += "<h4 class='modal-title' id='title' style='text-align: center;'>" +
+				   "자르기" +
+				   "</h4>";
+				   
+				title.html(str);
+				
+				$("#modalLeft").removeAttr('style');
+				$("#modalRight").removeAttr('style');
 	            
 	            $("#modal-body").append(tag);
+	            
 	        }
+	        uploadImgFilePrinted("#addFile");
 		});
 		 
 		
 		
 	});
+
+
+	 
+function checkExtension(fileName) {
+	
+	if(regex.test(fileName)) {
+		alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+	}
+	
+}	
 	
 function logoutConfirm(logoutAction) {
 	var x = confirm('로그아웃 하시겠습니까?');
