@@ -16,5 +16,8 @@ public interface IMemberService {
 	public void follow(String member_id, String member_nick);
 	public void unfollow(String member_nick, String member_id);
 	
+	public int followingCnt(String member_id);
+	public int followerCnt(String member_nick);
+
 	public List<MemberDTO> following(String member_id);
 }

@@ -89,7 +89,7 @@ height: 168.75px;
                     <ul class="middle">
                         <li><span>게시물</span>3</li>
                         <li><span>팔로워</span>3</li>
-                        <li><span>팔로우</span>3</li>
+                        <li><span>팔로잉</span>3</li>
                     </ul>
                 </div>
             </div>
@@ -142,7 +142,7 @@ $(document).ready(function() {
 	});
 });
 
-$(function() {
+  $(function() {
     var cnt = 0;
     $(window).scroll(function(event) {
         var scrolltop = parseInt ( $(window).scrollTop() );
@@ -195,7 +195,6 @@ $(function() {
         }
     });
 });
-
 </script>
 </html>
 

@@ -128,6 +128,18 @@
 		and member_id=#{member_id}
 	</delete>
 	
+	<select id="followingCnt">
+		SELECT COUNT(*)
+		FROM joinus_follow
+		WHERE member_id=#{member_id}
+	</select>
+	
+	<select id="followerCnt">
+		SELECT COUNT(*)
+		FROM joinus_follow
+		WHERE member_nick=#{member_nick}
+	</select>
+	
 	<select id="followingProfile" resultType="com.mypatch.www.member.domain.ProfileDTO">
 		select *
 		from joinus_profile p,
