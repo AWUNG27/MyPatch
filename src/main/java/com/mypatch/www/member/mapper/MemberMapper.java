@@ -20,9 +20,13 @@ public interface MemberMapper {
 	public void follow(Map<String, String> paramMap);
 	public void unfollow(Map<String, String> paramMap);
 
+	public int followingCnt(String member_id);
+	public int followerCnt(String member_nick);
+	
 	public List<ProfileDTO> followingProfile(String member_id);
 	public List<MemberDTO> followingInfo(String member_id);
 	
 	public List<ProfileDTO> followerProfile(String member_nick);
 	public List<MemberDTO> followerInfo(String member_nick);
+
 }

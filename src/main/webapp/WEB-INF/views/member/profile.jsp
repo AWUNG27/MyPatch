@@ -21,7 +21,7 @@
                     <ul class="middle">
                         <li><span>게시물</span>3</li>
                         <li><span>팔로워</span>3</li>
-                        <li><span>팔로우</span>3</li>
+                        <li><span>팔로잉</span>3</li>
                     </ul>
                 </div>
             </div>
@@ -37,7 +37,6 @@
 </body>
 <script src="js/profile.js"></script>
 <script>
-
 
 </script>
 </html>

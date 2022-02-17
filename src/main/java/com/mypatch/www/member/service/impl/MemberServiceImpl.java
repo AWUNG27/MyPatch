@@ -1,6 +1,5 @@
 package com.mypatch.www.member.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +59,18 @@ public class MemberServiceImpl implements IMemberService{
 		mapper.unfollow(paramMap);
 	}
 
+	@Override
+	public int followingCnt(String member_id) {
+		
+		return mapper.followingCnt(member_id);
+	}
+
+	@Override
+	public int followerCnt(String member_nick) {
+		
+		return mapper.followerCnt(member_nick);
+	}
+	
 	@Override
 	public List<MemberDTO> following(String member_id) {
 		
