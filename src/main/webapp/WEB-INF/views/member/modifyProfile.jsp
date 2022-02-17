@@ -1,506 +1,373 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp" %>
+<style>
+	h1 {
+	    margin-left: 15px;
+	    margin-bottom: 20px;
+	}
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+@media (min-width: 768px) {
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Target Material Design Bootstrap Admin Template</title>
-	
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="assets/materialize/css/materialize.min.css" media="screen,projection" />
-    <!-- Bootstrap Styles-->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FontAwesome Styles-->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <!-- Morris Chart Styles-->
-    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
-    <!-- Custom Styles-->
-    <link href="assets/css/custom-styles.css" rel="stylesheet" />
-    <!-- Google Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css"> 
-</head>
-<body>
-    <div id="wrapper">
-        <nav class="navbar navbar-default top-navbar" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand waves-effect waves-dark" href="index.html"><i class="large material-icons">track_changes</i> <strong>target</strong></a>
-				
-		<div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
-            </div>
+    .brand-pills > li > a {
+        border-top-right-radius: 0px;
+    	border-bottom-right-radius: 0px;
+    }
+    
+    li.brand-nav.active a:after{
+    	content: " ";
+    	display: block;
+    	width: 0;
+    	height: 0;
+    	border-top: 20px solid transparent;
+    	border-bottom: 20px solid transparent;
+    	border-left: 9px solid #428bca;
+    	position: absolute;
+    	top: 50%;
+    	margin-top: -20px;
+    	left: 100%;
+    	z-index: 2;
+    }
+}
 
-            <ul class="nav navbar-top-links navbar-right"> 
-				<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown4"><i class="fa fa-envelope fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>				
-				<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown3"><i class="fa fa-tasks fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
-				<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
-				  <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i class="fa fa-user fa-fw"></i> <b>John Doe</b> <i class="material-icons right">arrow_drop_down</i></a></li>
-            </ul>
-        </nav>
-		<!-- Dropdown Structure -->
-<ul id="dropdown1" class="dropdown-content">
-<li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
-</li>
-<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-</li> 
-<li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-</li>
-</ul>
-<ul id="dropdown2" class="dropdown-content w250">
-  <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 min</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 min</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 min</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 min</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 min</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-</ul>
-<ul id="dropdown3" class="dropdown-content dropdown-tasks w250">
-<li>
-		<a href="#">
-			<div>
-				<p>
-					<strong>Task 1</strong>
-					<span class="pull-right text-muted">60% Complete</span>
-				</p>
-				<div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-						<span class="sr-only">60% Complete (success)</span>
-					</div>
-				</div>
-			</div>
-		</a>
-	</li>
-	<li class="divider"></li>
-	<li>
-		<a href="#">
-			<div>
-				<p>
-					<strong>Task 2</strong>
-					<span class="pull-right text-muted">28% Complete</span>
-				</p>
-				<div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" style="width: 28%">
-						<span class="sr-only">28% Complete</span>
-					</div>
-				</div>
-			</div>
-		</a>
-	</li>
-	<li class="divider"></li>
-	<li>
-		<a href="#">
-			<div>
-				<p>
-					<strong>Task 3</strong>
-					<span class="pull-right text-muted">60% Complete</span>
-				</p>
-				<div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-						<span class="sr-only">60% Complete (warning)</span>
-					</div>
-				</div>
-			</div>
-		</a>
-	</li>
-	<li class="divider"></li>
-	<li>
-		<a href="#">
-			<div>
-				<p>
-					<strong>Task 4</strong>
-					<span class="pull-right text-muted">85% Complete</span>
-				</p>
-				<div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-						<span class="sr-only">85% Complete (danger)</span>
-					</div>
-				</div>
-			</div>
-		</a>
-	</li>
-	<li class="divider"></li>
-	<li>
-</ul>   
-<ul id="dropdown4" class="dropdown-content dropdown-tasks w250 taskList">
-  <li>
-                                <div>
-                                    <strong>John Doe</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Today</em>
-                                    </span>
-                                </div>
-                                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <p>Lorem Ipsum has been the industry's standard dummy text ever since an kwilnw...</p>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <p>Lorem Ipsum has been the industry's standard dummy text ever since the...</p>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-</ul>  
-	   <!--/. NAV TOP  -->
-        <!--/. NAV TOP  -->
-        <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu">
+.modal{ 
+  position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.8); top:0; left:0; display:none;
+}
 
-                    <li>
-                        <a href="index.html" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="ui-elements.html" class="waves-effect waves-dark"><i class="fa fa-desktop"></i> UI Elements</a>
-                    </li>
-					<li>
-                        <a href="chart.html" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i> Charts</a>
-                    </li>
-                    <li>
-                        <a href="tab-panel.html" class="waves-effect waves-dark"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
-                    </li>
-                    
-                    <li>
-                        <a href="table.html" class="waves-effect waves-dark"><i class="fa fa-table"></i> Responsive Tables</a>
-                    </li>
-                    <li>
-                        <a href="form.html" class="active-menu waves-effect waves-dark"><i class="fa fa-edit"></i> Forms </a>
-                    </li>
-
-
-                    <li>
-                        <a href="#" class="waves-effect waves-dark"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Second Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#" class="waves-effect waves-dark">Second Level Link<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-
-                                </ul>
-
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="empty.html" class="waves-effect waves-dark"><i class="fa fa-fw fa-file"></i> Empty Page</a>
-                    </li>
+.modal_content{
+  width:180px; height:180px;
+  background:#fff; border-radius:10px;
+  position:relative; top:50%; left:50%;
+  margin-top:-100px; margin-left:-100px;
+  text-align:center;
+  box-sizing:border-box;
+  line-height:23px; cursor:pointer;
+}
+#modal_li {
+	height: 60px;
+	padding-top: 20px;
+}
+#modal_li:hover {
+	color:blue;
+	font-weight: bold;
+}
+</style>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<div class="container" style="margin-top: 120px; width:768px;">
+	<div class="row">
+        <div role="tabpanel">
+            <div class="col-sm-3">
+                <ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+                    <li role="presentation" class="brand-nav active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">회원정보 수정</a></li>
+                    <li role="presentation" class="brand-nav"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">비밀번호 변경</a></li>
+                    <li role="presentation" class="brand-nav"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">회원 탈퇴</a></li>
                 </ul>
-
             </div>
-
-        </nav>
-        <!-- /. NAV SIDE  -->
-        <div id="page-wrapper" >
-		  <div class="header"> 
-                        <h1 class="page-header">
-                             Form Inputs Page
-                        </h1>
-						<ol class="breadcrumb">
-					  <li><a href="#">Home</a></li>
-					  <li><a href="#">Forms</a></li>
-					  <li class="active">Data</li>
-					</ol> 
-									
-		</div>
-		
-            <div id="page-inner"> 
-			 <div class="row">
-			 <div class="col-lg-12">
-			 <div class="card">
-                        <div class="card-action">
-                            Basic Form Elements
-                        </div>
-                        <div class="card-content">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s6">
-          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-          <label for="first_name">First Name</label>
-        </div>
-        <div class="input-field col s6">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Last Name</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-          <label for="disabled">Disabled</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="password" type="password" class="validate">
-          <label for="password">Password</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" type="email" class="validate">
-          <label for="email">Email</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s12">
-          This is an inline input field:
-          <div class="input-field inline">
-            <input id="email" type="email" class="validate">
-            <label for="email" data-error="wrong" data-success="right">Email</label>
-          </div>
-        </div>
-      </div>
-    </form>
-	<div class="clearBoth"></div>
-  </div>
-    </div>
- </div>	
-	 </div>		
-              <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-action">
-                            Basic Form Elements
-                        </div>
-                        <div class="card-content">
-                         	<form class="col s12">
-								  <div class="row">
-									<div class="input-field col s6">
-									  <i class="material-icons prefix">account_circle</i>
-									  <input id="icon_prefix" type="text" class="validate">
-									  <label for="icon_prefix">First Name</label>
-									</div>
-									<div class="input-field col s6">
-									  <i class="material-icons prefix">phone</i>
-									  <input id="icon_telephone" type="tel" class="validate">
-									  <label for="icon_telephone">Telephone</label>
-									</div>
-								  </div>
-								</form>
-								
-								<form class="col s12">
-								  <div class="row">
-									<div class="input-field col s12">
-									  <input id="email" type="email" class="validate">
-									  <label for="email" data-error="wrong" data-success="right">Email</label>
-									</div>
-								  </div>
-								</form>
-								
-								  <form class="col s12">
-							  <div class="row">
-								<div class="input-field col s12">
-								  <textarea id="textarea1" class="materialize-textarea"></textarea>
-								  <label for="textarea1">Textarea</label>
-								</div>
-							  </div>
-							</form>
-							  </form>
- 
-   <!-- Switch -->
-  <div class="switch">
-    <label>
-      Off
-      <input type="checkbox">
-      <span class="lever"></span>
-      On
-    </label>
-  </div>
-
-  <!-- Disabled Switch -->
-  <div class="switch">
-    <label>
-      Off
-      <input disabled type="checkbox">
-      <span class="lever"></span>
-      On
-    </label>
-  </div>
-							<div class="clearBoth"></div>
-							</div>
-							</div>
-							</div>
-							 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-action">
-                            Basic Form Elements
-                        </div>
-                        <div class="card-content">
-						
-								  <form action="#">
-    <p>
-      <input name="group1" type="radio" id="test1" />
-      <label for="test1">Red</label>
-    </p>
-    <p>
-      <input name="group1" type="radio" id="test2" />
-      <label for="test2">Yellow</label>
-    </p>
-    <p>
-      <input class="with-gap" name="group1" type="radio" id="test3"  />
-      <label for="test3">Green</label>
-    </p>
-      <p>
-        <input name="group1" type="radio" id="test4" disabled="disabled" />
-        <label for="test4">Brown</label>
-    </p>
-  </form>
-         <form action="#">
-    <p>
-      <input type="checkbox" id="test5" />
-      <label for="test5">Red</label>
-    </p>
-    <p>
-      <input type="checkbox" id="test6" checked="checked" />
-      <label for="test6">Yellow</label>
-    </p>
-    <p>
-      <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-      <label for="filled-in-box">Filled in</label>
-    </p>
-    <p>
-      <input type="checkbox" id="indeterminate-checkbox" />
-      <label for="indeterminate-checkbox">Indeterminate Style</label>
-    </p>
-    <p>
-      <input type="checkbox" id="test7" checked="checked" disabled="disabled" />
-      <label for="test7">Green</label>
-    </p>
-      <p>
-        <input type="checkbox" id="test8" disabled="disabled" />
-        <label for="test8">Brown</label>
-    </p>
-
-        
-                                </div>
-                               
-                            </div>
-                            <!-- /.row (nested) -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div> 
-                <!-- /.col-lg-12 --> 
-			<footer><p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a>
-</p></footer>
-			</div>
-             <!-- /. PAGE INNER  -->
+            <div class="col-sm-9">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="tab1">
+                        <form action="/member/modifyProfile" id="profileFrm" name="profileFrm" class="bg-white border py-4 px-5" method="post" enctype="multipart/form-data" style="border:none; text-align: center;">
+				          <div class="text-center mb-3">
+				            <i class="fab fa-bootstrap fa-5x text-secondary mb-2"></i>
+				          </div>
+				          <div id="imagediv" style="margin:0 auto; width:100px; height:100px; border-radius: 70%; overflow: hidden;">
+							  <c:choose>							  
+								  <c:when test="${empty profileDTO}">
+									  <img id="profileImage" src="/resources/image/profile.png" style="width: 100%; height: 100%; object-fit: cover;">
+									  <input type='hidden' id='profile_uuid' name='profile_uuid' value="">					  
+									  <input type='hidden' id='profile_fileName' name='profile_fileName' value="">
+								  </c:when>
+								  <c:otherwise>							  
+									  <img id="profileImage" src="/resources/fileUpload/profile/${profileDTO.profile_uuid}_${profileDTO.profile_fileName}" style="width: 100%; height: 100%; object-fit: cover;">
+									  <input type='hidden' id='profile_uuid' name='profile_uuid' value="${profileDTO.profile_uuid}">					  
+									  <input type='hidden' id='profile_fileName' name='profile_fileName' value="${profileDTO.profile_fileName}">				  
+								  </c:otherwise>
+							  </c:choose>
+				          </div>
+				          <span style="color:black; font-weight: bold; font-size: 40px;">${memberDTO.member_nick}</span>
+				          <br>
+				          <sec:csrfInput/>
+				          <input type="hidden" id="member_id" name="member_id" value="${user.username}">
+				          <input type="file" id="profile" style="display: none;">
+				          <div class="form-floating mb-3">
+				            <input class="form-control" id="fullname" name="member_name" placeholder="Name" type="text" style="height:50px;" maxlength="6" value="${memberDTO.member_name}"/><label id="label-name">이름</label>
+				          </div>
+				          <br>
+				          <div class="form-floating mb-3">
+				            <input class="form-control" id="nickname" name="member_nick" placeholder="Nickname" type="text" style="height:50px;" maxlength="20" value="${memberDTO.member_nick}"/><label id="label-nickname">닉네임</label>
+				          </div>
+				          <div class="form-floating mb-3" style="text-align: left;">
+				          	<c:choose>
+				          		<c:when test="${memberDTO.member_alarm eq 'Y'.charAt(0)}">
+									<input type="checkbox" checked="checked" name="alarmConfirm" style="width: 20px; height:20px; position: relative; top: 1.5px;">&nbsp;<span style="position: relative; top: -1.5px;">알림 수신 동의</span>
+				          		</c:when>
+				          		<c:otherwise>
+									<input type="checkbox" name="alarmConfirm" style="width: 20px; height:20px; position: relative; top: 1.5px;">&nbsp;<span style="position: relative; top: -1.5px;">알림 수신 동의</span>
+				          		</c:otherwise>
+				          	</c:choose>
+				          </div>
+				          <br>
+				          <div class="mb-2">
+				            <button class="btn btn-primary fw-bold w-100 bg-gradient" id="modifyProfile" type="button">프로필 변경</button>
+				          </div>
+				        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tab2">
+                        <form action="/logout" id="passwordFrm" name="passwordFrm" class="bg-white border py-4 px-5" method="post">
+				          <div class="text-center mb-3">
+				            <i class="fab fa-bootstrap fa-5x text-secondary mb-2"></i>
+				            <p class="text-muted fw-bold">
+				              비밀번호 변경
+				            </p>
+				          </div>
+				          <br>
+				          <sec:csrfInput/>
+				          <div class="form-floating mb-3">
+				            <input class="form-control" id="origin" name="origin" placeholder="Password" type="password" maxlength="20" style="height:50px;"/><label id="label-origin">기존 비밀번호</label>
+				          </div>
+				          <br>
+				          <div class="form-floating mb-3">
+				            <input class="form-control" id="password" name="password" placeholder="Password" type="password" maxlength="20" style="height:50px;"/><label id="label-password">새 비밀번호</label>
+				          </div>
+				          <br>
+				          <div class="form-floating mb-3">
+				            <input class="form-control" id="password2" name="password2" placeholder="Password" type="password" maxlength="20" style="height:50px;"/><label id="label-password2">비밀번호 확인</label>
+				          </div>
+				          <br>
+				          <div class="mb-2">
+				            <button class="btn btn-primary fw-bold w-100 bg-gradient" id="modifyPassword" type="button">비밀번호 변경</button>
+				          </div>
+				        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tab3">
+                        <form action="#" name="exitForm" class="bg-white border py-4 px-5" method="post">
+				          <div class="text-center mb-3">
+				            <i class="fab fa-bootstrap fa-5x text-secondary mb-2"></i>
+				            <p class="text-muted fw-bold">
+				              회원 탈퇴
+				            </p>
+				          </div>
+				          <br>
+				          <sec:csrfInput/>
+				          <div class="form-floating mb-3">
+				            <input class="form-control" id="password" name="password" placeholder="Password" type="password" maxlength="20" style="height:50px;"/><label id="label-password">기존 비밀번호</label>
+				          </div>
+				          <br>
+				          <div class="mb-2">
+				            <button class="btn btn-primary fw-bold w-100 bg-gradient" id="exitMember" type="button">회원 탈퇴</button>
+				          </div>
+				        </form>
+                    </div>
+                </div>
             </div>
-         <!-- /. PAGE WRAPPER  -->
         </div>
-     <!-- /. WRAPPER  -->
-    <!-- JS Scripts-->
-    <!-- jQuery Js -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-	
-	<!-- Bootstrap Js -->
-    <script src="assets/js/bootstrap.min.js"></script>
-	
-	<script src="assets/materialize/js/materialize.min.js"></script>
-	
-    <!-- Metis Menu Js -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-    <!-- Morris Chart Js -->
-    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>
-	
-	
-	<script src="assets/js/easypiechart.js"></script>
-	<script src="assets/js/easypiechart-data.js"></script>
-	
-	 <script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
-	
-    <!-- Custom Js -->
-    <script src="assets/js/custom-scripts.js"></script> 
- 
+	</div>
+</div>
 
+<div class="modal" id="pipi">
+  <div class="modal_content" 
+       title="클릭하면 창이 닫힙니다.">
+    <ul id="modal_ul">
+    	<li class="pic_mod" id="modal_li">수정</li>
+    	<li class="pic_del" id="modal_li" style="color:red;">삭제</li>
+    	<li class="pic_cancle" id="modal_li">취소</li>
+    </ul>
+  </div>
+</div>
 </body>
+<script type="text/javascript">
+	//모달윈도우 클릭이벤트
+	$(function(){ 
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+	    //Ajax spring security header..
+	    $(document).ajaxSend(function(e, xhr, options){
+	    	xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+	    });
+	    
+		$(".pic_cancle").click(function(){
+			$("#pipi").fadeOut();
+		});
+		$(".pic_mod").click(function(){
+			$("#profile").click();
+		});
+		$(".pic_del").click(function(){
+			var user = "${user.username}";
+			var uuid = $("#profile_uuid").val();
+			var fileName = $("#profile_fileName").val();
+			$.ajax({
+				url: "/member/removeProfile",
+				data: {"member_id": user,
+					   "profile_uuid": uuid,
+					   "profile_fileName": fileName},
+				type: "POST",
+				success: function(result){
+					console.log(result);
+					$("#pipi").fadeOut();
+					location.reload();
+				},
+				error: function(result){
+					location.reload();
+				}
+			});
+		});	
+	});
+	//프로필 이미지 클릭이벤트,,
+	$(document).on("click","#profileImage",function(e){
+		e.preventDefault();
+		var x = $("#profile_fileName").val();
+		if (x == "") {
+			$("#profile").click();			
+		} else {
+			$("#pipi").fadeIn();
+		}
+	});
+	
+	$(function () {
+		var regBlank = /\s/g; //공백
+		var regNick = /^[A-Za-z0-9_]{5,20}$/; // 대소문자 숫자 _ 허용
+		var regName = /[가-힣]{2,6}$/; //이름 한글 2~6자
+		var regPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/; //비번 8자 이상 문자 숫자 특문 포함
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+	    //Ajax spring security header..
+	    $(document).ajaxSend(function(e, xhr, options){
+	    	xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+	    });
+	    
+	    //이미지 변경 Ajax,,,
+		$("#profile").on("change", function(){
+			$("#pipi").fadeOut();
+			var formData = new FormData();
+			var file = $(this);
+			var fileList = file[0].files;
+			formData.append("profile", fileList[0]);
+			$.ajax({
+				url: "/uploadProfile",
+				processData: false, 
+				contentType: false,
+				data: formData,
+				type: "POST",
+				dataType:"json",
+				success: function(result){
+					showProfile(result);
+					$('html').css("cursor","wait");
+				}
+			});
+		});
+		
+	    //변경된 이미지 미리보기,,
+		function showProfile(result){
+			var src = "/resources/fileUpload/profile/"+result.profile_uuid+"_"+result.profile_fileName;
+			var str = "<img id='profileImage' src='"+src+"' style='width: 100%; height: 100%; object-fit: cover;'>";
+			var fileDTO = "<input type='hidden' id='profile_uuid' name='profile_uuid' value='"+result.profile_uuid+"'>";
+			fileDTO += "<input type='hidden' id='profile_fileName' name='profile_fileName' value='"+result.profile_fileName+"'>";
+			setTimeout(function() {
+				$("#profileImage").remove();
+				$("#profile_uuid").remove();
+				$("#profile_fileName").remove();
+				$("#imagediv").append(str);
+				$("#profileFrm").append(fileDTO);
+				$('html').css("cursor","auto");
+			}, 5000);
 
+		}
+	    
+	    //프로필 form submit
+	    $("#modifyProfile").on("click", function(e){
+	    	var controll = confirm("입력하신 정보로 수정하시겠습니까?");
+	    	if (controll) {
+	    		var originNick = "${memberDTO.member_nick}";
+				var name = $("#fullname").val();
+				var nick = $("#nickname").val();
+				
+				if (name == "" && !regName.test(name)) {
+					alert("닉네임과 이름은 필수 입력 항목입니다.");
+					return;
+				}
+				
+				if (nick == "" && !regNick.test(nick)) {
+					alert("닉네임과 이름은 필수 입력 항목입니다.");
+					return;
+				}
+				
+				if (originNick != nick) {
+					if (regNick.test(nick)) {
+						$.ajax({
+							url:"/member/nickChk",
+							data: {"nickname" : nick},
+							type: "post",
+							success: function(result){
+								if (result != "") {
+									$("#label-nickname").html("이미 존재하는 닉네임입니다.").css("color","red");
+									$("#nickname").val(originNick);
+								} else {
+									$("#profileFrm").submit();
+								}
+							}
+						});
+					}
+				} else{
+					$("#profileFrm").submit();
+				}
+			}
+	    });
+	    
+	    $("#password").on("blur", function(){
+			var password = $(this).val();
+			if (regPwd.test(password) && !regBlank.test(password)) {
+				$("#label-password").html("사용가능한 비밀번호입니다.").css("color","blue");
+				$("#password2").on("keyup",function(){
+					var password2 = $(this).val();
+					if (password === password2) {
+						$("#label-password2").html("비밀번호가 일치합니다.").css("color","blue");
+					}else {
+						$("#label-password2").html("비밀번호가 일치하지 않습니다.").css("color","red");
+					}
+				});
+			} else {
+				$("#label-password").html("문자,숫자,특수문자를 포함해야 합니다.").css("color","red");	
+	 			$(this).focus();
+				$(this).val("");
+			}
+		});
+	    
+	    $("#modifyPassword").on("click", function(){
+	    	var origin = $("#origin").val();
+	    	var newPass = $("#password").val();
+	    	var newPassChk = $("#password2").val();
+    		var user = "${user.username}";
+	    	if (origin == "") {
+				alert("입력란을 다시 확인해주세요.");
+				return;
+			} else if (newPass == "" || !regPwd.test(newPass)){
+				alert("입력란을 다시 확인해주세요.");
+				return;
+			} else if (newPass != newPassChk) {
+				alert("입력란을 다시 확인해주세요.");
+				return;
+			}
+	    	$.ajax({
+	    		url: "/member/pwdModify",
+	    		data: {"origin":origin,
+	    			   "member_id":user,
+	    			   "member_pwd":newPass},
+	    		type: "post",
+	    		success: function(data){
+	    			if (data < 1) {
+						alert("기존 비밀번호가 일치하지 않습니다.");
+						$("#origin").val("");
+					} else {						
+		    			alert("비밀번호가 변경되었습니다. 재로그인 후 이용해주세요");
+		    			$("#passwordFrm").submit();
+					}
+	    		}
+	    	});
+	    });
+	});
+</script>
 </html>

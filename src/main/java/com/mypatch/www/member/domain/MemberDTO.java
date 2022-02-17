@@ -15,6 +15,5 @@ public class MemberDTO {
 	private char member_alarm;
 	private String member_nick;
 	private List<AuthDTO> authList;
-	
-	private ProfileDTO profile;
+	private ProfileDTO profileDTO;
 }
