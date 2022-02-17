@@ -20,4 +20,5 @@ public interface IMemberService {
 	public int followerCnt(String member_nick);
 
 	public List<MemberDTO> following(String member_id);
+	public List<MemberDTO> follower(String member_nick);
 }
