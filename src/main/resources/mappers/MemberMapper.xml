@@ -3,6 +3,39 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mypatch.www.member.mapper.MemberMapper">
+	<update id="updatePwd">
+		update joinus_member
+		set member_pwd = #{member_pwd}
+		where member_id = #{member_id}
+	</update>
+	<delete id="deleteProfile">
+		delete from joinus_profile
+		where member_id = #{member_id}
+	</delete>
+	<insert id="insertProfile">
+		insert into joinus_profile
+		values(#{profile_uuid}, #{member_id}, #{profile_fileName})
+	</insert>
+	<update id="updateMember">
+		update joinus_member
+		set member_name = #{member_name},
+			member_nick = #{member_nick},
+			member_alarm = #{member_alarm}
+		where member_id = #{member_id}
+	</update>
+	<select id="selectMe" resultMap="memberMap">
+		select member.member_id, 
+			   member.member_pwd, 
+			   member.member_name, 
+			   member.member_nick,
+			   member.member_alarm,
+			   pro.profile_uuid, 
+			   pro.profile_filename
+		from joinus_member member
+		left outer join joinus_profile pro
+		on member.member_id = pro.member_id
+		where member.member_id = #{member_id}
+	</select>
 	<insert id="insertMemberAuth">
 		insert into JOINUS_AUTH
 		VALUES(#{member_id},'ROLE_MEMBER')
@@ -21,26 +54,37 @@
 		from joinus_member
 		where member_id = #{member_id}
 	</select>
+	<resultMap type="com.mypatch.www.member.domain.ProfileDTO" id="profileMap">
+		<id property="profile_uuid" column="profile_uuid"/>
+		<result property="profile_fileName" column="profile_fileName"/>
+	</resultMap>
 	<resultMap type="com.mypatch.www.member.domain.MemberDTO" id="memberMap">
 		<id property="member_id" column="member_id"/>
 		<result property="member_pwd" column="member_pwd"/>
 		<result property="member_name" column="member_name"/>
+		<result property="member_nick" column="member_nick"/>
+		<result property="member_alarm" column="member_alarm"/>
 		<collection property="authList" resultMap="authMap"></collection>
+		<collection property="profileDTO" resultMap="profileMap"></collection>
 	</resultMap>
 	<resultMap type="com.mypatch.www.member.domain.AuthDTO" id="authMap">
 		<result property="member_id" column="member_id"/>
 		<result property="auth_rank" column="auth_rank"/>
 	</resultMap>
 	<select id="selectUser" resultMap="memberMap">
-		select member.member_id, member.member_pwd, member.member_name, auth.member_id, auth.auth_rank
+		select member.member_id, 
+			   member.member_pwd, 
+			   member.member_name, 
+			   auth.member_id, 
+			   auth.auth_rank
 		from joinus_member member
-			left outer join joinus_auth auth
-			on member.member_id = auth.member_id
-		where member.member_id = #{userid}
+		left outer join joinus_auth auth
+		on member.member_id = auth.member_id
+		where member.member_id = #{member_id}
 	</select>
 	
 
-	<select id="profileread" resultType="com.mypatch.www.board.domain.BoardDTO">
+	<select id="profileimg" resultType="com.mypatch.www.board.domain.BoardAttachDTO">
 		SELECT *
 		FROM joinus_boardattach A,
 			(SELECT last.*
@@ -51,8 +95,26 @@
 					   ORDER BY board_num DESC) board_num_order
                   ) last
 			 WHERE rn
-			 BETWEEN 1 AND 5) B
+			 BETWEEN 6*#{cnt}+1 AND 6*(#{cnt}+1)) B
 		WHERE A.board_num = B.board_num
+	</select>
+
+	<select id="profileboard" resultType="com.mypatch.www.board.domain.BoardDTO">
+		SELECT last.*
+		FROM(SELECT board_num_order.*, rownum rn
+             FROM (SELECT *
+                   FROM joinus_board
+                   WHERE member_id = #{member_id}
+                   ORDER BY board_num DESC) board_num_order
+              ) last
+		WHERE rn
+		BETWEEN 6*#{cnt}+1 AND 6*(#{cnt}+1)
+	</select>
+	
+	<select id="profilecnt" resultType="Integer">
+		SELECT COUNT(board_num)
+		FROM joinus_board
+		WHERE member_id = #{member_id}
 	</select>
 
 	<insert id="follow">

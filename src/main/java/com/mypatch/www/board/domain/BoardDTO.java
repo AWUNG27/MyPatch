@@ -13,5 +13,8 @@ public class BoardDTO {
 	private String board_content;
 	private Date board_date;
 	
+	//날짜 포맷 담기위해
+	private String date;
+	//글의 파일들 list
 	private List<BoardAttachDTO> bList;
 }

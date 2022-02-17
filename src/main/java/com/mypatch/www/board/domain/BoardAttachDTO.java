@@ -9,5 +9,6 @@ public class BoardAttachDTO {
 	private Integer board_num;
 	private String boardattach_filename;
 	private String boardattach_path;
+	private String boardattach_type;
 
 }

@@ -7,5 +7,5 @@ public class ProfileDTO {
 
 	private String profile_uuid;
 	private String member_id;
-	private String profile_filename;
+	private String profile_fileName;
 }

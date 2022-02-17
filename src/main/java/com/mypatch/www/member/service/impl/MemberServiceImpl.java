@@ -40,6 +40,31 @@ public class MemberServiceImpl implements IMemberService{
 		int result = memberResult+authResult;
 		return result;
 	}
+
+	@Override
+	public MemberDTO selectMe(String member_id) {
+		return mapper.selectMe(member_id);
+	}
+	
+	@Transactional
+	@Override
+	public int modifyMember(MemberDTO mDto) {
+		int result = mapper.updateMember(mDto);
+		if (mDto.getProfileDTO() != null) {
+			mapper.deleteProfile(mDto.getMember_id());
+			mapper.insertProfile(mDto.getProfileDTO());			
+		}
+		return result;
+	}
+
+	@Override
+	public int removeProfile(ProfileDTO pDto) {
+		return mapper.deleteProfile(pDto.getMember_id());
+	}
+
+	@Override
+	public void updatePwd(MemberDTO mDto) {
+		mapper.updatePwd(mDto);
 	
 	@Override
 	public void follow(String member_id, String member_nick) {
