@@ -65,4 +65,46 @@
 		where member_nick=#{member_nick}
 		and member_id=#{member_id}
 	</delete>
+	
+	<select id="followingProfile" resultType="com.mypatch.www.member.domain.ProfileDTO">
+		select *
+		from joinus_profile p,
+	     	(select m.member_id
+	      	 from joinus_member m,
+	              (SELECT member_nick
+	               FROM joinus_follow
+	               WHERE member_id=#{member_id}) a
+	      	 where m.member_nick = a.member_nick) b
+		where p.member_id=b.member_id
+	</select>
+	
+	<select id="followingInfo" resultType="com.mypatch.www.member.domain.MemberDTO">
+		SELECT *
+		FROM joinus_member jm,
+	         (SELECT *
+	          FROM joinus_follow
+	          WHERE member_id=#{member_id}) jf
+		WHERE jm.member_nick = jf.member_nick
+	</select>
+	
+	<select id="followerProfile" resultType="com.mypatch.www.member.domain.ProfileDTO">
+		select *
+		from joinus_profile p,
+		     (select m.member_id
+		      from joinus_member m,
+		            (SELECT member_id
+		             FROM joinus_follow
+		             WHERE member_nick=#{member_nick}) f
+		      where m.member_id = f.member_id) b
+		where p.member_id=b.member_id
+	</select>
+	
+	<select id="followerInfo" resultType="com.mypatch.www.member.domain.MemberDTO">
+		SELECT *
+		FROM joinus_member jm,
+		    (SELECT member_id
+		     FROM joinus_follow
+		     WHERE member_nick=#{member_nick}) jf
+		WHERE jm.member_id = jf.member_id
+	</select>
 </mapper>
