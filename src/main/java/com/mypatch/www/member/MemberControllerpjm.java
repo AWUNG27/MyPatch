@@ -29,7 +29,8 @@ public class MemberControllerpjm {
 	@GetMapping("/follow")
 	public void follow(String member_id, String member_nick) {
 		
-		log.info("follow............");
+		log.info("follow..");
+		log.info("follow member_id : " + member_id);
 		
 		service.follow(member_id, member_nick);
 	}
@@ -38,7 +39,8 @@ public class MemberControllerpjm {
 	@GetMapping("/unfollow")
 	public void unfollow(String member_id, String member_nick) {
 		
-		log.info("unfollow............");
+		log.info("unfollow..");
+		log.info("unfollow member_id : " + member_id);
 		
 		service.unfollow(member_nick, member_id);
 	}
@@ -46,13 +48,13 @@ public class MemberControllerpjm {
 	// 팔로잉 목록
 	@GetMapping("/following")
 	@ResponseBody
-	public Map<String, Object> following(String member_id) {
+	public Map<String, Object> following(String member_id) {	
+		
+		log.info("following..");
+		log.info("following member_id : " + member_id);
 		
 		Map<String, Object> following = new HashedMap();
-		
-		log.info("following............");
-		log.info(member_id);
-		
+
 		List<MemberDTO> mDto = service.following(member_id);
 	
 		following.put("following", mDto);
@@ -62,11 +64,18 @@ public class MemberControllerpjm {
 	
 	// 팔로워 목록
 	@GetMapping("/follower")
-	public void follower(String member_nick) {
+	@ResponseBody
+	public Map<String, Object> follower(String member_nick) {
+				
+		log.info("follower..");
+		log.info("follower member_nick : " + member_nick);
 		
-		log.info("following............");
-		
+		Map<String, Object> follower = new HashedMap();
+
 		List<MemberDTO> mDto = service.follower(member_nick);
 	
+		follower.put("follower", mDto);
+		
+		return follower;
 	}
 }
