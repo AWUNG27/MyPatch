@@ -82,4 +82,73 @@
 		on member.member_id = auth.member_id
 		where member.member_id = #{member_id}
 	</select>
+	
+
+	<select id="profileread" resultType="com.mypatch.www.board.domain.BoardDTO">
+		SELECT *
+		FROM joinus_boardattach A,
+			(SELECT last.*
+			 FROM(SELECT board_num_order.*, rownum rn
+				  FROM(SELECT *
+					   FROM joinus_board
+					   WHERE member_id = #{member_id}
+					   ORDER BY board_num DESC) board_num_order
+                  ) last
+			 WHERE rn
+			 BETWEEN 1 AND 5) B
+		WHERE A.board_num = B.board_num
+	</select>
+
+	<insert id="follow">
+		insert into joinus_follow
+		VALUES(#{member_id},#{member_nick})
+	</insert>
+	
+	<delete id="unfollow">
+		delete from joinus_follow
+		where member_nick=#{member_nick}
+		and member_id=#{member_id}
+	</delete>
+	
+	<select id="followingProfile" resultType="com.mypatch.www.member.domain.ProfileDTO">
+		select *
+		from joinus_profile p,
+	     	(select m.member_id
+	      	 from joinus_member m,
+	              (SELECT member_nick
+	               FROM joinus_follow
+	               WHERE member_id=#{member_id}) a
+	      	 where m.member_nick = a.member_nick) b
+		where p.member_id=b.member_id
+	</select>
+	
+	<select id="followingInfo" resultType="com.mypatch.www.member.domain.MemberDTO">
+		SELECT *
+		FROM joinus_member jm,
+	         (SELECT *
+	          FROM joinus_follow
+	          WHERE member_id=#{member_id}) jf
+		WHERE jm.member_nick = jf.member_nick
+	</select>
+	
+	<select id="followerProfile" resultType="com.mypatch.www.member.domain.ProfileDTO">
+		select *
+		from joinus_profile p,
+		     (select m.member_id
+		      from joinus_member m,
+		            (SELECT member_id
+		             FROM joinus_follow
+		             WHERE member_nick=#{member_nick}) f
+		      where m.member_id = f.member_id) b
+		where p.member_id=b.member_id
+	</select>
+	
+	<select id="followerInfo" resultType="com.mypatch.www.member.domain.MemberDTO">
+		SELECT *
+		FROM joinus_member jm,
+		    (SELECT member_id
+		     FROM joinus_follow
+		     WHERE member_nick=#{member_nick}) jf
+		WHERE jm.member_id = jf.member_id
+	</select>
 </mapper>
