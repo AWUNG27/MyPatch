@@ -87,9 +87,6 @@ margin-right: 5px;
             <h1 class="logo">
                 <a href="/">
                     <img alt="#" src="/resources/image/logo.png" style="width:150px;">
-                    <div>
-                        <div class="sprite_write_logo"></div>
-                    </div>
                 </a>
             </h1>
 
@@ -116,7 +113,7 @@ margin-right: 5px;
 						<sec:csrfInput/>
 					</form>
                 </sec:authorize>
-                <div><a href=""><img src="/resources/image/follow.png"></a></div>
+                <div><a href=""><img src="/resources/image/dm.png"></a></div>
 				<!-- 익명회원 접근시 -->
                 <sec:authorize access="isAnonymous()">
 	                <div><a href="javascript:isUser()"><img src="/resources/image/profile.png"></a></div>                
