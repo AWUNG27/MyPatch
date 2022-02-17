@@ -40,7 +40,7 @@
 	</select>
 	
 
-	<select id="profileread" resultType="com.mypatch.www.board.domain.BoardDTO">
+	<select id="profileimg" resultType="com.mypatch.www.board.domain.BoardAttachDTO">
 		SELECT *
 		FROM joinus_boardattach A,
 			(SELECT last.*
@@ -51,8 +51,26 @@
 					   ORDER BY board_num DESC) board_num_order
                   ) last
 			 WHERE rn
-			 BETWEEN 1 AND 5) B
+			 BETWEEN 6*#{cnt}+1 AND 6*(#{cnt}+1)) B
 		WHERE A.board_num = B.board_num
+	</select>
+
+	<select id="profileboard" resultType="com.mypatch.www.board.domain.BoardDTO">
+		SELECT last.*
+		FROM(SELECT board_num_order.*, rownum rn
+             FROM (SELECT *
+                   FROM joinus_board
+                   WHERE member_id = #{member_id}
+                   ORDER BY board_num DESC) board_num_order
+              ) last
+		WHERE rn
+		BETWEEN 6*#{cnt}+1 AND 6*(#{cnt}+1)
+	</select>
+	
+	<select id="profilecnt" resultType="Integer">
+		SELECT COUNT(board_num)
+		FROM joinus_board
+		WHERE member_id = #{member_id}
 	</select>
 
 	<insert id="follow">
