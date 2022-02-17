@@ -81,7 +81,7 @@ height: 168.75px;
                     <div class="top">
                         <div class="user_name">KindTiger</div>
 
-                        <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit">프로필편집</a>
+                        <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit" style="font-size: 15px;">프로필편집</a>
 
                         <a href="#" class="logout">로그아웃</a>
                     </div>

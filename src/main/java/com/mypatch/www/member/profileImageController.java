@@ -19,8 +19,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class profileImageController {
 
-	private static final String UPLOAD_PATH = "C:\\Users\\82104\\git\\MyPatch\\src\\main\\webapp\\resources\\fileUpload\\profile";
-	
+	private static final String UPLOAD_PATH = "C:\\Users\\cnlguq\\git\\MyPatch\\src\\main\\webapp\\resources\\fileUpload\\profile";
+
 	@PostMapping(value = "/uploadProfile", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<ProfileDTO> upload(MultipartFile profile) {
