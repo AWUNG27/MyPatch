@@ -65,6 +65,7 @@ public class MemberServiceImpl implements IMemberService{
 	@Override
 	public void updatePwd(MemberDTO mDto) {
 		mapper.updatePwd(mDto);
+	}
 	
 	@Override
 	public void follow(String member_id, String member_nick) {
@@ -106,7 +107,7 @@ public class MemberServiceImpl implements IMemberService{
 			for (ProfileDTO profileDTO : pDto) {
 				if (memberDTO.getMember_id().equals(profileDTO.getMember_id())) {
 					
-					memberDTO.setProfile(profileDTO);
+					memberDTO.setProfileDTO(profileDTO);
 				}
 			}
 		}
@@ -124,7 +125,7 @@ public class MemberServiceImpl implements IMemberService{
 			for (ProfileDTO profileDTO : pDto) {
 				if (memberDTO.getMember_id().equals(profileDTO.getMember_id())) {
 					
-					memberDTO.setProfile(profileDTO);
+					memberDTO.setProfileDTO(profileDTO);
 				}
 			}
 		}
