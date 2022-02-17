@@ -10,5 +10,5 @@ public class BoardAttachDTO {
 	private String boardattach_filename;
 	private String boardattach_path;
 	private String boardattach_type;
-
+	private boolean imageORvideo;
 }
