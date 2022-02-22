@@ -8,7 +8,6 @@ width: 300px;
 }
 .thumbnail img{
 width: 300px;
-height: 168.75px;
 }
 .glyphicon { margin-right:5px; }
 .thumbnail
@@ -73,8 +72,8 @@ height: 168.75px;
         <section class="b_inner">
             <div class="hori_cont">
                 <div class="profile_wrap">
-                    <div class="profile_img">
-                        <img src="imgs/thumb.jpeg" alt="착한호랑이">
+                    <div class="profile_img" style="margin:0 auto; width:150px; height:150px; border-radius: 70%; overflow: hidden;">
+                        <img src="/resources/fileUpload/profile/4c3e575d-97b6-4674-91c7-bac19205a954_5.png" alt="착한호랑이" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="detail">

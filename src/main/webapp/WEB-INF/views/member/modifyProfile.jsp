@@ -336,6 +336,7 @@
 			}
 		});
 	    
+	    //비밀번호 변경..
 	    $("#modifyPassword").on("click", function(){
 	    	var origin = $("#origin").val();
 	    	var newPass = $("#password").val();
@@ -367,6 +368,11 @@
 					}
 	    		}
 	    	});
+	    });
+	    
+	    //회원탈퇴..
+	    $("#exitMember").on("click", function(){
+	    	
 	    });
 	});
 </script>

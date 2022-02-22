@@ -29,7 +29,7 @@
     <meta itemprop="image" content="http://kindtiger.dothome.co.kr/insta/imgs/instagram.jpeg">
 
 
-    <title>instagram</title>
+    <title>JOINUS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -93,9 +93,6 @@
             <h1 class="logo">
                 <a href="/">
                     <img alt="#" src="/resources/image/logo.png" style="width:150px;">
-                    <div>
-                        <div class="sprite_write_logo"></div>
-                    </div>
                 </a>
             </h1>
 
@@ -111,8 +108,8 @@
 
             <div class="right_icons">
             	<div>
-                	<a href="#" data-bs-toggle="modal" data-bs-target="#modal" id="boardRegist"><img src="/resources/image/write.png"></a>
-                </div>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modal" id="boardRegist"><img src="/resources/image/kakao.png"></a>
+              </div>
                 <sec:authorize access="isAnonymous()">
 	                <div><a href="/member/login"><img src="/resources/image/login.png"></a></div>
                 </sec:authorize>
@@ -122,7 +119,7 @@
 						<sec:csrfInput/>
 					</form>
                 </sec:authorize>
-                <div><a href=""><img src="/resources/image/follow.png"></a></div>
+                <div><a href=""><img src="/resources/image/dm.png"></a></div>
 				<!-- 익명회원 접근시 -->
                 <sec:authorize access="isAnonymous()">
 	                <div><a href="javascript:isUser()"><img src="/resources/image/profile.png"></a></div>                
