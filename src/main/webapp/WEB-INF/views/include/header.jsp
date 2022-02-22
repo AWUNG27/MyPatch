@@ -48,36 +48,42 @@
 
 </head>
 <style type="text/css">
-
+	
+	#modal{
+		width: 100%;
+  		height: 100%;
+	}
+	
 	.select-button{
-	  padding: 6px 25px;
-	  background-color:#0095F6;
-	  border-radius: 4px;
-	  color: white;
-	  cursor: pointer;
-	  text-align: center;
+		padding: 6px 25px;
+	  	background-color:#0095F6;
+	  	border-radius: 4px;
+	  	color: white;
+	  	cursor: pointer;
+	  	text-align: center;
 	}
 
 	.modal-header {
-	  height: 42px;
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
+	  	height: 42px;
+	  	display: flex;
+	  	justify-content: center;
+	  	align-items: center;
 	}
 	
 	.modal-body{
-	  height: auto; 
-	  min-height: 400px; 
-	  border-radius: 0;
-	  display: flex;
-	  justify-content: center; 
-	  align-items: center;
+	  	height: auto; 
+	  	min-height: 400px; 
+	  	border-radius: 0;
+	  	display: flex;
+	  	justify-content: center; 
+	  	align-items: center;
 	}
-.right_icons img{
-width: 35px;
-margin-left: 5px;
-margin-right: 5px;
-}
+	
+	.right_icons img{
+		width: 35px;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
 
 </style>
 <body>
@@ -103,7 +109,7 @@ margin-right: 5px;
             <div class="right_icons">
             	<div>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#modal" id="boardRegist"><img src="/resources/image/kakao.png"></a>
-                </div>
+              </div>
                 <sec:authorize access="isAnonymous()">
 	                <div><a href="/member/login"><img src="/resources/image/login.png"></a></div>
                 </sec:authorize>
@@ -151,8 +157,8 @@ margin-right: 5px;
 					</div>
 					
 					<!-- Modal Body -->
-					<div id="modal-body" class="modal-body">
-						<div class="col text-center">
+					<div id="modal-body" class="modal-body" style="padding: 0 0 0 0;">
+						<div class="col-9 text-center">
 							<div id="1st" style="">
 								<svg aria-label="이미지나 동영상과 같은 미디어를 나타내는 아이콘" class="_8-yf5 " color="#262626" fill="#262626" height="77" role="img" viewBox="0 0 97.6 77.3" width="96">
 									<path d="M16.3 24h.3c2.8-.2 4.9-2.6 4.8-5.4-.2-2.8-2.6-4.9-5.4-4.8s-4.9 2.6-4.8 5.4c.1 2.7 2.4 4.8 5.1 4.8zm-2.4-7.2c.5-.6 1.3-1 2.1-1h.2c1.7 0 3.1 1.4 3.1 3.1 0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-.8.3-1.5.8-2.1z" fill="currentColor">
@@ -179,6 +185,17 @@ margin-right: 5px;
 							<div id="3rd" style="display: none;">
 							</div>
 						</div>
+						<div id="cropRatio" class="col-3 text-center" style="display: none;">
+							<ul id="ratio">
+								<li id="original"><a href="#" style="none;">원본 이미지</a></li>
+								<hr>
+								<li id="square"><a href="#" style="none;">정방향</a></li>
+								<hr>
+								<li id="movie">16:9</li>
+								<hr>
+								<li id="rectangular"><a href="#" style="none;">4:3</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -203,9 +220,20 @@ margin-right: 5px;
 	var title = $("#title");
 	
 	var showImage = $("#2nd");
-	const cropper = null;
+	var cropper = null;
+	
+	// cropper 세팅값들
+	var w = 1; // 크롭영역 가로길이
+	var h = 1; // 크롭영역 높이
+	var a = 1.0; // 크롭영역 크기(이미지기준)
 	
 	$(function() {
+		
+		$("#boardRegist").on("click", function() {
+			var option = {
+					
+			};
+		});
 		
 		$("#addFile").change(function() {
 			
@@ -251,24 +279,17 @@ margin-right: 5px;
 					// image 또는 video 파일이 들어오면 파일 업로드 표시 사라지게하기
 					if (!result.length == 0) {
 						$("#1st").css("display", "none");
+						$("#cropRatio").css("display", "");
 					}
 					
 					$("#2nd").css("display", "");
 					showUploadedFile(result);
-					const image = document.getElementById('img');
+					//const image = document.getElementById('img');
+					var imgSrc = document.getElementById('img');
+					//var realKing = imgSrc.attr('src');
+					console.log("imgSrc : " + imgSrc.src);
 					
-					cropper = new Cropper(image, {
-						  aspectRatio: 16 / 16,
-						  crop(event) {
-						    console.log(event.detail.x);
-						    console.log(event.detail.y);
-						    console.log(event.detail.width);
-						    console.log(event.detail.height);
-						    console.log(event.detail.rotate);
-						    console.log(event.detail.scaleX);
-						    console.log(event.detail.scaleY);
-						  },
-						});
+					cropperFunction(w, h, a);
 					
 				}
 			}); // end $.ajax
@@ -344,10 +365,100 @@ margin-right: 5px;
 			}); // end $.ajax
 			
 		});
-		 
 		
+		$("#original").on("click", function() {
+			var imgSrc = document.getElementById('img');
+			var x = 1;
+			var y = 1;
+			reShowUploadedFile(imgSrc);
+			cropperFunction(x, y, a);
+		});
+		
+		$("#square").on("click", function() {
+			var imgSrc = document.getElementById('img');
+			var x = 1;
+			var y = 1;
+			var z = 0.8;
+			
+			reShowUploadedFile(imgSrc);
+			cropperFunction(x, y, z);
+		});
+		 
+		$("#movie").on("click", function() {
+			var imgSrc = document.getElementById('img');
+			var x = 16;
+			var y = 9;
+			reShowUploadedFile(imgSrc);
+			cropperFunction(x, y, a);
+		});
+		
+		$("#rectangular").on("click", function() {
+			var imgSrc = document.getElementById('img');
+			var x = 4;
+			var y = 5;
+			reShowUploadedFile(imgSrc);
+			cropperFunction(x, y, a);
+		});
 		
 	});
+	
+function re_requestAjax() {
+	
+	$.ajax({		
+		url: '/board/fileUpload',
+		processData: false,
+		contentType: false,
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		 },
+		data: formData,
+		type: 'POST',
+		dataType: 'json',
+		success: function(result) {
+			console.log(result);
+			// image 또는 video 파일이 들어오면 파일 업로드 표시 사라지게하기
+			if (!result.length == 0) {
+				$("#1st").css("display", "none");
+				$("#cropRatio").css("display", "");
+			}
+			
+			$("#2nd").css("display", "");
+			showUploadedFile(result);
+			//const image = document.getElementById('img');
+			
+			cropperFunction(w, h);
+			
+		}
+	}); // end $.ajax
+}
+	
+function cropperFunction(w, h, a) {
+	var image = document.getElementById('img');
+	console.log("w : " + w);
+	console.log("h : " + h);
+	
+	cropper = new Cropper(image, {
+		  dragMode: 'crop', // 자르기영역 새로 생성여부
+		  aspectRatio: w / h,
+		  moveable: true,
+		  center: true,
+		  viewMode: 2,
+		  cropBoxMovable: true, // 자르기영역 이동여부
+		  cropBoxResizable: false, // 자르기영역 크기조절 여부
+		  autoCropArea: a,
+		  guides: true,
+		  crop(event) {
+			
+		    console.log(event.detail.x);
+		    console.log(event.detail.y);
+		    console.log(event.detail.width);
+		    console.log(event.detail.height);
+		    console.log(event.detail.rotate);
+		    console.log(event.detail.scaleX);
+		    console.log(event.detail.scaleY);
+		  },
+		});
+}
 
 function showUploadedFile(uploadResultArr) {
 	
@@ -365,7 +476,22 @@ function showUploadedFile(uploadResultArr) {
 	 
 	showImage.append(str);
 	
-}  
+}
+
+function reShowUploadedFile(imgSrc) {
+	var str = "";
+	var fileCallPath = imgSrc.src.substring(45);
+	$("#img").remove();
+	$(".cropper-container.cropper-bg").remove();
+	/* $(".cropper-drag-box.cropper-crop.cropper-modal").remove();
+	$(".cropper-crop-box").remove(); */
+	
+	console.log("fileCallPath : " + fileCallPath);
+	
+	str += "<img id='img' src='/board/display?fileName="+fileCallPath+"'>";
+	
+	showImage.append(str);
+}
 	 
 function checkExtension(fileName) {
 	
