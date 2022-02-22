@@ -196,7 +196,7 @@
 								<hr>
 								<li id="movie">16:9</li>
 								<hr>
-								<li id="rectangular"><a href="#" style="none;">4:3</a></li>
+								<li id="rectangular"><a href="#" style="none;">4:5</a></li>
 							</ul>
 						</div>
 					</div>
@@ -442,13 +442,13 @@ function cropperFunction(w, h, a) {
 	
 	cropper = new Cropper(image, {
 		  dragMode: 'crop', // 자르기영역 새로 생성여부
-		  aspectRatio: w / h,
+		  aspectRatio: w / h, // 자르기영역 종횡비
 		  moveable: true,
 		  center: true,
 		  viewMode: 2,
 		  cropBoxMovable: true, // 자르기영역 이동여부
 		  cropBoxResizable: false, // 자르기영역 크기조절 여부
-		  autoCropArea: a,
+		  autoCropArea: a, // 자르기영역 크기
 		  guides: true,
 		  crop(event) {
 			
@@ -486,8 +486,6 @@ function reShowUploadedFile(imgSrc) {
 	var fileCallPath = imgSrc.src.substring(45);
 	$("#img").remove();
 	$(".cropper-container.cropper-bg").remove();
-	/* $(".cropper-drag-box.cropper-crop.cropper-modal").remove();
-	$(".cropper-crop-box").remove(); */
 	
 	console.log("fileCallPath : " + fileCallPath);
 	
