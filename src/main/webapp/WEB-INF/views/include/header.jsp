@@ -116,11 +116,13 @@ margin-right: 5px;
                 <div><a href=""><img src="/resources/image/dm.png"></a></div>
 				<!-- 익명회원 접근시 -->
                 <sec:authorize access="isAnonymous()">
-	                <div><a href="javascript:isUser()"><img src="/resources/image/profile.png"></a></div>                
+	                <div><a href="javascript:isUser()"><img src="/resources/image/profile.png"></a></div>
+	                <input type="hidden" value="anonymous" id="anonymous">
                 </sec:authorize>
                 <!-- 인증회원 접근시 -->
                 <sec:authorize access="isAuthenticated()">
-	                <div><a href="/member/profile?member_id=${user.username}"><img src="/resources/image/profile.png"></a></div>                
+	                <div><a href="/member/profile?member_id=${user.username}"><img src="/resources/image/profile.png"></a></div>
+	                <input type="hidden" value="${user.username}" id="auth">
                 </sec:authorize>
             </div>
         </section>
