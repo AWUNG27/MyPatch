@@ -5,8 +5,10 @@
 <style>
 video{
 width: 300px;
+height: 300px;
 }
 .thumbnail img{
+width: 300px;
 width: 300px;
 }
 .glyphicon { margin-right:5px; }
@@ -95,12 +97,12 @@ width: 300px;
             <div class="hori_cont">
                 <div class="profile_wrap">
                     <div class="profile_img" style="margin:0 auto; width:150px; height:150px; border-radius: 70%; overflow: hidden;">
-                        <img src="/resources/fileUpload/profile/4c3e575d-97b6-4674-91c7-bac19205a954_5.png" alt="착한호랑이" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="/resources/fileUpload/profile/${mDto.profileDTO.profile_uuid}_${mDto.profileDTO.profile_fileName}" alt="착한호랑이" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="detail">
                     <div class="top">
-                        <div class="user_name">KindTiger</div>
+                        <div class="user_name">${mDto.member_nick}</div>
 
                         <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit" style="font-size: 15px;">프로필편집</a>
 
@@ -108,9 +110,11 @@ width: 300px;
                     </div>
 
                     <ul class="middle">
-                        <li><span>게시물</span>3</li>
-                        <li><div class="follower" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로워</span>3</div></li>
-                        <li><div class="following" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로잉</span>3</div></li>
+
+                        <li><span>게시물</span>${bcnt}</li>
+                        <li><div class="follower" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로워</span>${followerCnt}</li>
+                        <li><div class="following" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로잉</span>${followingCnt}</li>
+
                     </ul>
 					          	
 					      <!-- Modal -->
@@ -170,12 +174,7 @@ width: 300px;
 $(document).ready(function() {
     $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
     $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-/*     $("video").mouseenter(function() {
-    	$(this).get(0).play();
-	});
-    $('video').mouseleave(function(){
-    	$(this).get(0).pause();
-	}); */
+
 	$(document).on('mouseenter','video',function(){
 		$(this).get(0).play();
 	});
