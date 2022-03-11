@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mypatch.www.board.mapper.BoardMapper">
+	<select id="mainread" resultType="com.mypatch.www.board.domain.MainDTO">
+		SELECT rn, A.board_num, A.member_id, A.member_nick, A.board_content, A.board_date,
+	               B.boardattach_uuid, B.boardattach_filename, B.boardattach_path, B.boardattach_type,
+	               C.cnt,
+	               D.profile_uuid, D.profile_filename,
+	               E.reply_num, E.member_id reply_id,E.member_nick reply_nick, E.reply_content, E.reply_date,
+	               F.like_cnt
+		FROM (SELECT last.*, mem.member_nick
+	          FROM(SELECT board_num_order.*, rownum rn
+	               FROM (SELECT *
+	                     FROM joinus_board
+	                     WHERE member_id IN (SELECT member_id
+	                                         FROM joinus_member
+	                                         WHERE member_nick IN (SELECT member_nick
+	                                                               FROM joinus_follow
+	                                                               WHERE member_id = #{member_id})
+	                                         )
+	                     ORDER BY board_num DESC) board_num_order
+	               )last,
+	               joinus_member mem
+	          WHERE rn
+	          BETWEEN #{a} AND #{b}
+	          AND last.member_id = mem.member_id) A,
+	          joinus_boardattach B,
+	          (SELECT b_like.board_num, COUNT(l_like.like_cnt) cnt
+	          FROM (SELECT last_like.board_num
+	                FROM(SELECT board_num_order_like.*, rownum rn_like
+	                     FROM (SELECT *
+	                           FROM joinus_board
+	                           WHERE member_id IN (SELECT member_id
+	                                               FROM joinus_member
+	                                               WHERE member_nick IN (SELECT member_nick
+	                                                                     FROM joinus_follow
+	                                                                     WHERE member_id = #{member_id})
+	                                               )
+	                           ORDER BY board_num DESC) board_num_order_like
+	                      ) last_like
+	                WHERE rn_like
+	                BETWEEN #{a} AND #{b}) b_like,
+	                joinus_like l_like
+	          WHERE l_like.board_num(+) = b_like.board_num
+	          AND l_like.like_cnt = 'Y'
+	          GROUP BY b_like.board_num, l_like.like_cnt) C,
+	          joinus_profile D,
+	          (SELECT rnum_reply.*, remem.member_nick
+	          FROM (SELECT ROW_NUMBER() OVER(PARTITION BY joinus_reply.board_num ORDER BY joinus_reply.reply_num DESC) AS rnum, joinus_reply.*
+	                FROM joinus_reply
+	                WHERE board_num IN (SELECT last.board_num
+	                                    FROM(SELECT board_num_order.*, rownum rn
+	                                         FROM (SELECT *
+	                                               FROM joinus_board
+	                                               WHERE member_id IN (SELECT member_id
+	                                                                   FROM joinus_member
+	                                                                   WHERE member_nick IN (SELECT member_nick
+	                                                                                         FROM joinus_follow
+	                                                                                         WHERE member_id = #{member_id})
+	                                                                   )
+	                                               ORDER BY board_num DESC) board_num_order
+	                                          ) last
+	                                    WHERE rn
+	                                    BETWEEN #{a} AND #{b})
+					) rnum_reply,
+					joinus_member remem
+	          WHERE rnum = 1
+	          AND rnum_reply.member_id = remem.member_id) E,
+	          (SELECT b_like.board_num, my_like.like_cnt
+	           FROM (SELECT last_like.board_num
+	                 FROM(SELECT board_num_order_like.*, rownum rn_like
+	                      FROM (SELECT *
+	                            FROM joinus_board
+	                            WHERE member_id IN (SELECT member_id
+	                                                FROM joinus_member
+	                                                WHERE member_nick IN (SELECT member_nick
+	                                                                      FROM joinus_follow
+	                                                                      WHERE member_id = 'test@gmail.com')
+	                                                                    )
+	                            ORDER BY board_num DESC) board_num_order_like
+	                       ) last_like
+	                  WHERE rn_like
+	                  BETWEEN #{a} AND #{b}) b_like,
+	                  joinus_like my_like
+	           WHERE my_like.board_num = b_like.board_num
+	           AND my_like.member_id = #{member_id}) F
+		WHERE A.board_num = B.board_num
+		AND A.board_num = C.board_num(+)
+		AND A.member_id = D.member_id(+)
+		AND A.board_num = E.board_num(+)
+		AND A.board_num = F.board_num(+)
+	</select>
+	
+	<select id="maincount" resultType="Integer">
+		SELECT COUNT(board_num)
+		FROM joinus_board
+		WHERE member_id IN (SELECT member_id
+		                    FROM joinus_member
+		                    WHERE member_nick IN (SELECT member_nick
+		                                          FROM joinus_follow
+		                                          WHERE member_id = #{member_id})
+		                    )
+	</select>
+	
+	<update id="mylike" parameterType="com.mypatch.www.board.domain.LikeDTO">
+		UPDATE joinus_like
+		SET like_cnt = 'N'
+		WHERE member_id = #{member_id}
+		AND board_num = #{board_num}
+	</update>
+	
+	<update id="mydislike" parameterType="com.mypatch.www.board.domain.LikeDTO">
+		UPDATE joinus_like
+		SET like_cnt = 'Y'
+		WHERE member_id = #{member_id}
+		AND board_num = #{board_num}
+	</update>
+	
+	<select id="searchlike" parameterType="com.mypatch.www.board.domain.LikeDTO" resultType="String">
+		SELECT like_cnt
+		FROM joinus_like
+		WHERE member_id = #{member_id}
+		AND board_num = #{board_num}
+	</select>
+	
+	<insert id="insertlike" parameterType="com.mypatch.www.board.domain.LikeDTO">
+		INSERT INTO joinus_like
+		VALUES (#{board_num}, #{member_id}, 'Y')
+	</insert>
+	
+	<insert id="mainreply" parameterType="com.mypatch.www.board.domain.ReplyDTO">
+		INSERT INTO joinus_reply
+		VALUES (reply_seq.NEXTVAL, #{board_num}, #{member_id}, #{reply_content}, SYSDATE)
+	</insert>
+</mapper>

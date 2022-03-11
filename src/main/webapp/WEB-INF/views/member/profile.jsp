@@ -5,8 +5,10 @@
 <style>
 video{
 width: 300px;
+height: 300px;
 }
 .thumbnail img{
+width: 300px;
 width: 300px;
 }
 .glyphicon { margin-right:5px; }
@@ -67,18 +69,40 @@ width: 300px;
     margin: 0 0 11px;
 }
 
+.modal-title{
+	font-size: 17px;
+	text-align:left;
+	font-weight: bold;
+}
+.modal_table{
+	width:100%;
+}
+#modal_userImg{
+	width:50px;
+	height:50px;
+	border-radius: 75%;
+}
+#modal_userId{
+	width:200px;
+	padding-bottom: 50px;
+}
+#modal_userFollow{
+	margin:10px;
+	text-align: right;
+}
+
 </style>
     <div id="main_container">
         <section class="b_inner">
             <div class="hori_cont">
                 <div class="profile_wrap">
                     <div class="profile_img" style="margin:0 auto; width:150px; height:150px; border-radius: 70%; overflow: hidden;">
-                        <img src="/resources/fileUpload/profile/4c3e575d-97b6-4674-91c7-bac19205a954_5.png" alt="착한호랑이" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="/resources/fileUpload/profile/${mDto.profileDTO.profile_uuid}_${mDto.profileDTO.profile_fileName}" alt="착한호랑이" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="detail">
                     <div class="top">
-                        <div class="user_name">KindTiger</div>
+                        <div class="user_name">${mDto.member_nick}</div>
 
                         <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit" style="font-size: 15px;">프로필편집</a>
 
@@ -86,10 +110,33 @@ width: 300px;
                     </div>
 
                     <ul class="middle">
-                        <li><span>게시물</span>3</li>
-                        <li><span>팔로워</span>3</li>
-                        <li><span>팔로잉</span>3</li>
+
+                        <li><span>게시물</span>${bcnt}</li>
+                        <li><div class="follower" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로워</span>${followerCnt}</li>
+                        <li><div class="following" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로잉</span>${followingCnt}</li>
+
                     </ul>
+					          	
+					      <!-- Modal -->
+							<div class="modal fade" id="followModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
+							  <div class="modal-dialog modal-dialog-scrollable">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        <table class="modal_table">
+							        	
+					          		</table>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+					    </div>
+					</div>
+                </div>
+                    
                 </div>
             </div>
 			<div class="container">
@@ -127,12 +174,7 @@ width: 300px;
 $(document).ready(function() {
     $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
     $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-/*     $("video").mouseenter(function() {
-    	$(this).get(0).play();
-	});
-    $('video').mouseleave(function(){
-    	$(this).get(0).pause();
-	}); */
+
 	$(document).on('mouseenter','video',function(){
 		$(this).get(0).play();
 	});
@@ -193,6 +235,75 @@ $(document).ready(function() {
 			}
         }
     });
+    
+    $('.follower').on('click', function(){
+	    
+    	alert("팔로워");	    
+    	
+	    $.ajax({
+	    	url:"/member/follower",
+	    	data:{"member_nick":user},
+	    	type:"get",
+	    	success:function(result) {
+	    		$('.modal-title').text("팔로워"); // modal의 header부분에 "팔로우" 값 넣기
+    			showfollow(result);
+	    	}
+	    });
+	});
+    
+    $('.following').on('click', function(){
+	    
+	    var user = "${user.username}";
+	    
+	    $.ajax({
+	    	url:"/member/following",
+	    	data:{"member_id":user},
+	    	type:"get",
+	    	success:function(result) {
+	    		$('.modal-title').text("팔로잉"); // modal의 header부분에 "팔로우" 값 넣기
+    			showfollowing(result);
+	    	}
+	    });
+	});
+	
+	function showfollowing(resultArr) {
+		
+		console.log(resultArr);
+		
+		$(".modal_table").empty();
+		
+		var result = '';
+		
+		$.each(resultArr, function(i, obj){	
+			var followingList1 = '';
+			var followingList2 = '';
+			var followingList3 = '';
+			var followingList4 = '';
+			
+			console.log("List나와랏!!");
+			followingList1 += "<tr>"
+						   +  "<td style='width:70px;'>";
+						   
+			if (obj.profileDTO != "" && obj.profileDTO != null) {
+				followingList2 += "<img id='modal_userImg' src='/resources/fileUpload/profile/"
+						       + obj.profileDTO.profile_uuid + "_" + obj.profileDTO.profile_fileName + "'>" + "</td>";
+			} else {
+				followingList3 += "<img id='modal_userImg' src='/resources/image/profile.png'></td>";
+			}
+			
+			followingList4 += '<td id="modal_userID">' + obj.member_nick + '</td>'
+			 			   +  '<td id="modal_userFollow"><buttton class="btn btn-outline-primary">팔로우</button></td>'
+ 		 	  			   +  '</tr>';
+ 		 	  			
+ 		 	result += followingList1 + followingList2 + followingList3 + followingList4;
+			
+		});
+			console.log(result);
+			$(".modal_table").append(result);
+		
+		$('#followModal').modal("show"); // id가 "followModal"인 모달창 열기
+	}
+	
 });
 </script>
 </html>

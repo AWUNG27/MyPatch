@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mypatch.www.board.domain.BoardAttachDTO;
 import com.mypatch.www.board.domain.BoardDTO;
+import com.mypatch.www.member.domain.MemberDTO;
 import com.mypatch.www.member.mapper.MemberMapper;
 import com.mypatch.www.util.DeduplicationUtils;
 
@@ -48,11 +49,14 @@ public class MemberControllerkjw {
 		List<BoardAttachDTO> bimgList = new ArrayList<BoardAttachDTO>();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		log.info("My page..");
-		log.info("내 아이디: " + member_id);
 		bList = memberMapper.profileboard(member_id, cnt);
 		bimgList = memberMapper.profileimg(member_id, cnt);
+		MemberDTO mDto = memberMapper.selectMe(member_id);
 		Integer bcnt = memberMapper.profilecnt(member_id);
+		int followingCnt = memberMapper.followingCnt(member_id);
+		int followerCnt = memberMapper.followerCnt(mDto.getMember_nick());
 		bimgList = DeduplicationUtils.deduplication(bimgList, BoardAttachDTO::getBoard_num);
+		log.info("내 정보: " + mDto);
 		for (BoardAttachDTO boardAttachDTO : bimgList) {
 			log.info("중복 제거" + boardAttachDTO);
 		}
@@ -83,6 +87,9 @@ public class MemberControllerkjw {
 		model.addAttribute("bList", bList);
 		model.addAttribute("bimgList", bimgList);
 		model.addAttribute("bcnt", bcnt);
+		model.addAttribute("mDto", mDto);
+		model.addAttribute("followingCnt", followingCnt);
+		model.addAttribute("followerCnt", followerCnt);
 	}
 	//내 프로필 스크롤 이벤트
 	@ResponseBody

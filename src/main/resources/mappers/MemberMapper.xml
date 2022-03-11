@@ -136,13 +136,13 @@
 		and member_id=#{member_id}
 	</delete>
 	
-	<select id="followingCnt">
+	<select id="followingCnt" resultType="int">
 		SELECT COUNT(*)
 		FROM joinus_follow
 		WHERE member_id=#{member_id}
 	</select>
 	
-	<select id="followerCnt">
+	<select id="followerCnt" resultType="int">
 		SELECT COUNT(*)
 		FROM joinus_follow
 		WHERE member_nick=#{member_nick}
