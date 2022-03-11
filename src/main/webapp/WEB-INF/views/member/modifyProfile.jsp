@@ -143,7 +143,7 @@
 				        </form>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tab3">
-                        <form action="#" name="exitForm" class="bg-white border py-4 px-5" method="post">
+                        <form action="" name="exitForm" id="exitForm" class="bg-white border py-4 px-5" method="post">
 				          <div class="text-center mb-3">
 				            <i class="fab fa-bootstrap fa-5x text-secondary mb-2"></i>
 				            <p class="text-muted fw-bold">
@@ -153,7 +153,7 @@
 				          <br>
 				          <sec:csrfInput/>
 				          <div class="form-floating mb-3">
-				            <input class="form-control" id="password" name="password" placeholder="Password" type="password" maxlength="20" style="height:50px;"/><label id="label-password">기존 비밀번호</label>
+				            <input class="form-control" id="passwordExit" name="passwordExit" placeholder="Password" type="password" maxlength="20" style="height:50px;"/><label id="label-passwordExit">기존 비밀번호</label>
 				          </div>
 				          <br>
 				          <div class="mb-2">
@@ -179,7 +179,6 @@
 </div>
 </body>
 <script type="text/javascript">
-	//모달윈도우 클릭이벤트
 	$(function(){ 
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
@@ -188,12 +187,14 @@
 	    	xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 	    });
 	    
+	    //모달 윈도우 클릭이벤트
 		$(".pic_cancle").click(function(){
 			$("#pipi").fadeOut();
 		});
 		$(".pic_mod").click(function(){
 			$("#profile").click();
 		});
+		// 사진 삭제 요청시
 		$(".pic_del").click(function(){
 			var user = "${user.username}";
 			var uuid = $("#profile_uuid").val();
@@ -218,6 +219,7 @@
 	//프로필 이미지 클릭이벤트,,
 	$(document).on("click","#profileImage",function(e){
 		e.preventDefault();
+		//프로필에 파일이 있는지 확인..
 		var x = $("#profile_fileName").val();
 		if (x == "") {
 			$("#profile").click();			
@@ -273,7 +275,7 @@
 				$("#imagediv").append(str);
 				$("#profileFrm").append(fileDTO);
 				$('html').css("cursor","auto");
-			}, 5000);
+			}, 5000);//파일이 경로에 저장되는동안 시간...
 
 		}
 	    
@@ -372,7 +374,32 @@
 	    
 	    //회원탈퇴..
 	    $("#exitMember").on("click", function(){
-	    	
+	    	var user = "${user.username}";
+	    	var password = $("#passwordExit").val();
+	    	if (password != "") {
+		    	var exitConfirm = confirm("탈퇴하시겠습니까?");
+		    	if (exitConfirm) {
+					$.ajax({
+						url: "/member/exitMember",
+						data: {"member_id":user,
+							   "member_pwd": password},
+						type: "post",
+						success: function(data){
+							if (data < 1) {
+								alert("기존 비밀번호가 일치하지 않습니다.");
+								$("#passwordExit").val("");
+								$("#label-passwordExit").html("비밀번호를 입력하세요.").css("color","red");
+							} else {						
+				    			alert("탈퇴 신청이 완료되었습니다.");
+				    			location.href="/";
+							}
+						}
+					});
+				}				
+			}else {
+				$("#label-passwordExit").html("비밀번호를 입력하세요.").css("color","red");
+				$("#passwordExit").focus();
+			}
 	    });
 	});
 </script>

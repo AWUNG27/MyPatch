@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mypatch.www.chat.mapper.ChatMapper">
+	<select id="lastMessage" resultMap="MessageMap">
+		SELECT *
+		FROM joinus_chatmessage msg
+		LEFT OUTER JOIN joinus_chatattach attach
+		ON msg.message_num = attach.chatattach_msgnum
+		WHERE message_num = (SELECT MAX(MESSAGE_NUM)FROM JOINUS_CHATMESSAGE)
+		AND LENGTH(ATTACH.CHATATTACH_UUID) > 0
+		AND MSG.MESSAGE_SENDER = #{message_sender}
+	</select>
+	<insert id="insertAttach">
+		INSERT INTO JOINUS_CHATATTACH
+		VALUES(#{chatAttach_uuid},#{chatAttach_roomNum},#{chatAttach_msgNum},#{chatAttach_fileName},#{chatAttach_path},#{chatAttach_fileType})
+	</insert>
+	<select id="maxMessageNum" resultType="integer">
+		SELECT MAX(MESSAGE_NUM)
+		FROM JOINUS_CHATMESSAGE
+		WHERE MESSAGE_SENDER = #{message_sender}
+	</select>
+	<insert id="chatInsert">
+		INSERT INTO JOINUS_CHATMESSAGE
+		VALUES(SEQ_MESSAGE_NUM.NEXTVAL, #{chatRoom_num}, #{message_sender},#{message_receiver},#{message_content},sysdate,'n')
+	</insert>
+	<select id="chatUserList" resultType="com.mypatch.www.chat.domain.ChatRoomDTO">
+		SELECT *
+		FROM JOINUS_CHATROOM
+		WHERE CHATROOM_NUM = #{chatRoom_num}
+	</select>
+	<select id="chatList" resultType="com.mypatch.www.chat.domain.ChatMessageDTO">
+		SELECT chatlist.*
+		FROM joinus_chatmessage chatlist
+		INNER JOIN (SELECT MAX(msg.message_num) maxnumber
+		            FROM joinus_chatmessage msg 
+		            INNER JOIN (SELECT * 
+				                FROM joinus_chatroom 
+				                WHERE chatroom_user = #{member_id} 
+				                OR chatroom_user2 = #{member_id})room
+       			   	ON msg.chatroom_num = room.chatroom_num
+		            GROUP BY room.chatroom_num) lastmsg
+		ON chatlist.message_num = lastmsg.maxnumber
+		ORDER BY chatlist.message_sendtime desc
+	</select>
+	<select id="messageList" resultMap="MessageMap">
+		SELECT *
+		FROM joinus_chatmessage msg
+		LEFT OUTER JOIN joinus_chatattach attach
+		ON msg.message_num = attach.chatattach_msgnum
+		WHERE msg.chatroom_num = #{chatRoom_num}
+		ORDER BY msg.message_num
+	</select>
+	<resultMap type="com.mypatch.www.chat.domain.ChatAttachDTO" id="chatAttachMap">
+		<id property="chatAttach_uuid" column="chatAttach_uuid"/>
+		<result property="chatAttach_fileName" column="chatAttach_fileName"/>
+		<result property="chatAttach_path" column="chatAttach_path"/>
+		<result property="chatAttach_fileType" column="chatAttach_fileType"/>
+	</resultMap>
+	<resultMap type="com.mypatch.www.chat.domain.ChatMessageDTO" id="MessageMap">
+		<id property="message_num" column="message_num"/>
+		<result property="chatRoom_num" column="chatRoom_num"/>
+		<result property="message_sender" column="message_sender"/>
+		<result property="message_receiver" column="message_receiver"/>
+		<result property="message_content" column="message_content"/>
+		<result property="message_sendTime" column="message_sendTime"/>
+		<result property="message_read" column="message_read"/>
+		<collection property="attachFile" resultMap="chatAttachMap"></collection>
+	</resultMap>
+</mapper>

@@ -132,4 +132,12 @@ public class MemberServiceImpl implements IMemberService{
 
 		return mDto;
 	}
+	
+	@Transactional
+	@Override
+	public int deleteMember(String member_id) {
+		mapper.deleteAuth(member_id);
+		mapper.deleteProfile(member_id);
+		return mapper.deleteMember(member_id);
+	}
 }

@@ -18,6 +18,8 @@ public interface MemberMapper {
 	public String chkNick(String member_nick);
 	public int insertMember(MemberDTO mDto);
 	public int insertMemberAuth(String member_id);
+	public int deleteMember(String member_id);
+	public void deleteAuth(String member_id);
 
 
 	public int deleteProfile(String member_id);

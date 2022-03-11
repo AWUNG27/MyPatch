@@ -43,6 +43,7 @@
    <context:component-scan base-package="com.mypatch.www"/>
    <mybatis-spring:scan base-package="com.mypatch.www.member.mapper"/>
    <mybatis-spring:scan base-package="com.mypatch.www.board.mapper"/>
+   <mybatis-spring:scan base-package="com.mypatch.www.chat.mapper"/>
    <task:annotation-driven/>
 		
 </beans>

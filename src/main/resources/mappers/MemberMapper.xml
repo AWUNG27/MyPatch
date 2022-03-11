@@ -3,6 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mypatch.www.member.mapper.MemberMapper">
+	<delete id="deleteAuth">
+		delete from joinus_auth
+		where member_id = #{member_id}
+	</delete>
+	<delete id="deleteMember">
+		delete from joinus_member
+		where member_id = #{member_id}
+	</delete>
 	<update id="updatePwd">
 		update joinus_member
 		set member_pwd = #{member_pwd}
