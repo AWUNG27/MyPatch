@@ -50,6 +50,9 @@
 	}
 	.modal_ul li {
 		margin: 5px 0 5px 0;
+		height: 40px;
+		font-size: 13px;
+		text-align: left;
 	}
 	.modal_ul li:hover	{
 		background-color: #2478FF;
@@ -59,6 +62,13 @@
 	.searchMember {
 		margin-top : 10px;
 		padding-left : 10px;
+	}
+	.chat_img {
+		margin: 0 auto; 
+		width:40px; 
+		height:40px; 
+		border-radius: 70%; 
+		overflow: hidden;
 	}
 </style>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -114,25 +124,26 @@
         	<div class="msg_history" style="text-align: center; padding-top: 220px;">
 	        	<h3>내 메세지</h3>
 	        	<br>
-	        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">메세지 보내기</button>
+	        	<button type="button" id="letsModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm">메세지 보내기</button>
         	</div>
         </div>
       </div>
     </div>
 </div>
 <!-- 메세지 보내기 모달 window -->
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-sm" id="modalWindow" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
-    <div class="modal-content" style="width:200px; height:auto; max-height: 500px;">
+    <div class="modal-content" style="width:300px; height:auto; max-height: 500px;">
       <input type="text" class="searchMember" placeholder="검색.." style="border: none;">
       <hr>
       <ul class="modal_ul" style="text-align: center; margin: 5px 0 5px 0;">
-      	<li>정승현</li>
-      	<li>정승현</li>
-      	<li>정승현</li>
-      	<li>정승현</li>
-      	<li>정승현</li>
-      	<li>정승현</li>
+      	<li>
+      		<div class="chat_img" style="margin:0 30px 0 70px;">
+      			<img src="/resources/image/profile.png">
+      		</div>
+      		<b>정승현</b>
+      		<br>마스터
+      	</li>
       </ul>
     </div>
   </div>
@@ -151,7 +162,7 @@ window.onload = function(){
 			console.log("socket connected");
 		}
 		
-		//채팅창이 아닌 다른 화면을 보고있을때 감지..
+		//채팅창이 아닌 다른 화면을 보고있을때 메세지 받으면 실행
 		socket.onmessage = function(){
 			$.ajax({
 				url: "/chat/chat",
@@ -175,12 +186,85 @@ $(document).ready(function(){
     });
 });
 
-//메세지 보내기 modal open
-$(".newMsgBtn").on("click",function(){
-	$(".modal.fade.bd-example-modal-sm").fadeIn();
+//메세지 보내기 버튼을 눌렀을때 modal open
+$(document).ready(function(){
+	//채팅방 목록 추천을 위한 Ajax..
+	$("#letsModal").on("click",function(){
+		$.ajax({
+			url: "/chat/chat",
+			data: {"member_id": username},
+			type: "post",
+			success: function(result){
+				//li 태그 삽입을 위한 함수 실행
+				recommendChat(result);
+			}
+		});
+		//모달창 open
+		$("#modalWindow").fadeIn();
+
+	});
 });
 
-//DM목록 클릭 이벤트 등록
+//modal window 내에서 검색 Ajax
+$(".searchMember").on("keyup",function(){
+	var keyword = $(this).val();
+	if (keyword.length > 0) {
+		$.ajax({
+			url: "/chat/search",
+			data: {"keyword": keyword},
+			type: "post",
+			success: function(result){
+				recommendChat(result);
+			}
+		});
+	}
+});
+//모달윈도우 추천채팅 목록 출력을 위한 함수
+function recommendChat(result){
+	var uploadUl = $(".modal_ul");
+	uploadUl.empty();
+	var str = "";
+	$(result).each(function(i,obj){
+		str += "<li class='recommendList' >";
+  		str += 	'<div class="chat_img" style="width:40px; margin:0 30px 0 70px;">';
+  		if (obj.member.profileDTO != null) {
+			str += '<img src="/resources/fileUpload/profile/'+obj.member.profileDTO.profile_uuid+'_'+obj.member.profileDTO.profile_fileName+'">';
+		} else {
+	  		str +=	 '<img src="/resources/image/profile.png">';			
+		}
+  		str += 	'</div>';
+  		str += '<input type="hidden" id="thisLiId" value="'+obj.member.member_id+'" >'
+  		str += '<input type="hidden" id="thisLiNick" value="'+obj.member.member_nick+'" >'
+  		str += 	'<b>'+obj.member.member_nick+'</b>';
+  		str += 	'<br>'+obj.member.member_name;
+  		str += '</li>';
+	});
+	uploadUl.append(str);
+}
+//modal화면에서 상대방 선택시 이벤트 발생..
+$(document).on("click",".recommendList",function(){
+	var yourid = $(this).children("#thisLiId").val();
+	var yourNick = $(this).children("#thisLiNick").val();
+	
+	//선택한 상대방과의 채팅목록이 있는지 먼저 검색
+	$.ajax({
+		url: "/chat/selectChatRoom",
+		data: {"chatRoom_user": username,
+			   "chatRoom_user2": yourid},
+		type: "post",
+		success: function(data){
+			if (data > 0) { //이미 채팅방이 존재할때 메세지 목록 호출 함수 실행
+				requestMessageHistory(username,data,yourid,yourNick);
+				//모달창 닫으며 Div class모두 삭제
+				$("#modalWindow").removeClass("in");
+				$(".modal-backdrop").remove();
+				$("#modalWindow").fadeOut();
+			}
+		}
+	});
+});
+
+//왼쪽 DM목록 클릭 이벤트 등록
 $(document).on("click", ".chat_list.active_chat", function(){ 
 	var roomNum = $(this).children("#chatRoomNumber").val();
 	var receiver = $(this).children("#message_receiver").val();
@@ -188,7 +272,7 @@ $(document).on("click", ".chat_list.active_chat", function(){
 	requestMessageHistory(username, roomNum, receiver,nick); //메세지 목록 불러오는 함수 실행
 });
 
-//메세지 목록 호출하는 함수
+//메세지 내역 요청 Ajax
 function requestMessageHistory(username,roomNum,receiver,nick){
 	$.ajax({
 		url: "/chat/messageList",
@@ -196,79 +280,84 @@ function requestMessageHistory(username,roomNum,receiver,nick){
 			   "chatRoom_num":roomNum},
 		type: "post",
 		success: function(result){
-			showMessageResult(result,receiver,nick); //메세지 내역 출력 함수
+			showMessageResult(result,roomNum,receiver,nick); //메세지 내역 출력 함수 실행
 		}
 	});
 }
 
 //메세지 내역 출력 함수
-function showMessageResult(result,receiver,nick){
+function showMessageResult(result,roomNum,receiver,nick){
 	var uploadDiv = $(".mesgs");
 	uploadDiv.empty(); //메세지가 들어갈 div태그 비우기
 	var str = "";
 	str += '<span class="opponent">'+nick+'님</span>';
    	str += '<hr>'
-       str += '<div class="msg_history" id="msg_div" style="height: 470px;">';
-	$(result).each(function(i,obj){
-		if (obj.message_sender == username) { //센더와 리시버로 분기해 메세지 위치를 구분
-            str += '<div class="outgoing_msg">';
-            str += '<div class="sent_msg">';
-            if (obj.attachFile != null) { //메세지 내용이 첨부파일일때 분기문
-				if (obj.attachFile.chatAttach_fileType == "v") { //첨부파일이 비디오인지 이미지인지 분기
-					str += "<video src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"' autoplay loop muted/>";
-				} else {
-					str += "<img style='width:200px;' src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"'>";
-				}
-			} else {
-	            str += '<p>'+obj.message_content+'</p>';				
-			}
-            str += '<span class="time_date">'+obj.message_sendTime+'</span> </div>';
-            str += '</div>';
-		} else if (obj.message_receiver == username){
-            str += '<div class="incoming_msg">';
-            if (obj.member.profileDTO == null) { //상대방의 프로필사진이 있는지 분기	
-	            str += '<div class="incoming_msg_img"> <img src="/resources/image/profile.png"> </div>';
-			} else {
-				str += '<div class="incoming_msg_img"> <img src="/resources/fileUpload/profile/'+obj.member.profileDTO.profile_uuid+'_'+obj.member.profileDTO.profile_fileName+'"> </div>';
-			}
-            str += '<div class="received_msg">';
-            str += '<div class="received_withd_msg">';
-            if (obj.attachFile != null) {
-				if (obj.attachFile.chatAttach_fileType == "v") {
-					str += "<video src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"' autoplay loop muted/>";
-				} else {
-					str += "<img style='width:200px;' src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"' />";
-				}
-			} else {
-	            str += '<p>'+obj.message_content+'</p>';				
-			}
-            str += '<span class="time_date">'+obj.message_sendTime+'</span></div>';
-            str += '<input type="hidden" id="roomNum" name="roomNum" value="'+obj.chatRoom_num+'">';
-            str += '</div></div>';
-		}
-	});
+    str += '<div class="msg_history" id="msg_div" style="height: 470px;">';
+   	if (result != null) { //기존에 존재하는 대화방과 채팅목록이 있을때 화면에 출력
+   		$(result).each(function(i,obj){
+   			if (obj.message_sender == username) { //센더와 리시버로 분기해 메세지 위치를 구분
+   	            str += '<div class="outgoing_msg">';
+   	            str += '<div class="sent_msg">';
+   	            if (obj.attachFile != null) { //메세지 내용이 첨부파일일때 분기문
+   					if (obj.attachFile.chatAttach_fileType == "v") { //첨부파일이 비디오인지 이미지인지 분기
+   						str += "<video src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"' autoplay loop muted/>";
+   					} else {
+   						str += "<img style='width:200px;' src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"'>";
+   					}
+   				} else {
+   		            str += '<p>'+obj.message_content+'</p>';				
+   				}
+   	            str += '<span class="time_date">'+obj.message_sendTime+'</span> </div>';
+   	            str += '</div>';
+   			} else if (obj.message_receiver == username){
+   	            str += '<div class="incoming_msg">';
+   	            if (obj.member.profileDTO == null) { //상대방의 프로필사진이 있는지 분기	
+   		            str += '<div class="incoming_msg_img"> <img src="/resources/image/profile.png"> </div>';
+   				} else {
+   					str += '<div class="incoming_msg_img"> <img src="/resources/fileUpload/profile/'+obj.member.profileDTO.profile_uuid+'_'+obj.member.profileDTO.profile_fileName+'"> </div>';
+   				}
+   	            str += '<div class="received_msg">';
+   	            str += '<div class="received_withd_msg">';
+   	            if (obj.attachFile != null) {
+   					if (obj.attachFile.chatAttach_fileType == "v") {
+   						str += "<video src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"' autoplay loop muted/>";
+   					} else {
+   						str += "<img style='width:200px;' src='/resources/fileUpload/chat/"+obj.attachFile.chatAttach_path+"/"+obj.attachFile.chatAttach_uuid+"_"+obj.attachFile.chatAttach_fileName+"' />";
+   					}
+   				} else {
+   		            str += '<p>'+obj.message_content+'</p>';				
+   				}
+   	            str += '<span class="time_date">'+obj.message_sendTime+'</span></div>';
+   	            //str += '<input type="hidden" id="roomNum" name="roomNum" value="'+obj.chatRoom_num+'">';
+   	            str += '</div></div>';
+   			}
+   		});
+	}
+	
 	str += '</div>';
-       str += '<div class="type_msg">';
-       str += '<div class="input_msg_write">';
-       str += '<form method="post" id="messageForm" enctype="multipart/form-data">';
-       str += '<input type="file" id="attachFile" name="file" style="display: none;" accept=".jpg, .jpeg, .png, .mp4">';
-       str += '<input type="hidden" id="receiver" value="'+receiver+'">'
-       str += '<sec:csrfInput/>';
-       str += '<textarea onKeyPress="javascript: if (event.keyCode==13) return false;" class="message_content" id="message_content" name="message_content" placeholder="Type a message" maxlength="300"></textarea>';	        
-       str += '<button class="msg_attach_btn" type="button"><i class="fa fa-file-image-o" aria-hidden="true"></i></button>&nbsp;';
-       str += '<button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>';
-       str += '</form>';
-       str += '</div>';
-       str += '</div>';
+    str += '<div class="type_msg">';
+    str += '<div class="input_msg_write">';
+    str += '<form method="post" id="messageForm" enctype="multipart/form-data">';
+    str += '<input type="hidden" id="roomNum" name="roomNum" value="'+roomNum+'">';
+    str += '<input type="file" id="attachFile" name="file" style="display: none;" accept=".jpg, .jpeg, .png, .mp4">';
+    str += '<input type="hidden" id="receiver" value="'+receiver+'">'
+    str += '<sec:csrfInput/>';
+    str += '<textarea onKeyPress="javascript: if (event.keyCode==13) return false;" class="message_content" id="message_content" name="message_content" placeholder="Type a message" maxlength="300"></textarea>';	        
+    str += '<button class="msg_attach_btn" type="button"><i class="fa fa-file-image-o" aria-hidden="true"></i></button>&nbsp;';
+    str += '<button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>';
+    str += '</form>';
+    str += '</div>';
+    str += '</div>';
 	uploadDiv.append(str);
 	//message 목록 최신순 보기를 위한 스크롤 하단 이동
 	var scrollDiv = document.getElementById("msg_div");
 	scrollDiv.scrollTop = scrollDiv.scrollHeight;
-	var thisRoom = $("#roomNum").val();
+	
 	//대화창 이용중에 서버에서 메세지를 받았을때 감지..
 	socket.onmessage = function(msg) {
-		receivedMsg(msg,thisRoom);
+		receivedMsg(msg,roomNum); //받은 메세지 출력 함수 실행
 		
+		//왼쪽 채팅방 목록을 새로고침하기 위해 Ajax실행
 		$.ajax({
 			url: "/chat/chat",
 			data: {"member_id": username},
@@ -283,7 +372,7 @@ function showMessageResult(result,receiver,nick){
 	}
 }
 
-//새로운 메세지를 출력하는 함수
+//받은 메세지 출력 함수
 function receivedMsg(msg,thisRoom){
 	var data = JSON.parse(msg.data);
 	var chatRoom_num = data.chatRoom_num;
@@ -302,7 +391,7 @@ function receivedMsg(msg,thisRoom){
 		msgStr += '<div class="sent_msg">';
 		if (data.attachFile != null) { //첨부파일이 경로에 저장되는동안 로딩이미지를 먼저 출력
 			if (data.attachFile.chatAttach_fileType == "v") {
-				msgStr += "<video id='chatVod' src='/resources/image/loading.gif' autoplay loop muted/>";
+				msgStr += "<video id='chatVod' src='/resources/image/download.mp4' autoplay loop muted/>";
 			} else {
 				msgStr += "<img id='chatImg' style='width:200px;' src='/resources/image/loading.gif' />";
 			}
@@ -322,7 +411,7 @@ function receivedMsg(msg,thisRoom){
 		msgStr += '<div class="received_withd_msg">';
 		if (data.attachFile != null) {
 			if (data.attachFile.chatAttach_fileType == "v") {
-				msgStr += "<video id='chatImg' src='/resources/image/loading.gif' autoplay loop muted/>";
+				msgStr += "<video id='chatImg' src='/resources/image/download.mp4' autoplay loop muted/>";
 			} else {
 				msgStr += "<img id='chatImg' style='width:200px;' src='/resources/image/loading.gif'/>";
 			}
@@ -350,7 +439,7 @@ function receivedMsg(msg,thisRoom){
 	
 }
 
-//새로운 메세지가 발생했을 때 채팅방 목록을 새로고침..
+//새로운 메세지가 발생했을 때 왼쪽 채팅방 목록을 새로고침..
 function refreshChatList(data){
 	var refreshDiv = $("#inbox_chat");
 	var str = "";

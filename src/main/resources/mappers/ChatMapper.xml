@@ -3,6 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mypatch.www.chat.mapper.ChatMapper">
+	<update id="messageRead">
+		update joinus_chatmessage
+		set message_read = 'y'
+		where chatroom_num = #{chatRoom_num} and message_receiver = #{member_id}
+	</update>
+	<insert id="newChatRoom">
+		INSERT INTO joinus_chatroom
+		VALUES(seq_chatroom_num.nextval,#{chatRoom_user},#{chatRoom_user2})
+		<selectKey keyProperty="chatRoom_num" resultType="Integer" order="AFTER">
+			select seq_chatroom_num.currval from dual
+		</selectKey>
+	</insert>
+	<select id="findExistChatRoom" resultType="String">
+		select chatRoom_num
+		from joinus_chatroom
+		where (CHATROOM_USER = #{chatRoom_user} and CHATROOM_USER2 = #{chatRoom_user2})
+		or (CHATROOM_USER = #{chatRoom_user2} and CHATROOM_USER2 = #{chatRoom_user})
+	</select>
 	<select id="lastMessage" resultMap="MessageMap">
 		SELECT *
 		FROM joinus_chatmessage msg

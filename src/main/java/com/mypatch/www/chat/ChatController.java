@@ -10,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mypatch.www.chat.domain.ChatMessageDTO;
+import com.mypatch.www.chat.domain.ChatRoomDTO;
 import com.mypatch.www.chat.service.IChatService;
 import com.mypatch.www.member.domain.MemberDTO;
 import com.mypatch.www.member.service.IMemberService;
@@ -100,7 +103,10 @@ public class ChatController {
 	@PostMapping("/messageList")
 	public ResponseEntity<List<ChatMessageDTO>> messageList(String member_id, int chatRoom_num, Model model){
 		log.info("message history..");
-		List<ChatMessageDTO> messageList = service.messageList(chatRoom_num);
+		List<ChatMessageDTO> messageList = service.messageList(chatRoom_num,member_id);
+		if (messageList == null) {
+			new ResponseEntity<List<ChatMessageDTO>>(messageList,HttpStatus.OK);
+		}
 		for (ChatMessageDTO chatMessageDTO : messageList) {
 			//상대방의 아이디 확인..
 			String yourID = chatMessageDTO.getMessage_receiver().equals(member_id) ? 
@@ -112,5 +118,35 @@ public class ChatController {
 			
 		}
 		return new ResponseEntity<List<ChatMessageDTO>>(messageList,HttpStatus.OK);
+	}
+	
+	//DM 상대방 목록 검색..
+	@PostMapping("/search")
+	public ResponseEntity<List<ChatMessageDTO>> searchMemberList(String keyword) {
+		List<MemberDTO> memberList = new ArrayList<>();
+		memberList = service.searchMemberList(keyword);
+		List<ChatMessageDTO> chatList = new ArrayList<>();
+		
+		for (MemberDTO memberDTO : memberList) {
+			ChatMessageDTO cmDTO = new ChatMessageDTO();
+			cmDTO.setMember(memberDTO);	
+			chatList.add(cmDTO);
+		}
+		return new ResponseEntity<List<ChatMessageDTO>>(chatList,HttpStatus.OK);
+	}
+	
+	//modal window에서 대화상대 선택 controller
+	@PostMapping("/selectChatRoom")
+	@ResponseBody
+	public int findExistChatRoom(ChatRoomDTO crDTO) {
+		log.info("find exist chatroom..");
+		String result = service.findExistChatRoom(crDTO);
+		int roomNum = 0;
+		//기존 대화방이 없다면 새로운 대화방 생성해 return..
+		if (result == null) {
+			roomNum = service.newChatRoom(crDTO);
+			return roomNum;
+		} else
+		return roomNum = Integer.parseInt(result);
 	}
 }
