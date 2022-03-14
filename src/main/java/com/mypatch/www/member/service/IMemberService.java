@@ -13,8 +13,8 @@ public interface IMemberService {
 	public int modifyMember(MemberDTO mDto);
 	public int removeProfile(ProfileDTO pDto);
 	public void updatePwd(MemberDTO mDto);
-	public void follow(String member_id, String member_nick);
-	public void unfollow(String member_nick, String member_id);
+	public int follow(String member_id, String member_nick);
+	public int unfollow(String member_nick, String member_id);
 	
 	public int followingCnt(String member_id);
 	public int followerCnt(String member_nick);

@@ -90,8 +90,12 @@ width: 300px;
 	margin:10px;
 	text-align: right;
 }
-
+#modal_followingImg{
+	width:20px;
+	height:20px;
+}
 </style>
+
     <div id="main_container">
         <section class="b_inner">
             <div class="hori_cont">
@@ -112,8 +116,8 @@ width: 300px;
                     <ul class="middle">
 
                         <li><span>게시물</span>${bcnt}</li>
-                        <li><div class="follower" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로워</span>${followerCnt}</li>
-                        <li><div class="following" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로잉</span>${followingCnt}</li>
+                        <li><div class="follower" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로워</span>${followerCnt}</div></li>
+                        <li><div class="following" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로잉</span>${followingCnt}</div></li>
 
                     </ul>
 					          	
@@ -236,21 +240,24 @@ $(document).ready(function() {
         }
     });
     
+    <%-- 팔로워 클릭 --%>
     $('.follower').on('click', function(){
-	    
-    	alert("팔로워");	    
     	
+    	var user = "${mDto.member_nick}";
+    	console.log("내 닉네임" + user);
+    	 
 	    $.ajax({
 	    	url:"/member/follower",
 	    	data:{"member_nick":user},
 	    	type:"get",
 	    	success:function(result) {
 	    		$('.modal-title').text("팔로워"); // modal의 header부분에 "팔로우" 값 넣기
-    			showfollow(result);
+    			showfollower(result);
 	    	}
 	    });
 	});
     
+    <%-- 팔로잉 클릭 --%>
     $('.following').on('click', function(){
 	    
 	    var user = "${user.username}";
@@ -266,6 +273,44 @@ $(document).ready(function() {
 	    });
 	});
 	
+    <%-- 팔로워목록 모달 띄우기 --%>
+    function showfollower(resultArr) {
+    	console.log(resultArr);
+    	
+    	$(".modal_table").empty();
+    	
+    	var result = '';
+    	
+    	$.each(resultArr, function(i, obj) {
+    		var followerList1 = '';
+			var followerList2 = '';
+			var followerList3 = '';
+			var followerList4 = '';
+			
+			followerList1 += "<tr>"
+						  + "<td style='width:70px;'>";
+						  
+			if (obj.profileDTO != "" && obj.profileDTO != null) {
+				followerList2 += "<img id='modal_userImg' src='/resources/fileUpload/profile/"
+						       + obj.profileDTO.profile_uuid + "_" + obj.profileDTO.profile_fileName + "'>" + "</td>";
+			} else {
+				followerList3 += "<img id='modal_userImg' src='/resources/image/profile.png'></td>";
+			}
+			
+			followerList4 += '<td id="modal_userID">' + obj.member_nick + '</td>'
+						   + '<input type="hidden" id="yourId" value="'+obj.member_nick+'">'
+						   + '</tr>';
+ 		 	  			
+ 		 	result += followerList1 + followerList2 + followerList3 + followerList4;
+ 		 	
+    	});
+    	console.log(result);
+		$(".modal_table").append(result);
+		
+		$('#followModal').modal("show"); // id가 "followModal"인 모달창 열기
+    }
+    
+    <%-- 팔로잉목록 모달 띄우기 --%>
 	function showfollowing(resultArr) {
 		
 		console.log(resultArr);
@@ -280,7 +325,6 @@ $(document).ready(function() {
 			var followingList3 = '';
 			var followingList4 = '';
 			
-			console.log("List나와랏!!");
 			followingList1 += "<tr>"
 						   +  "<td style='width:70px;'>";
 						   
@@ -292,19 +336,95 @@ $(document).ready(function() {
 			}
 			
 			followingList4 += '<td id="modal_userID">' + obj.member_nick + '</td>'
-			 			   +  '<td id="modal_userFollow"><buttton class="btn btn-outline-primary">팔로우</button></td>'
+						   + '<input type="hidden" id="yourId" value="'+obj.member_nick+'">'
+			 			   +  '<td id="modal_userFollow"><buttton class="btn btn-outline-primary unfol" id="' + obj.member_nick + '"><img id="modal_followingImg" src="/resources/image/following.png"></button></td>'
  		 	  			   +  '</tr>';
  		 	  			
  		 	result += followingList1 + followingList2 + followingList3 + followingList4;
 			
 		});
-			console.log(result);
-			$(".modal_table").append(result);
+		console.log(result);
+		$(".modal_table").append(result);
 		
 		$('#followModal').modal("show"); // id가 "followModal"인 모달창 열기
 	}
 	
 });
+  
+	<%-- 팔로잉목록 모달에서 언팔하기 --%>
+	$(document).on("click", ".unfol", function() {
+		
+		var user = "${user.username}";		
+		var x = $(this).closest("tr"); //버튼과 가장 가까운 부모 요소 찾기
+		var unfollow_nick = x.children("#yourId").val(); //부모 요소의 자식중에 id값이 yourid인 값의 value
+		
+		console.log(unfollow_nick);
+		console.log(x);
+
+		$.ajax({
+			url:"/member/unfollow",
+	    	data:{"member_nick":unfollow_nick,
+	    		  "member_id":user},
+	    	type:"get",
+	    	success:function(result){
+	    		if (result == "success") {
+	    			console.log(result);
+	    			
+ 		    		showUnfollowSuccess(unfollow_nick);
+				}
+	    	}
+		});		
+	});
+		
+	<%-- 팔로잉목록 모달에서 언팔한 계정 버튼 변경 --%>
+	function showUnfollowSuccess(unfollow_nick){
+
+		var x = $("#" + unfollow_nick).closest("td");
+		
+		console.log(unfollow_nick);
+		$("#" + unfollow_nick).remove();
+		
+		str = '<buttton class="btn btn-outline-primary fol" id="' + unfollow_nick + '">팔로우</button>';
+		x.append(str);
+	}
+	
+	<%-- 팔로잉목록 모달에서 언팔한 계정 다시 팔로우하기 --%>
+	$(document).on("click", ".fol", function() {
+	
+		var user = "${user.username}";		
+		var x = $(this).closest("tr"); //버튼과 가장 가까운 부모 요소 찾기
+		var follow_nick = x.children("#yourId").val(); //부모 요소의 자식중에 id값이 yourid인 값의 value
+		
+		console.log(follow_nick);
+		console.log(x);
+	
+		$.ajax({
+			url:"/member/follow",
+	    	data:{"member_nick":follow_nick,
+	    		  "member_id":user},
+	    	type:"get",
+	    	success:function(result){
+	    		if (result == "success") {
+	    			console.log(result);
+	    			
+			    		showfollowSuccess(follow_nick);
+				}
+	    	}
+		});	
+	});
+	
+	<%-- 팔로잉목록 모달에서 다시 팔로우한 계정 버튼 변경 --%>
+	function showfollowSuccess(follow_nick){
+
+		var x = $("#" + follow_nick).closest("td");
+		
+		console.log(follow_nick);
+		$("#" + follow_nick).remove();
+		
+		str = '<buttton class="btn btn-outline-primary unfol" id="' + follow_nick + '"><img id="modal_followingImg" src="/resources/image/following.png"></button>';
+		x.append(str);
+	}
+
 </script>
 </html>
 
