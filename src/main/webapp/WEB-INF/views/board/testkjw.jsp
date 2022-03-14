@@ -18,11 +18,23 @@
 .modal-xl{
 height: 650px;
 }
-
+.carousel-control-next-icon, .carousel-control-prev-icon{
+background-color: black;
+}
+.modal-body{
+padding: 0px;
+}
+.col{
+padding: 0px;
+}
+#modal-contents{
+margin-bottom: 0px;
+width: 100%; 
+}
 </style>
 <body>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button>
 
@@ -61,61 +73,89 @@ height: 650px;
 							</div>
 						</div>
 						<div class="col">
-							<header class="top">
-		                        <div class="user_container">
-		                            <div class="profile_img">
-		                                <img src="/resources/image/profile.png" alt="프로필사진">
-		                            </div>
-		                            <div class="user_name">
-		                                <div class="nick_name m_text">글닉네임</div>
-		                            </div>
-		
-		                        </div>
-		
-		                        <div class="sprite_more_icon" data-name="more">
-		                            <ul class="toggle_box">
-		                               <li><input type="submit" class="follow" value="팔로우" data-name="follow"></li>
-		                                <li>수정</li>
-		                                <li>삭제</li>
-		                            </ul>
-		                        </div>
-		                    </header>
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-							2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+							<article class="contents" id="modal-contents">
+								<header class="top sticky-top">
+			                        <div class="user_container">
+			                            <div class="profile_img">
+			                                <img src="/resources/image/profile.png" alt="프로필사진">
+			                            </div>
+			                            <div class="user_name">
+			                                <div class="nick_name m_text">글닉네임</div>
+			                            </div>
+			                        </div>
+			                    </header>
+			                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px;">
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+									2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+			                    </div>
+			                    <div class="sticky-bottom">
+									<div class="bottom_icons">
+				                        <div class="left_icons">
+				                            <div class="heart_btn">
+				                                <div class="sprite_heart_icon_outline" name="39" data-name="heartbeat"></div>
+				                            </div>
+				                            <div class="sprite_bubble_icon"></div>
+				                            <div class="sprite_share_icon" data-name="share"></div>
+				                        </div>
+				                    </div>
+				                    <div class="likes m_text">
+				                        좋아요
+				                        <span id="like-count-39">1,234</span>
+				                        개
+				                    </div>
+			                    	<div class="comment_field" id="add-comment-post37">
+				                        <input type="text" placeholder="댓글달기..." name="reply_content" maxlength="200">
+				                        <div class="upload_btn m_text" data-name="comment">게시</div>
+				                    </div>
+			                    </div>
+							</article>
 						</div>
 					</div>
 				</div>

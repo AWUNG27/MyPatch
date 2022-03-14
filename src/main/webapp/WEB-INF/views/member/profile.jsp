@@ -75,7 +75,14 @@ width: 300px;
             <div class="hori_cont">
                 <div class="profile_wrap">
                     <div class="profile_img" style="margin:0 auto; width:150px; height:150px; border-radius: 70%; overflow: hidden;">
-                        <img src="/resources/fileUpload/profile/${mDto.profileDTO.profile_uuid}_${mDto.profileDTO.profile_fileName}" alt="착한호랑이" style="width: 100%; height: 100%; object-fit: cover;">
+                    	<c:choose>
+	                    	<c:when test="${empty mDto.profileDTO}">
+		                        <img src="/resources/image/profile.png" style="width: 100%; height: 100%; object-fit: cover;">
+	                    	</c:when>
+	                    	<c:otherwise>
+		                        <img src="/resources/fileUpload/profile/${mDto.profileDTO.profile_uuid}_${mDto.profileDTO.profile_fileName}" style="width: 100%; height: 100%; object-fit: cover;">
+	                    	</c:otherwise>
+                    	</c:choose>
                     </div>
                 </div>
                 <div class="detail">
@@ -105,6 +112,9 @@ width: 300px;
 			        </div>
 				</div>
 				<div id="products" class="row list-group flex-row">
+						<c:if test="${empty bimgList}">
+							<img src="/resources/image/profile_default.png">
+						</c:if>
 					<c:forEach items="${bimgList}" var="bimgList">
 				        <div class="item  col-xs-4 col-lg-6 col-xl-4">
 				            <div class="thumbnail">
