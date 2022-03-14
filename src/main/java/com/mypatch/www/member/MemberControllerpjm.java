@@ -1,10 +1,10 @@
 package com.mypatch.www.member;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,23 +25,38 @@ public class MemberControllerpjm {
 
 	// 팔로우
 	@GetMapping("/follow")
-	public void follow(String member_id, String member_nick) {
+	public ResponseEntity<String> follow(String member_id, String member_nick) {
 		
 		log.info("follow..");
 		log.info("follow member_id : " + member_id);
 		log.info("follow member_nick : " + member_nick);
 		
-		service.follow(member_id, member_nick);
+		int result = service.follow(member_id, member_nick);
+		log.info("follow result..." + result);
+		
+		if (result <= 0) {
+			return new ResponseEntity<String>("error", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
 	// 언팔로우(팔로우 취소)
 	@GetMapping("/unfollow")
-	public void unfollow(String member_id, String member_nick) {
+	public ResponseEntity<String> unfollow(String member_id, String member_nick) {
 		
 		log.info("unfollow..");
 		log.info("unfollow member_id : " + member_id);
+		log.info("unfollow member_nick : " + member_nick);
 		
-		service.unfollow(member_nick, member_id);
+		int result = service.unfollow(member_nick, member_id);
+		log.info("unfollow result..." + result);
+
+		if (result <= 0) {
+			return new ResponseEntity<String>("error", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
 	// 팔로잉 목록
@@ -51,37 +66,32 @@ public class MemberControllerpjm {
 		
 		log.info("following..");
 		log.info("following member_id : " + member_id);
-		
-//		Map<String, Object> following = new HashMap();
 
-		List<MemberDTO> mDto = service.following(member_id);
+		List<MemberDTO> followingMemDto = service.following(member_id);
 	
-		for (MemberDTO memberDTO : mDto) {
+		for (MemberDTO memberDTO : followingMemDto) {
 			
-			log.info("memberDTO : " + memberDTO);
+			log.info("팔로잉 리스트 memberDTO : " + memberDTO);
 		}
-
-//		following.put("following", mDto);
 		
-//		log.info(following.toString());
-		
-		return mDto;
+		return followingMemDto;
 	}
 	
 	// 팔로워 목록
 	@GetMapping("/follower")
 	@ResponseBody
-	public Map<String, Object> follower(String member_nick) {
+	public List<MemberDTO> follower(String member_nick) {
 				
 		log.info("follower..");
 		log.info("follower member_nick : " + member_nick);
-		
-		Map<String, Object> follower = new HashMap();
 
-		List<MemberDTO> mDto = service.follower(member_nick);
+		List<MemberDTO> followerMemDto = service.follower(member_nick);
 	
-		follower.put("follower", mDto);
+		for (MemberDTO memberDTO : followerMemDto) {
+			
+			log.info("팔로워 리스트 memberDTO : " + memberDTO);
+		}
 		
-		return follower;
+		return followerMemDto;
 	}
 }
