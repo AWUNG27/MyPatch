@@ -7,8 +7,7 @@
         <div class="form_container">
             <div class="form">
                 <h1 class="sprite_insta_big_logo title"></h1>
-                <form action="/loginConfirm" method="post">
-              	  
+                <form action="/loginConfirm" method="post" id="loginFrm">
                     <p class="login_user_name">
                         <label for="user_name">사용자명:</label>
                         <input type="text" id="id" name="id">
@@ -33,6 +32,18 @@
 </body>
 
 <script>
+$("input[type=submit]").on("click",function(e){
+	e.preventDefault();
+	var id = $("#id").val();
+	var pw = $("#pw").val();
+	if (id == "" || pw == "") {
+		alert("아이디와 비밀번호를 입력해주세요");
+		return;
+	} else {
+		$("#loginFrm").submit();
+	}
+});
+
 //loginFailHandler를 통해 받은 msg
 var x = "${requestScope.loginFailMsg}";
 (function () { 
