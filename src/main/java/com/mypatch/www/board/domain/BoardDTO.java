@@ -3,6 +3,8 @@ package com.mypatch.www.board.domain;
 import java.util.Date;
 import java.util.List;
 
+import com.mypatch.www.member.domain.ProfileDTO;
+
 import lombok.Data;
 
 @Data
@@ -17,4 +19,5 @@ public class BoardDTO {
 	private String date;
 	//글의 파일들 list
 	private List<BoardAttachDTO> bList;
+	
 }

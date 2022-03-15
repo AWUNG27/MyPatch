@@ -5,8 +5,10 @@
 <style>
 video{
 width: 300px;
+height: 300px;
 }
 .thumbnail img{
+width: 300px;
 width: 300px;
 }
 .glyphicon { margin-right:5px; }
@@ -67,18 +69,51 @@ width: 300px;
     margin: 0 0 11px;
 }
 
+.modal-title{
+	font-size: 17px;
+	text-align:left;
+	font-weight: bold;
+}
+.modal_table{
+	width:100%;
+}
+#modal_userImg{
+	width:50px;
+	height:50px;
+	border-radius: 75%;
+}
+#modal_userId{
+	width:200px;
+	padding-bottom: 50px;
+}
+#modal_userFollow{
+	margin:10px;
+	text-align: right;
+}
+#modal_followingImg{
+	width:20px;
+	height:20px;
+}
 </style>
+
     <div id="main_container">
         <section class="b_inner">
             <div class="hori_cont">
                 <div class="profile_wrap">
                     <div class="profile_img" style="margin:0 auto; width:150px; height:150px; border-radius: 70%; overflow: hidden;">
-                        <img src="/resources/fileUpload/profile/4c3e575d-97b6-4674-91c7-bac19205a954_5.png" alt="착한호랑이" style="width: 100%; height: 100%; object-fit: cover;">
+                    	<c:choose>
+	                    	<c:when test="${empty mDto.profileDTO}">
+		                        <img src="/resources/image/profile.png" style="width: 100%; height: 100%; object-fit: cover;">
+	                    	</c:when>
+	                    	<c:otherwise>
+		                        <img src="/resources/fileUpload/profile/${mDto.profileDTO.profile_uuid}_${mDto.profileDTO.profile_fileName}" style="width: 100%; height: 100%; object-fit: cover;">
+	                    	</c:otherwise>
+                    	</c:choose>
                     </div>
                 </div>
                 <div class="detail">
                     <div class="top">
-                        <div class="user_name">KindTiger</div>
+                        <div class="user_name">${mDto.member_nick}</div>
 
                         <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit" style="font-size: 15px;">프로필편집</a>
 
@@ -86,10 +121,33 @@ width: 300px;
                     </div>
 
                     <ul class="middle">
-                        <li><span>게시물</span>3</li>
-                        <li><span>팔로워</span>3</li>
-                        <li><span>팔로잉</span>3</li>
+
+                        <li><span>게시물</span>${bcnt}</li>
+                        <li><div class="follower" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로워</span>${followerCnt}</div></li>
+                        <li><div class="following" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로잉</span>${followingCnt}</div></li>
+
                     </ul>
+					          	
+					      <!-- Modal -->
+							<div class="modal fade" id="followModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
+							  <div class="modal-dialog modal-dialog-scrollable">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        <table class="modal_table">
+							        	
+					          		</table>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+					    </div>
+					</div>
+                </div>
+                    
                 </div>
             </div>
 			<div class="container">
@@ -103,6 +161,9 @@ width: 300px;
 			        </div>
 				</div>
 				<div id="products" class="row list-group flex-row">
+						<c:if test="${empty bimgList}">
+							<img src="/resources/image/profile_default.png">
+						</c:if>
 					<c:forEach items="${bimgList}" var="bimgList">
 				        <div class="item  col-xs-4 col-lg-6 col-xl-4">
 				            <div class="thumbnail">
@@ -127,12 +188,7 @@ width: 300px;
 $(document).ready(function() {
     $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
     $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-/*     $("video").mouseenter(function() {
-    	$(this).get(0).play();
-	});
-    $('video').mouseleave(function(){
-    	$(this).get(0).pause();
-	}); */
+
 	$(document).on('mouseenter','video',function(){
 		$(this).get(0).play();
 	});
@@ -193,7 +249,192 @@ $(document).ready(function() {
 			}
         }
     });
+    
+    <%-- 팔로워 클릭 --%>
+    $('.follower').on('click', function(){
+    	
+    	var user = "${mDto.member_nick}";
+    	console.log("내 닉네임" + user);
+    	 
+	    $.ajax({
+	    	url:"/member/follower",
+	    	data:{"member_nick":user},
+	    	type:"get",
+	    	success:function(result) {
+	    		$('.modal-title').text("팔로워"); // modal의 header부분에 "팔로우" 값 넣기
+    			showfollower(result);
+	    	}
+	    });
+	});
+    
+    <%-- 팔로잉 클릭 --%>
+    $('.following').on('click', function(){
+	    
+	    var user = "${user.username}";
+	    
+	    $.ajax({
+	    	url:"/member/following",
+	    	data:{"member_id":user},
+	    	type:"get",
+	    	success:function(result) {
+	    		$('.modal-title').text("팔로잉"); // modal의 header부분에 "팔로우" 값 넣기
+    			showfollowing(result);
+	    	}
+	    });
+	});
+	
+    <%-- 팔로워목록 모달 띄우기 --%>
+    function showfollower(resultArr) {
+    	console.log(resultArr);
+    	
+    	$(".modal_table").empty();
+    	
+    	var result = '';
+    	
+    	$.each(resultArr, function(i, obj) {
+    		var followerList1 = '';
+			var followerList2 = '';
+			var followerList3 = '';
+			var followerList4 = '';
+			
+			followerList1 += "<tr>"
+						  + "<td style='width:70px;'>";
+						  
+			if (obj.profileDTO != "" && obj.profileDTO != null) {
+				followerList2 += "<img id='modal_userImg' src='/resources/fileUpload/profile/"
+						       + obj.profileDTO.profile_uuid + "_" + obj.profileDTO.profile_fileName + "'>" + "</td>";
+			} else {
+				followerList3 += "<img id='modal_userImg' src='/resources/image/profile.png'></td>";
+			}
+			
+			followerList4 += '<td id="modal_userID">' + obj.member_nick + '</td>'
+						   + '<input type="hidden" id="yourId" value="'+obj.member_nick+'">'
+						   + '</tr>';
+ 		 	  			
+ 		 	result += followerList1 + followerList2 + followerList3 + followerList4;
+ 		 	
+    	});
+    	console.log(result);
+		$(".modal_table").append(result);
+		
+		$('#followModal').modal("show"); // id가 "followModal"인 모달창 열기
+    }
+    
+    <%-- 팔로잉목록 모달 띄우기 --%>
+	function showfollowing(resultArr) {
+		
+		console.log(resultArr);
+		
+		$(".modal_table").empty();
+		
+		var result = '';
+		
+		$.each(resultArr, function(i, obj){	
+			var followingList1 = '';
+			var followingList2 = '';
+			var followingList3 = '';
+			var followingList4 = '';
+			
+			followingList1 += "<tr>"
+						   +  "<td style='width:70px;'>";
+						   
+			if (obj.profileDTO != "" && obj.profileDTO != null) {
+				followingList2 += "<img id='modal_userImg' src='/resources/fileUpload/profile/"
+						       + obj.profileDTO.profile_uuid + "_" + obj.profileDTO.profile_fileName + "'>" + "</td>";
+			} else {
+				followingList3 += "<img id='modal_userImg' src='/resources/image/profile.png'></td>";
+			}
+			
+			followingList4 += '<td id="modal_userID">' + obj.member_nick + '</td>'
+						   + '<input type="hidden" id="yourId" value="'+obj.member_nick+'">'
+			 			   +  '<td id="modal_userFollow"><buttton class="btn btn-outline-primary unfol" id="' + obj.member_nick + '"><img id="modal_followingImg" src="/resources/image/following.png"></button></td>'
+ 		 	  			   +  '</tr>';
+ 		 	  			
+ 		 	result += followingList1 + followingList2 + followingList3 + followingList4;
+			
+		});
+		console.log(result);
+		$(".modal_table").append(result);
+		
+		$('#followModal').modal("show"); // id가 "followModal"인 모달창 열기
+	}
+	
 });
+  
+	<%-- 팔로잉목록 모달에서 언팔하기 --%>
+	$(document).on("click", ".unfol", function() {
+		
+		var user = "${user.username}";		
+		var x = $(this).closest("tr"); //버튼과 가장 가까운 부모 요소 찾기
+		var unfollow_nick = x.children("#yourId").val(); //부모 요소의 자식중에 id값이 yourid인 값의 value
+		
+		console.log(unfollow_nick);
+		console.log(x);
+
+		$.ajax({
+			url:"/member/unfollow",
+	    	data:{"member_nick":unfollow_nick,
+	    		  "member_id":user},
+	    	type:"get",
+	    	success:function(result){
+	    		if (result == "success") {
+	    			console.log(result);
+	    			
+ 		    		showUnfollowSuccess(unfollow_nick);
+				}
+	    	}
+		});		
+	});
+		
+	<%-- 팔로잉목록 모달에서 언팔한 계정 버튼 변경 --%>
+	function showUnfollowSuccess(unfollow_nick){
+
+		var x = $("#" + unfollow_nick).closest("td");
+		
+		console.log(unfollow_nick);
+		$("#" + unfollow_nick).remove();
+		
+		str = '<buttton class="btn btn-outline-primary fol" id="' + unfollow_nick + '">팔로우</button>';
+		x.append(str);
+	}
+	
+	<%-- 팔로잉목록 모달에서 언팔한 계정 다시 팔로우하기 --%>
+	$(document).on("click", ".fol", function() {
+	
+		var user = "${user.username}";		
+		var x = $(this).closest("tr"); //버튼과 가장 가까운 부모 요소 찾기
+		var follow_nick = x.children("#yourId").val(); //부모 요소의 자식중에 id값이 yourid인 값의 value
+		
+		console.log(follow_nick);
+		console.log(x);
+	
+		$.ajax({
+			url:"/member/follow",
+	    	data:{"member_nick":follow_nick,
+	    		  "member_id":user},
+	    	type:"get",
+	    	success:function(result){
+	    		if (result == "success") {
+	    			console.log(result);
+	    			
+			    		showfollowSuccess(follow_nick);
+				}
+	    	}
+		});	
+	});
+	
+	<%-- 팔로잉목록 모달에서 다시 팔로우한 계정 버튼 변경 --%>
+	function showfollowSuccess(follow_nick){
+
+		var x = $("#" + follow_nick).closest("td");
+		
+		console.log(follow_nick);
+		$("#" + follow_nick).remove();
+		
+		str = '<buttton class="btn btn-outline-primary unfol" id="' + follow_nick + '"><img id="modal_followingImg" src="/resources/image/following.png"></button>';
+		x.append(str);
+	}
+
 </script>
 </html>
 

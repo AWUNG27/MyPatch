@@ -68,21 +68,27 @@ public class MemberServiceImpl implements IMemberService{
 	}
 	
 	@Override
-	public void follow(String member_id, String member_nick) {
+	public int follow(String member_id, String member_nick) {
 				
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("member_id", member_id);		
 		paramMap.put("member_nick", member_nick);		
-		mapper.follow(paramMap);
+		
+		int result = mapper.follow(paramMap);
+		
+		return result;
 	}
 	
 	@Override
-	public void unfollow(String member_nick, String member_id) {
+	public int unfollow(String member_nick, String member_id) {
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("member_nick", member_nick);
 		paramMap.put("member_id", member_id);
-		mapper.unfollow(paramMap);
+		
+		int result = mapper.unfollow(paramMap);
+		
+		return result;
 	}
 
 	@Override
@@ -131,5 +137,13 @@ public class MemberServiceImpl implements IMemberService{
 		}
 
 		return mDto;
+	}
+	
+	@Transactional
+	@Override
+	public int deleteMember(String member_id) {
+		mapper.deleteAuth(member_id);
+		mapper.deleteProfile(member_id);
+		return mapper.deleteMember(member_id);
 	}
 }

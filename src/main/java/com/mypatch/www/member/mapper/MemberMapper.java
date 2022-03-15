@@ -18,6 +18,9 @@ public interface MemberMapper {
 	public String chkNick(String member_nick);
 	public int insertMember(MemberDTO mDto);
 	public int insertMemberAuth(String member_id);
+	public int deleteMember(String member_id);
+	public void deleteAuth(String member_id);
+	public List<MemberDTO> searchMemberList(String searchKeyword);
 
 
 	public int deleteProfile(String member_id);
@@ -29,8 +32,8 @@ public interface MemberMapper {
 	public List<BoardAttachDTO> profileimg(@Param("member_id") String member_id,@Param("cnt") String cnt);
 	public List<BoardDTO> profileboard(@Param("member_id") String member_id,@Param("cnt") String cnt);
 	public Integer profilecnt(String member_id);
-	public void follow(Map<String, String> paramMap);
-	public void unfollow(Map<String, String> paramMap);
+	public int follow(Map<String, String> paramMap);
+	public int unfollow(Map<String, String> paramMap);
 
 	public int followingCnt(String member_id);
 	public int followerCnt(String member_nick);
