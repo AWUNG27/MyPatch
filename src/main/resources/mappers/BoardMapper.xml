@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mypatch.www.board.mapper.BoardMapper">
+
+	<insert id="register">
+		INSERT INTO JOINUS_BOARD(BOARD_NUM, MEMBER_ID, BOARD_CONTENT, BOARD_DATE)
+		VALUES(BOARD_SEQ.NEXTVAL, #{member_id}, #{board_content}, sysdate)
+		<selectKey keyProperty="board_num" resultType="Integer" order="AFTER">
+			SELECT board_seq.currval FROM dual
+		</selectKey>
+	</insert>
+
+</mapper>

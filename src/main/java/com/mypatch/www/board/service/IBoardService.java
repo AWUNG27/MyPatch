@@ -1,8 +1,8 @@
-package com.mypatch.www.board.mapper;
+package com.mypatch.www.board.service;
 
 import com.mypatch.www.board.domain.BoardDTO;
 
-public interface BoardMapper {
+public interface IBoardService {
 	
 	public void register(BoardDTO bDto) throws Exception;
 	

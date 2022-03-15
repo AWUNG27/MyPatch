@@ -49,10 +49,10 @@
 </head>
 <style type="text/css">
 	
-	#modal{
+	/* #modal{
 		width: 100%;
   		height: 100%;
-	}
+	} */
 	
 	.select-button{
 		padding: 6px 25px;
@@ -108,8 +108,13 @@
 
             <div class="right_icons">
             	<div>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#modal" id="boardRegist"><img src="/resources/image/kakao.png"></a>
-              </div>
+            		<sec:authorize access="isAuthenticated()">
+	                	<a href="#" data-bs-toggle="modal" data-bs-target="#modal-1st" id="boardRegist"><img src="/resources/image/kakao.png"></a>
+            		</sec:authorize>
+            		<sec:authorize access="isAnonymous()">
+	                	<a href="/member/login"><img src="/resources/image/kakao.png"></a>
+            		</sec:authorize>
+              	</div>
                 <sec:authorize access="isAnonymous()">
 	                <div><a href="/member/login"><img src="/resources/image/login.png"></a></div>
                 </sec:authorize>
@@ -132,25 +137,25 @@
         </section>
     </header>
     <!-- The Board Regist Modal -->
-		<div class="modal" id="modal">
+		<div class="modal" id="modal-1st">
 			
-			<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-dialog modal-dialog-centered" id="modal-parent">
 				<div class="modal-content">
 					
 					<!-- Modal Header -->
 					<div class="modal-header">
-						<div class="col-1" id="modalLeft" style="display: none;"> 
-							<button style="margin: auto; border: 0; outline: 0; background-color: transparent;">
+						<div class="col-1" id="modalLeft"> 
+							<button id="back" style="margin: auto; border: 0; outline: 0; background-color: transparent; display: none;">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
   									<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
 								</svg>
-							</button>
+							</button> 
 						</div>
 						<div class="col-10">
 							<h4 class="modal-title" id="title" style="text-align: center;">새 게시물 만들기</h4>
 						</div>
-						<div class="col-1" id="modalRight" style="display: none;">
-							<button style="margin: auto; font-size: 14px; border: 0; outline: 0; background-color: transparent;">
+						<div class="col-1" data-bs-toggle="modal" data-bs-target="#modal-2st" id="modalRight">
+							<button id="next" style="margin: auto; font-size: 14px; border: 0; outline: 0; background-color: transparent; display: none;">
 								다음
 							</button>
 						</div>
@@ -158,7 +163,8 @@
 					
 					<!-- Modal Body -->
 					<div id="modal-body" class="modal-body" style="padding: 0 0 0 0;">
-						<div class="col-9 text-center">
+						
+						<div class="col-9 text-center" id="sibal">
 							<div id="1st" style="">
 								<svg aria-label="이미지나 동영상과 같은 미디어를 나타내는 아이콘" class="_8-yf5 " color="#262626" fill="#262626" height="77" role="img" viewBox="0 0 97.6 77.3" width="96">
 									<path d="M16.3 24h.3c2.8-.2 4.9-2.6 4.8-5.4-.2-2.8-2.6-4.9-5.4-4.8s-4.9 2.6-4.8 5.4c.1 2.7 2.4 4.8 5.1 4.8zm-2.4-7.2c.5-.6 1.3-1 2.1-1h.2c1.7 0 3.1 1.4 3.1 3.1 0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-.8.3-1.5.8-2.1z" fill="currentColor">
@@ -185,6 +191,8 @@
 							<div id="3rd" style="display: none;">
 							</div>
 						</div>
+						
+						<!-- 이미지 자르기 영역 -->
 						<div id="cropRatio" class="col-3 text-center" style="display: none;">
 							<ul id="ratio">
 								<li id="original"><a href="#" style="none;">원본 이미지</a></li>
@@ -196,10 +204,63 @@
 								<li id="rectangular"><a href="#" style="none;">4:5</a></li>
 							</ul>
 						</div>
+						
+						<!-- 글 내용 작성 영역 -->
+						<div id="contentWrite" class="col-3 text-center" style="display: none;">
+							<textarea rows="" cols="" maxlength="500"></textarea>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+	<!-- Second Board Regist Modal -->
+	<div class="modal" id="modal-2st">
+		<div class="modal-dialog modal-dialog-centered modal-xl">
+			<div class="modal-content">
+			
+			<!-- modal header -->
+			<div class="modal-header">
+				<div class="modal_left col-1" style="text-align: center;">
+					<button id="back" style="margin: auto; border: 0; outline: 0; background-color: transparent;">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+  							<path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+						</svg>
+					</button> 
+				</div>
+				<div class="modal_midle col-10" style="text-align: center;">
+					새 글 작성하기
+				</div>
+				<div class="modal_right col-1" style="text-align: center;">
+					<a href="#" id="regist" style="text-decoration: none;">작성하기</a>
+				</div>
+			</div>
+			
+			<!-- modal body -->
+			<form role="form" action="/board/regist" method="post">
+				<div class="modal-body align-items-start" style=" padding: 0;">
+					<div class="modal_img col-7 modal-dialog-centered" id="modal_img" style="height:500px; overflow: hidden; position: relative;">
+						<!--<img src="/resources/fileUpload/board/2022/03/07/b9a6a018-84a4-4978-903c-cd51782d880d_D3C0BE0B-4917-4248-BD02-CE997D21DD31.jpeg">-->
+					</div>
+					
+					<div class="modal_content col-5">
+						<div class="modal_profile">
+							<sec:authorize access="isAuthenticated()">	                              
+								<input type="hidden" name="member_id" value="${user.username}">
+                			</sec:authorize>
+						</div>
+						<div class="text_area_top">
+							<div class="text_area_middle" style="display: flex;">
+								<textarea rows="10" cols="10" class="form-control" name="board_content" aria-label="문구 입력..." placeholder="문구 입력..." autocomplete="off" autocorrect="off" style="resize: none; border: none; height: 500; !important;"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<sec:csrfInput/>
+			</form>
+			</div>
+		</div>
+	</div>
 		
 <script src="/resources/js/insta.js"></script>
 <script type="text/javascript">
@@ -215,6 +276,8 @@
 	});
 	
 	var fileList = []; //파일 정보를 담아 둘 배열
+	var originalFile = ""; // 원본이미지 이름 저장용 변수
+	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	//var maxSize = 10485760; // 10MB
 	var title = $("#title");
@@ -227,13 +290,136 @@
 	var h = 1; // 크롭영역 높이
 	var a = 1.0; // 크롭영역 크기(이미지기준)
 	
+	// 첨부파일 정보 담아둘 변수들
+	var input1stFile = ""; // 처음 선택한 첨부파일의 경로와 이름
+	var input2stFile = ""; // 최종 단계(자르기 완료) 첨부파일의 경로와 이름
+	var inputImageFile = ""; // 첨부파일 이름
+	
+	// 서버에 전송할 첨부파일 formObj
+	var formObj = $("form[role='form']");
+	
+	// -> 버튼 클릭시(최종 이미지 선택완료) 파일 업로드 폴더에 원본 이미지 삭제
 	$(function() {
 		
-		$("#boardRegist").on("click", function() {
-			var option = {
-					
-			};
+		$("#regist").on("click", function(e) {
+			
+			e.preventDefault();
+			console.log("작성하기 클릭");
+			
+			var str = "";
+			
+			$('#attachFileList ul li').each(function(i, obj){
+				
+				var jobj = $(obj);
+				console.dir(jobj);
+				
+				str += "<input type='hidden' name='bList[" + i + "].boardattach_filename' value='" + jobj.data("filename") + "'>";
+				str += "<input type='hidden' name='bList[" + i + "].boardattach_uuid' value='" + jobj.data("uuid") + "'>";
+				str += "<input type='hidden' name='bList[" + i + "].boardattach_path' value='" + jobj.data("path") + "'>";
+				str += "<input type='hidden' name='bList[" + i + "].boardattach_type' value='" + jobj.data("type") + "'>";
+				str += "<input type='hidden' name='bList[" + i + "].imageORvideo' value='" + jobj.data("imageorvideo") + "'>";
+			});
+			formObj.append(str).submit();
+			
 		});
+		
+		
+		// 업로드폴더에 첨부파일 삭제
+		/* $("#next").on("click", function() {
+			
+			document.getElementById("img").setAttribute('data-type', 'image');
+			
+			var type = $("#img").data("type");
+			console.log("type : " + type);
+			
+			console.log("deletFile");
+			//var target = document.getElementById('img');
+			var targetFile = document.getElementById('img').src;		
+			console.log("targetFile : " + targetFile);
+			
+			var targetFilePathSplit = targetFile.split("=");
+			var targetFilePath = targetFilePathSplit[1];
+			var temp = targetFilePath.split("s_");
+			var originalFileFrontEnd = temp[0] + temp[1];
+			originalFile = originalFileFrontEnd;
+			console.log("targetFilePath : " + targetFilePath);
+			console.log("originalFile : " + originalFile);
+			
+			$.ajax({
+				
+				url: '/board/deleteFile',
+				processData: false,
+				contentType: false,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				 },
+				data: {fileName: targetFilePath, type: type},
+				dataType: 'text',
+				type: 'POST',
+				success: function(result) {
+					alert(result);
+				}
+				
+			}); // End $.ajax
+			
+			
+		}); */
+		
+		/* $("#next").on("click", function() {
+			
+			$("#cropRatio").css("display", "none");
+			$("#contentWrite").css("display", "");
+			$("#modal-parent").attr('class', 'modal-dialog modal-xl modal-dialog-centered');
+			$("#sibal").attr('class', 'col-7 text-center');
+			$("#contentWrite").attr('class', 'col-5 text-center');
+			
+		}); */
+		
+		$("#next").on("click", function() {
+			
+			$("#modal-1st").modal('hide');
+			
+			var cropImage = $("#img");
+			var canvas;
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+			
+			if($('input[type="file"]').val() != "") {
+				cropper.getCroppedCanvas({
+				imageSmoothingEnabled: false,
+				imageSmoothingQuality: 'high'
+				}).toBlob((blob) => {
+					
+					console.log("inputImageFile originalName : " + blob.size);
+					console.log("inputImageFile originalName : " + blob.type);
+					const formData = new FormData();
+					formData.append('uploadFile', blob);
+					
+					$.ajax({
+						url: '/board/cropFileUpload',
+						processData: false, // data 파라미터 강제 string 변환 방지
+						contentType: false,	// application/x-www-form-urlencoded; 방지
+						beforeSend: function(xhr){
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						 },
+						data: formData,
+						method: 'POST',
+						dataType: 'json',
+						success: function(result) {
+							console.log("crop result : " + result);
+							showUploadedCropFile(result);
+						},
+						error() {
+							console.log('Upload error');
+						}
+					});
+					
+				});
+			}
+		
+			
+			
+		});	
 		
 		$("#addFile").change(function() {
 			
@@ -247,11 +433,16 @@
 			
 			$("#modalLeft").removeAttr('style');
 			$("#modalRight").removeAttr('style');
+			$("#back").css("display", "");
+			$("#next").css("display", "");
+			// $("#modalLeft").setAttribute('')
 
 			var formData = new FormData();
 			var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
 			console.log(files);
+			console.log("inputFile : " + inputFile[0]);
+			
 			
 			// add File Data to formData
 			for(var i = 0; i < files.length; i++){
@@ -400,6 +591,7 @@
 			cropperFunction(x, y, a);
 		});
 		
+		
 	});
 	
 function re_requestAjax() {
@@ -438,7 +630,7 @@ function cropperFunction(w, h, a) {
 	console.log("h : " + h);
 	
 	cropper = new Cropper(image, {
-		  dragMode: 'crop', // 자르기영역 새로 생성여부
+		  dragMode: 'none', // 자르기영역 새로 생성여부
 		  aspectRatio: w / h, // 자르기영역 종횡비
 		  moveable: true,
 		  center: true,
@@ -467,6 +659,10 @@ function showUploadedFile(uploadResultArr) {
 	console.log("제발 : " + uploadResultArr[0].boardattach_path);
 	console.log("좀 : " + uploadResultArr[0].boardattach_uuid);
 	console.log("시발련아 : " + uploadResultArr[0].boardattach_filename);
+	input1stFile = uploadResultArr[0].boardattach_path + uploadResultArr[0].boardattach_uuid + uploadResultArr[0].boardattach_filename;
+	console.log("input1stFile : " + input1stFile);
+	inputImageFile = uploadResultArr[0].boardattach_filename;
+	console.log("inputImageFile : " + inputImageFile);
 	
 	$(uploadResultArr).each(function(i, obj) {
 		var fileCallPath = obj.boardattach_path + "/s_" + obj.boardattach_uuid + "_" + obj.boardattach_filename;
@@ -475,6 +671,46 @@ function showUploadedFile(uploadResultArr) {
 	});
 	 
 	showImage.append(str);
+	
+}
+
+function showUploadedCropFile(uploadResultArr) {
+	
+	var str = "";
+	
+	/* console.log("제발 : " + uploadResultArr[0].boardattach_path);
+	console.log("좀 : " + uploadResultArr[0].boardattach_uuid);
+	console.log("시발련아 : " + uploadResultArr[0].boardattach_filename);
+	input2stFile = uploadResultArr[0].boardattach_path + uploadResultArr[0].boardattach_uuid + uploadResultArr[0].boardattach_filename;
+	console.log("input1stFile : " + input1stFile); */
+	
+	/* let blob = new Blob([new ArrayBuffer(uploadResultArr[0])], { type: "image/png" });
+	console.log("uploadResultArr : " + uploadResultArr);
+	const url = window.URL.createObjectURL(blob);
+	console.log("blob : " + blob);
+	console.log("url : " + url); */
+	
+	$(uploadResultArr).each(function(i, obj) {
+		var fileCallPath = obj.boardattach_path + "/s_" + obj.boardattach_uuid + "_" + obj.boardattach_filename;
+		console.log(fileCallPath);
+		console.log("obj.image : " + obj.boardattach_type);
+		if(obj.boardattach_type) {
+		
+		console.log("obj.image : " + obj.boardattach_type);
+		str += "<img id='cropImg' src='/board/cropDisplay?fileName="+fileCallPath+"'>";
+		str += "<div id='attachFileList'>";
+		str += "<ul>";
+		str += "<li data-path='" + obj.boardattach_path +"'";
+		str += "data-uuid='" + obj.boardattach_uuid + "' data-filename='" + obj.boardattach_filename + "' data-type='" + obj.boardattach_type + "' data-imageorvideo='" + obj.imageORvideo + "'";
+		str += "</li>"
+		str += "</ul>";
+		str += "</div>";
+		
+		}
+	});
+	
+	var showCropImage = $("#modal_img");
+	showCropImage.append(str);
 	
 }
 
