@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.mypatch.www.board.domain.BoardDTO;
 import com.mypatch.www.board.domain.LikeDTO;
 import com.mypatch.www.board.domain.MainDTO;
 import com.mypatch.www.board.domain.ReplyDTO;
@@ -16,4 +17,6 @@ public interface BoardMapper {
 	public String searchlike(LikeDTO likeDTO);
 	public Integer insertlike(LikeDTO likeDTO);
 	public Integer mainreply(ReplyDTO replyDTO);
+  public void register(BoardDTO bDto) throws Exception;
+
 }
