@@ -5,6 +5,25 @@
 video{
 width: 612px;
 }
+#detail-click:hover{
+cursor: pointer;
+}
+.modal-xl{
+height: 650px;
+}
+.carousel-control-next-icon, .carousel-control-prev-icon{
+background-color: black;
+}
+.modal-body{
+padding: 0px;
+}
+.col{
+padding: 0px;
+}
+#modal-contents{
+margin-bottom: 0px;
+width: 100%; 
+}
 </style>
     <section id="main_container">
         <div class="inner">
@@ -22,7 +41,6 @@ width: 612px;
 			                            <div class="user_name">
 			                                <div class="nick_name m_text">글닉네임</div>
 			                            </div>
-			
 			                        </div>
 			
 			                        <div class="sprite_more_icon" data-name="more">
@@ -68,8 +86,7 @@ width: 612px;
 			                    <div class="timer">2022-03-01</div>
 			
 			                    <div class="comment_field" id="add-comment-post37">
-			                        <input type="text" placeholder="댓글달기...">
-			                        <div class="upload_btn m_text" data-name="comment">게시</div>
+			                        <input type="text" disabled="disabled" placeholder="댓글달기...">
 			                    </div>
 			                </article>
             			</c:when>
@@ -102,7 +119,7 @@ width: 612px;
 				                    </header>
 				                    <div class="img_section">
 				                        <div class="trans_inner">
-				                        	<div>
+				                        	<div id="detail-click" data-bs-toggle="modal" data-bs-target="#detailModal">
 					                        	<c:choose>
 								            		<c:when test="${mList.boardattach_type eq 'V'}">
 									                    <video src="/resources/fileUpload/board/${mList.boardattach_path}/${mList.boardattach_uuid}_${mList.boardattach_filename}" controls="controls"></video>
@@ -132,7 +149,7 @@ width: 612px;
 				                            		</c:otherwise>
 				                            	</c:choose>
 				                            </div>
-				                            <div class="sprite_bubble_icon"></div>
+				                            <div class="sprite_bubble_icon" data-bs-toggle="modal" data-bs-target="#detailModal"></div>
 				                            <div class="sprite_share_icon" data-name="share"></div>
 				                        </div>
 				                    </div>
@@ -233,10 +250,118 @@ width: 612px;
                     </div>
                 </article>
             </div>
-            
         </div>
     </section>
 
+	<!-- Modal -->
+	<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">글 상세페이지</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								<div id="carouselExampleControls" class="carousel slide sticky-top" data-bs-ride="carousel">
+									<div class="carousel-inner">
+										<div class="carousel-item active">
+											<img src="/resources/fileUpload/board/2022/02/17/10_곰돌이4.jpg" class="d-block w-100">
+										</div>
+										<div class="carousel-item">
+											<img src="/resources/fileUpload/board/2022/02/17/11_곰돌이5.jpg" class="d-block w-100">
+										</div>
+										<div class="carousel-item">
+											<img src="/resources/fileUpload/board/2022/02/17/12_곰돌이6.jpg" class="d-block w-100">
+										</div>
+									</div>
+									<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Previous</span>
+									</button>
+									<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Next</span>
+									</button>
+								</div>
+							</div>
+							<div class="col">
+								<article class="contents" id="modal-contents">
+									<header class="top sticky-top">
+				                        <div class="user_container">
+				                            <div class="profile_img">
+				                                <img src="/resources/image/profile.png" alt="프로필사진">
+				                            </div>
+				                            <div class="user_name">
+				                                <div class="nick_name m_text">글닉네임</div>
+				                            </div>
+				                        </div>
+				                    </header>
+				                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px;">
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadddsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+				                    </div>
+				                    <div class="sticky-bottom">
+										<div class="bottom_icons">
+					                        <div class="left_icons">
+					                            <div class="heart_btn">
+					                                <div class="sprite_heart_icon_outline" name="39" data-name="heartbeat"></div>
+					                            </div>
+					                            <div class="sprite_bubble_icon"></div>
+					                            <div class="sprite_share_icon" data-name="share"></div>
+					                        </div>
+					                    </div>
+					                    <div class="likes m_text">
+					                        좋아요
+					                        <span id="like-count-39">1,234</span>
+					                        개
+					                    </div>
+				                    	<div class="comment_field" id="add-comment-post37">
+					                        <input type="text" placeholder="댓글달기..." name="reply_content" maxlength="200">
+					                        <div class="upload_btn m_text" data-name="comment">게시</div>
+					                    </div>
+				                    </div>
+								</article>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -392,7 +517,7 @@ $(function() {
 									 +	"</header>"
 									 +	"<div class='img_section'>"
 									 +	"<div class='trans_inner'>"
-									 +	"<div>";
+									 +	"<div id='detail-click' data-bs-toggle='modal' data-bs-target='#detailModal'>";
 								if (this.boardattach_type == "V") {
 									str1 +=	"<video src='/resources/fileUpload/board/" + this.boardattach_path + "/"
 										 +	this.boardattach_uuid + "_" + this.boardattach_filename + "'" + "controls='controls'/>";
@@ -416,7 +541,7 @@ $(function() {
 										   + "</div>";
 								}
 								str3_3 += "</div>"
-									 +	"<div class='sprite_bubble_icon'>" + "</div>"
+									 +	"<div class='sprite_bubble_icon' data-bs-toggle='modal' data-bs-target='#detailModal'>" + "</div>"
 									 +	"<div class='sprite_share_icon' data-name='share'>" + "</div>"
 									 +	"</div>"
 									 +	"</div>"
