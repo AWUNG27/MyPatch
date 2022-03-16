@@ -94,6 +94,22 @@ width: 300px;
 	width:20px;
 	height:20px;
 }
+.modal-xl{
+height: 650px;
+}
+.carousel-control-next-icon, .carousel-control-prev-icon{
+background-color: black;
+}
+.modal-body{
+padding: 0px;
+}
+.col{
+padding: 0px;
+}
+#modal-contents{
+margin-bottom: 0px;
+width: 100%; 
+}
 </style>
 
     <div id="main_container">
@@ -122,7 +138,7 @@ width: 300px;
 
                     <ul class="middle">
 
-                        <li><span>게시물</span>${bcnt}</li>
+                        <li><span class="showModal">게시물</span>${bcnt}</li>
                         <li><div class="follower" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로워</span>${followerCnt}</div></li>
                         <li><div class="following" data-toggle="modal" data-target="#followModal" style="cursor: pointer;"><span>팔로잉</span>${followingCnt}</div></li>
 
@@ -144,12 +160,10 @@ width: 300px;
 							    </div>
 							  </div>
 							</div>
+						<!-- modal end -->
 					    </div>
 					</div>
-                </div>
-                    
-                </div>
-            </div>
+
 			<div class="container">
 				<input type="hidden" value="${bcnt}" id="allcnt">
 				<div class="well well-sm">
@@ -165,8 +179,9 @@ width: 300px;
 							<img src="/resources/image/profile_default.png">
 						</c:if>
 					<c:forEach items="${bimgList}" var="bimgList">
-				        <div class="item  col-xs-4 col-lg-6 col-xl-4">
+				        <div class="item col-xs-4 col-lg-6 col-xl-4">
 				            <div class="thumbnail">
+				            	<input type="hidden" id="board_num" value="${bimgList.board_num}">
 				            	<c:choose>
 				            		<c:when test="${bimgList.boardattach_type eq 'V'}">
 					                    <video src="/resources/fileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}" controls="controls"></video>
@@ -180,11 +195,98 @@ width: 300px;
 				    </c:forEach>
 			    </div>
 			</div>
-            
         </section>
-    </div>
+	</div>
+	<!-- Button trigger modal -->
+<button type="button" id="modalOpen" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">글 상세페이지</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div id="carouselExampleControls" class="carousel slide sticky-top" data-bs-ride="carousel">
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<img src="/resources/fileUpload/board/2022/02/17/10_곰돌이4.jpg" class="d-block w-100" alt="...">
+									</div>
+									<div class="carousel-item">
+										<img src="/resources/fileUpload/board/2022/02/17/11_곰돌이5.jpg" class="d-block w-100" alt="...">
+									</div>
+									<div class="carousel-item">
+										<img src="/resources/fileUpload/board/2022/02/17/12_곰돌이6.jpg" class="d-block w-100" alt="...">
+									</div>
+								</div>
+								<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+						<div class="col">
+							<article class="contents" id="modal-contents">
+								<header class="top sticky-top">
+			                        <div class="user_container">
+			                            <div class="profile_img">
+			                                <img src="/resources/image/profile.png" alt="프로필사진">
+			                            </div>
+			                            <div class="user_name">
+			                                <div class="nick_name m_text">글닉네임</div>
+			                            </div>
+			                        </div>
+			                    </header>
+			                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px;">
+									글 내용...
+			                    </div>
+			                    <div class="sticky-bottom">
+									<div class="bottom_icons">
+				                        <div class="left_icons">
+				                            <div class="heart_btn">
+				                                <div class="sprite_heart_icon_outline" name="39" data-name="heartbeat"></div>
+				                            </div>
+				                            <div class="sprite_bubble_icon"></div>
+				                            <div class="sprite_share_icon" data-name="share"></div>
+				                        </div>
+				                    </div>
+				                    <div class="likes m_text">
+				                        좋아요
+				                        <span id="like-count-39">1,234</span>
+				                        개
+				                    </div>
+			                    	<div class="comment_field" id="add-comment-post37">
+				                        <input type="text" placeholder="댓글달기..." name="reply_content" maxlength="200">
+				                        <div class="upload_btn m_text" data-name="comment">게시</div>
+				                    </div>
+			                    </div>
+							</article>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 <script>
+$(document).on("click",".thumbnail",function(){
+	location.href="/board/read?board_num="+15;
+	var boardNum = $(this).children("#board_num").val();
+	$("#modalOpen").click();
+});
+
 $(document).ready(function() {
     $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
     $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
@@ -229,6 +331,7 @@ $(document).ready(function() {
 								var str3 = "";
 								str +=	"<div class='item col-xs-4 col-lg-6 col-xl-4'>"
 									+	"<div class='thumbnail'>";
+								str += "<input type='hidden' id='board_num' value='"+this.board_num+"'>"
 									if (this.boardattach_type == 'V') {
 										str1 += "<video src='/resources/fileUpload/board/" + this.boardattach_path + "/"
 											 +	this.boardattach_uuid + "_" + this.boardattach_filename + "'" + "controls='controls'/>";

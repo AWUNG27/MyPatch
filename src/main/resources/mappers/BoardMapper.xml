@@ -3,6 +3,42 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mypatch.www.board.mapper.BoardMapper">
+	<select id="getReplyList" resultType="com.mypatch.www.board.domain.ReplyDTO">
+		select jr.*
+		from joinus_board jb
+		left outer join joinus_reply jr
+		on jb.board_num = jr.board_num
+		where jb.board_num = #{board_num}
+	</select>
+	<select id="getRereplyList" resultType="com.mypatch.www.board.domain.ReReplyDTO">
+		select jrr.*
+		from joinus_reply jr
+		left outer join joinus_rereply jrr
+		on jr.reply_num = jrr.reply_num
+		where jr.reply_num = #{reply_num}
+	</select>
+	<resultMap type="com.mypatch.www.board.domain.BoardAttachDTO" id="boardAttachMap">
+		<id property="boardattach_uuid" column="boardattach_uuid"/>
+		<result property="board_num" column="board_num"/>
+		<result property="boardattach_filename" column="boardattach_filename"/>
+		<result property="boardattach_path" column="boardattach_path"/>
+		<result property="boardattach_type" column="boardattach_type"/>
+		<result property="imageORvideo" column="imageORvideo"/>
+	</resultMap>
+	<resultMap type="com.mypatch.www.board.domain.BoardDTO" id="boardMap">
+		<id property="board_num" column="board_num"/>
+		<result property="member_id" column="member_id"/>
+		<result property="board_content" column="board_content"/>
+		<result property="board_date" column="board_date"/>
+		<collection property="bList" resultMap="boardAttachMap"></collection>
+	</resultMap>
+	<select id="boardRead" resultMap="boardMap">
+		select * 
+		from joinus_board jb 
+		left outer join joinus_boardattach jbo 
+		on jb.board_num = jbo.board_num
+		where jb.board_num = #{board_num}
+	</select>
   <insert id="register">
 		INSERT INTO JOINUS_BOARD(BOARD_NUM, MEMBER_ID, BOARD_CONTENT, BOARD_DATE)
 		VALUES(BOARD_SEQ.NEXTVAL, #{member_id}, #{board_content}, sysdate)
