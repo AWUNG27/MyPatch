@@ -266,8 +266,6 @@
 			</div>
 		</div>
 	</div>
-		
-<script src="/resources/js/insta.js"></script>
 <script type="text/javascript">
 	
 	//Ajax spring security header..
