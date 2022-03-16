@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.mypatch.www.board.domain.BoardDTO;
 import com.mypatch.www.board.domain.LikeDTO;
 import com.mypatch.www.board.domain.MainDTO;
+import com.mypatch.www.board.domain.ReReplyDTO;
 import com.mypatch.www.board.domain.ReplyDTO;
 
 public interface BoardMapper {
@@ -17,6 +18,9 @@ public interface BoardMapper {
 	public String searchlike(LikeDTO likeDTO);
 	public Integer insertlike(LikeDTO likeDTO);
 	public Integer mainreply(ReplyDTO replyDTO);
-  public void register(BoardDTO bDto) throws Exception;
+	public void register(BoardDTO bDto) throws Exception;
+	public BoardDTO boardRead(int board_num);
+	public List<ReplyDTO> getReplyList(int board_num);
+	public List<ReReplyDTO> getRereplyList(int reply_num);
 
 }

@@ -56,8 +56,11 @@ public class BoardController {
 	}
 	
 	@GetMapping("/read")
-	public String board_read() {
-		return null;
+	public ResponseEntity<BoardDTO> board_read(int board_num) {
+		log.info("board read...");
+		BoardDTO bDto = boardService.boardRead(board_num);
+		log.info("섹별자 : " + bDto.toString());
+		return new ResponseEntity<BoardDTO>(bDto,HttpStatus.OK);
 	}
 	
 	@GetMapping("/like")
