@@ -281,13 +281,36 @@ width: 100%;
 </div>
 </body>
 <script>
+
+
+//게시물 클릭이벤트 감지
 $(document).on("click",".thumbnail",function(){
-	location.href="/board/read?board_num="+15;
 	var boardNum = $(this).children("#board_num").val();
+	//게시글 상세 및 댓글목록을 가져오기 위한 Ajax..
+	$.ajax({
+		type : 'post',
+		url : '/board/read',
+		data : {"board_num" : boardNum},
+		success : function(data){
+			console.log(data);
+			console.log(data.blist);
+		},error: function(){
+			alert("System error..!!");
+		}
+		});
+	//글 상세 목록이 세팅이 되면 modal open..
 	$("#modalOpen").click();
 });
 
 $(document).ready(function() {
+
+	//Ajax spring security header..
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+    $(document).ajaxSend(function(e, xhr, options){
+    	xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+    });
+    
     $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
     $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
 
@@ -537,7 +560,7 @@ $(document).ready(function() {
 		str = '<buttton class="btn btn-outline-primary unfol" id="' + follow_nick + '"><img id="modal_followingImg" src="/resources/image/following.png"></button>';
 		x.append(str);
 	}
-
+	
 </script>
 </html>
 

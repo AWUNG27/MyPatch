@@ -53,7 +53,7 @@ public class BoardServiceimpl implements IBoardService {
 		bDto.setMember(memberMapper.selectMe(bDto.getMember_id())); // 게시글 작성자 정보
 		
 		List<ReplyDTO> replyList = boardMapper.getReplyList(board_num);
-		if (!replyList.equals(null)) {
+		if (!replyList.toString().equals("[null]")) {
 			for (ReplyDTO replyDTO : replyList) { //게시글에 대한 댓글 리스트와 댓글 작성자 정보를 set
 				replyDTO.setMember(memberMapper.selectMe(replyDTO.getMember_id()));
 				List<ReReplyDTO> rereplyList = boardMapper.getRereplyList(replyDTO.getReply_num());
