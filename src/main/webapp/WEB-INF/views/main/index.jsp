@@ -63,7 +63,7 @@ width: 100%;
 			                            <div class="heart_btn">
 			                                <div class="sprite_heart_icon_outline" name="39" data-name="heartbeat"></div>
 			                            </div>
-			                            <div class="sprite_bubble_icon"></div>
+			                            <div class="sprite_bubble_icon" id="bubble"></div>
 			                            <div class="sprite_share_icon" data-name="share"></div>
 			                        </div>
 			                    </div>
@@ -120,6 +120,7 @@ width: 100%;
 				                    <div class="img_section">
 				                        <div class="trans_inner">
 				                        	<div id="detail-click" data-bs-toggle="modal" data-bs-target="#detailModal">
+				                        		<input type="hidden" id="this_board_num" value="${mList.board_num}">
 					                        	<c:choose>
 								            		<c:when test="${mList.boardattach_type eq 'V'}">
 									                    <video src="/resources/fileUpload/board/${mList.boardattach_path}/${mList.boardattach_uuid}_${mList.boardattach_filename}" controls="controls"></video>
@@ -149,8 +150,11 @@ width: 100%;
 				                            		</c:otherwise>
 				                            	</c:choose>
 				                            </div>
-				                            <div class="sprite_bubble_icon" data-bs-toggle="modal" data-bs-target="#detailModal"></div>
-				                            <div class="sprite_share_icon" data-name="share"></div>
+				                            <div class="sprite_bubble_icon" data-bs-toggle="modal" data-bs-target="#detailModal">
+				                            	<input type="hidden" id="this_board_num" value="${mList.board_num}">
+				                            </div>
+				                            <div class="sprite_share_icon" data-name="share">
+				                            </div>
 				                        </div>
 				                    </div>
 				                    <div class="likes m_text">
@@ -267,7 +271,7 @@ width: 100%;
 							<div class="col">
 								<div id="carouselExampleControls" class="carousel slide sticky-top" data-bs-ride="carousel">
 									<div class="carousel-inner">
-										<div class="carousel-item active">
+										<!-- <div class="carousel-item active">
 											<img src="/resources/fileUpload/board/2022/02/17/10_곰돌이4.jpg" class="d-block w-100">
 										</div>
 										<div class="carousel-item">
@@ -275,16 +279,19 @@ width: 100%;
 										</div>
 										<div class="carousel-item">
 											<img src="/resources/fileUpload/board/2022/02/17/12_곰돌이6.jpg" class="d-block w-100">
+										</div> -->
+										<div class="carousel-item">
+											
 										</div>
 									</div>
-									<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+									<!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
 										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 										<span class="visually-hidden">Previous</span>
 									</button>
 									<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
 										<span class="carousel-control-next-icon" aria-hidden="true"></span>
 										<span class="visually-hidden">Next</span>
-									</button>
+									</button> -->
 								</div>
 							</div>
 							<div class="col">
@@ -295,44 +302,12 @@ width: 100%;
 				                                <img src="/resources/image/profile.png" alt="프로필사진">
 				                            </div>
 				                            <div class="user_name">
-				                                <div class="nick_name m_text">글닉네임</div>
+				                                
 				                            </div>
 				                        </div>
 				                    </header>
 				                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px;">
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadddsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
-										2 of 2sadsadsadsadsadsafasdfsdafs2 of 2sadsadsadsadsadsafasdfsdafs
+										
 				                    </div>
 				                    <div class="sticky-bottom">
 										<div class="bottom_icons">
@@ -365,6 +340,7 @@ width: 100%;
 
 </body>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="../resources/js/boardModal.js"></script>
 <script>
 $(function() {
 var anonymous = $("#anonymous").val();
@@ -588,6 +564,38 @@ $(function() {
 			}
         }
 	});
+});
+
+$(document).on('click', '#detail-click, .sprite_bubble_icon', function() {
+	var boardNum = $(this).children('#this_board_num').val();
+	
+	console.log("csrf value : " + csrfHeaderName + ', ' + csrfTokenValue);
+	alert(boardNum);
+	
+	$.ajax({
+		
+		url: '/board/read',
+		data: {'board_num' : boardNum},
+		beforeSend: function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		//processData: false, // data 파라미터 강제 string 변환 방지
+		//contentType: false,	// application/x-www-form-urlencoded; 방지
+		type: 'POST',
+		success: function(result) {
+
+			boardModal(result);
+			
+		},
+		error() {
+			
+			alert("왜않됀데");
+			
+		}
+						 
+		
+	});
+	
 });
 </script>
 </html>

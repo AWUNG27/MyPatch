@@ -59,10 +59,14 @@ public class BoardController {
 	@PostMapping("/read")
 	public ResponseEntity<BoardDTO> board_read(int board_num) {
 		log.info("board read...");
+		log.info("BoardController board_read board_num : " + board_num);
+		
 		BoardDTO bDto = boardService.boardRead(board_num);
+
 		if (bDto == null) {
 			return new ResponseEntity<BoardDTO>(bDto,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
 		return new ResponseEntity<BoardDTO>(bDto,HttpStatus.OK);
 	}
 	
@@ -84,7 +88,7 @@ public class BoardController {
 		
 		boardService.register(bDto);
 		
-		return null;
+		return "/";
 	}
 	
 	// 페이지 특성상 ajax비동기 통신으로 첨부파일 처리하기로 함
@@ -173,7 +177,7 @@ public class BoardController {
 		
 		log.info("BoardController cropFileUpload uploadFile : " + uploadFile);
 		
-		String uploadFolder = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/cropFileUpload/board";
+		String uploadFolder = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/board";
 		
 		String uploadFolderPath = getFolder();
 		
@@ -277,7 +281,7 @@ public class BoardController {
 		
 		log.info("BoardController getFile fileName : " + fileName);
 		
-		File file = new File("/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/cropFileUpload/board" + "/" + fileName);
+		File file = new File("/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/board" + "/" + fileName);
 		
 		log.info("BoardController getFile file : " + file);
 		
