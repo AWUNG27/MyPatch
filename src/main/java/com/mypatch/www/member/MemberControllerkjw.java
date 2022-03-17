@@ -40,9 +40,10 @@ public class MemberControllerkjw {
 	public void signup() {
 	}
   
-	//내 프로필 페이지 이동
+	//프로필 페이지 이동
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public void profile(String member_id, Model model, String cnt) {
+
 		if ("".equals(cnt) || cnt == null) {
 			cnt = "0";
 		}
@@ -58,10 +59,7 @@ public class MemberControllerkjw {
 		int followingCnt = memberMapper.followingCnt(member_id);
 		int followerCnt = memberMapper.followerCnt(mDto.getMember_nick());
 		bimgList = DeduplicationUtils.deduplication(bimgList, BoardAttachDTO::getBoard_num);
-		log.info("내 정보: " + mDto);
-		for (BoardAttachDTO boardAttachDTO : bimgList) {
-			log.info("중복 제거" + boardAttachDTO);
-		}
+
 		//날짜 변환
 		for (BoardDTO bDto : bList) {
 			bDto.setDate(simpleDateFormat.format(bDto.getBoard_date()));
@@ -106,14 +104,9 @@ public class MemberControllerkjw {
 		List<BoardDTO> bList = new ArrayList<BoardDTO>();
 		List<BoardAttachDTO> bimgList = new ArrayList<BoardAttachDTO>();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		log.info("My page..");
-		log.info("내 아이디: " + member_id);
 		bList = memberMapper.profileboard(member_id, cnt);
 		bimgList = memberMapper.profileimg(member_id, cnt);
 		bimgList = DeduplicationUtils.deduplication(bimgList, BoardAttachDTO::getBoard_num);
-		for (BoardAttachDTO boardAttachDTO : bimgList) {
-			log.info("중복 제거" + boardAttachDTO);
-		}
 		//날짜 변환
 		for (BoardDTO bDto : bList) {
 			bDto.setDate(simpleDateFormat.format(bDto.getBoard_date()));
@@ -135,10 +128,6 @@ public class MemberControllerkjw {
 			}
 			bDto.setBList(query);
 		}
-		for (BoardDTO allList : bList) {
-			log.info(allList);
-		}
-		
 		profiledata.put("bList", bList);
 		profiledata.put("bimgList", bimgList);
 		

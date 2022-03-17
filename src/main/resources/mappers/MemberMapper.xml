@@ -104,8 +104,8 @@
 		on member.member_id = auth.member_id
 		where member.member_id = #{member_id}
 	</select>
-	
 
+	
 	<select id="profileimg" resultType="com.mypatch.www.board.domain.BoardAttachDTO">
 		SELECT *
 		FROM joinus_boardattach A,
@@ -203,4 +203,5 @@
 		     WHERE member_nick=#{member_nick}) jf
 		WHERE jm.member_id = jf.member_id
 	</select>
+	
 </mapper>

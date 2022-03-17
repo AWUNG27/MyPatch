@@ -128,9 +128,12 @@ width: 100%;
                     </div>
                 </div>
                 <div class="detail">
-                    <div class="top">
+                	<div class="top">
                         <div class="user_name">${mDto.member_nick}</div>
 
+						<input type="hidden" id="member_id" value="${mDto.member_id}">	                
+		                <input type="hidden" id="member_nick" value="${mDto.member_nick}">
+		                
                         <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit" style="font-size: 15px;">프로필편집</a>
 
                         <a href="#" class="logout">로그아웃</a>
@@ -164,7 +167,7 @@ width: 100%;
 						<!-- modal end -->
 					    </div>
 					</div>
-          
+
 			<div class="container">
 				<input type="hidden" value="${bcnt}" id="allcnt">
 				<div class="well well-sm">
@@ -197,6 +200,36 @@ width: 100%;
 			    </div>
 			</div>
         </section>
+    </div>
+        
+	<div class="container">
+		<input type="hidden" value="${bcnt}" id="allcnt">
+		<div class="well well-sm">
+	        <strong>Display</strong>
+	        <div class="btn-group">
+	            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+	            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+	                class="glyphicon glyphicon-th"></span>Grid</a>
+	        </div>
+		</div>
+		<div id="products" class="row list-group flex-row">
+			<c:forEach items="${bimgList}" var="bimgList">
+		        <div class="item  col-xs-4 col-lg-6 col-xl-4">
+		            <div class="thumbnail">
+		            	<c:choose>
+		            		<c:when test="${bimgList.boardattach_type eq 'V'}">
+			                    <video src="/resources/fileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}" controls="controls"></video>
+		            		</c:when>
+		            		<c:when test="${bimgList.boardattach_type eq 'I'}">
+								<img class="group list-group-image" src="/resources/fileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}"/>
+		            		</c:when>
+		            	</c:choose>
+		            </div>
+				</div>
+		    </c:forEach>
+	    </div>
+	</div>
+
 	</div>
 	<!-- Button trigger modal -->
 <button type="button" id="modalOpen" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
@@ -283,6 +316,45 @@ width: 100%;
 </body>
 <script>
 
+// window.onload = function(){
+// 	var user = "${user.username}";
+// 	var pageUser = $("#member_id").val();
+// 	var pageUserNick = $("#member_nick").val();
+	
+// 	console.log(user);
+// 	console.log(pageUser);
+	
+// 	if (user === pageUser) {
+// 		// 내 프로필 페이지
+// 		var str = '';
+// 		str += '<a href="/member/modifyProfile?member_id=' + user + '" class="profile_edit" style="font-size: 15px">프로필편집</a>';
+// 		str += '<a href="#" class="logout">로그아웃</a>';
+		
+// 		$(".top").append(str);
+		
+// 	} else {
+// // 		// 다른 계정 프로필 페이지
+// // 		if () {
+// // 			var str = '';
+			
+// // 			str += '<a href="/member/modifyProfile?member_id=' + user + '" class="profile_edit" style="font-size: 15px"><img src="/resources/image/following.png" style="width: 18px;"></a>';
+// // 			str += '<a href="#" class="logout">▼</a>';			
+// // 		}
+		
+// // 		$(".top").append(str);
+
+// 		$.ajax({
+// 			url : "/member/followChk",
+// 			type : "post",
+// 			data : {"member_id" : user,
+// 					"member_nick" : pageUserNick},
+// 			success : function(result) {
+				
+// 			}
+// 		});
+		
+// 	}	
+// }
 
 //게시물 클릭이벤트 감지
 $(document).on("click",".thumbnail",function(){
@@ -302,6 +374,7 @@ $(document).on("click",".thumbnail",function(){
 	//글 상세 목록이 세팅이 되면 modal open..
 	$("#modalOpen").click();
 });
+>>>>>>> branch 'master' of https://github.com/AWUNG27/MyPatch.git
 
 $(document).ready(function() {
 
@@ -397,7 +470,7 @@ $(document).ready(function() {
     <%-- 팔로잉 클릭 --%>
     $('.following').on('click', function(){
 	    
-	    var user = "${user.username}";
+	    var user = "${mDto.member_id}";
 	    
 	    $.ajax({
 	    	url:"/member/following",
@@ -454,6 +527,9 @@ $(document).ready(function() {
 		
 		$(".modal_table").empty();
 		
+		var loginUser = "${user.username}";
+		var profileUser = "${mDto.member_id}";
+		
 		var result = '';
 		
 		$.each(resultArr, function(i, obj){	
@@ -461,6 +537,8 @@ $(document).ready(function() {
 			var followingList2 = '';
 			var followingList3 = '';
 			var followingList4 = '';
+			var followingList5 = '';
+			var followingList6 = '';
 			
 			followingList1 += "<tr>"
 						   +  "<td style='width:70px;'>";
@@ -474,10 +552,14 @@ $(document).ready(function() {
 			
 			followingList4 += '<td id="modal_userID">' + obj.member_nick + '</td>'
 						   + '<input type="hidden" id="yourId" value="'+obj.member_nick+'">'
-			 			   +  '<td id="modal_userFollow"><buttton class="btn btn-outline-primary unfol" id="' + obj.member_nick + '"><img id="modal_followingImg" src="/resources/image/following.png"></button></td>'
- 		 	  			   +  '</tr>';
+						   
+			if (profileUser == loginUser) {
+				followingList5 += '<td id="modal_userFollow"><button class="btn btn-outline-primary unfol" id="' + obj.member_nick + '"><img id="modal_followingImg" src="/resources/image/following.png"></button></td>';
+			}
+			 			   
+ 		 	followingList6 += '</tr>';
  		 	  			
- 		 	result += followingList1 + followingList2 + followingList3 + followingList4;
+ 		 	result += followingList1 + followingList2 + followingList3 + followingList4 + followingList5;
 			
 		});
 		console.log(result);
@@ -521,7 +603,7 @@ $(document).ready(function() {
 		console.log(unfollow_nick);
 		$("#" + unfollow_nick).remove();
 		
-		str = '<buttton class="btn btn-outline-primary fol" id="' + unfollow_nick + '">팔로우</button>';
+		str = '<button class="btn btn-outline-primary fol" id="' + unfollow_nick + '">팔로우</button>';
 		x.append(str);
 	}
 	
