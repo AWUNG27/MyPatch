@@ -95,7 +95,7 @@ width: 300px;
 	height:20px;
 }
 </style>
-
+   
     <div id="main_container">
         <section class="b_inner">
             <div class="hori_cont">
