@@ -30,6 +30,8 @@ public class MemberControllerkjw {
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper memberMapper;
 	
+	
+	
 	@RequestMapping(value = "/login")
 	public void login() {
 	}

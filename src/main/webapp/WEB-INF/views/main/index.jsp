@@ -267,7 +267,7 @@ width: 100%;
 							<div class="col">
 								<div id="carouselExampleControls" class="carousel slide sticky-top" data-bs-ride="carousel">
 									<div class="carousel-inner">
-										<div class="carousel-item active">
+										<!-- <div class="carousel-item active">
 											<img src="/resources/fileUpload/board/2022/02/17/10_곰돌이4.jpg" class="d-block w-100">
 										</div>
 										<div class="carousel-item">
@@ -275,7 +275,7 @@ width: 100%;
 										</div>
 										<div class="carousel-item">
 											<img src="/resources/fileUpload/board/2022/02/17/12_곰돌이6.jpg" class="d-block w-100">
-										</div>
+										</div> -->
 									</div>
 									<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
 										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -295,7 +295,7 @@ width: 100%;
 				                                <img src="/resources/image/profile.png" alt="프로필사진">
 				                            </div>
 				                            <div class="user_name">
-				                                <div class="nick_name m_text">글닉네임</div>
+				                                
 				                            </div>
 				                        </div>
 				                    </header>

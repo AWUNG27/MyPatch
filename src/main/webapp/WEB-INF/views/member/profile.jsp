@@ -160,10 +160,11 @@ width: 100%;
 							    </div>
 							  </div>
 							</div>
+
 						<!-- modal end -->
 					    </div>
 					</div>
-
+          
 			<div class="container">
 				<input type="hidden" value="${bcnt}" id="allcnt">
 				<div class="well well-sm">
@@ -184,10 +185,10 @@ width: 100%;
 				            	<input type="hidden" id="board_num" value="${bimgList.board_num}">
 				            	<c:choose>
 				            		<c:when test="${bimgList.boardattach_type eq 'V'}">
-					                    <video src="/resources/fileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}" controls="controls"></video>
+					                    <video src="/resources/cropFileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}" controls="controls"></video>
 				            		</c:when>
 				            		<c:when test="${bimgList.boardattach_type eq 'I'}">
-										<img class="group list-group-image" src="/resources/fileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}"/>
+										<img class="group list-group-image" src="/resources/cropFileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}"/>
 				            		</c:when>
 				            	</c:choose>
 				            </div>
@@ -336,7 +337,7 @@ $(document).ready(function() {
 										str1 += "<video src='/resources/fileUpload/board/" + this.boardattach_path + "/"
 											 +	this.boardattach_uuid + "_" + this.boardattach_filename + "'" + "controls='controls'/>";
 									} else if (this.boardattach_type == 'I') {
-										str2 +=	"<img class='group list-group-image'" + "src='/resources/fileUpload/board/"
+										str2 +=	"<img class='group list-group-image'" + "src='/resources/cropFileUpload/board/"
 											 +	this.boardattach_path + "/" + this.boardattach_uuid + "_" + this.boardattach_filename + "'/>";
 									}
 								str3 +=	"</div>"
