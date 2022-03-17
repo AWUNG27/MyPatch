@@ -5,6 +5,10 @@
 video{
 width: 612px;
 }
+
+.user_name {
+	
+}
 </style>
     <section id="main_container">
         <div class="inner">
@@ -84,11 +88,12 @@ width: 612px;
 				                            			<img src="/resources/image/profile.png" alt="프로필사진">
 				                            		</c:when>
 				                            		<c:otherwise>
-						                                <img src="resources/fileUpload/profile/${mList.profile_uuid}_${mList.profile_fileName}">
+						                                <img src="/resources/fileUpload/profile/${mList.profile_uuid}_${mList.profile_fileName}">
 				                            		</c:otherwise>
 				                            	</c:choose>
 				                            </div>
 				                            <div class="user_name">
+				                            	<input type="hidden" id="member_id" value="${mList.member_id }">
 				                                <div class="nick_name m_text">${mList.member_nick}</div>
 				                            </div>
 				                        </div>
@@ -242,6 +247,11 @@ width: 612px;
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="/resources/js/main.js"></script>
 <script>
+$(document).on("click", ".user_name", function(){
+	var yourname = $(this).children("#member_id").val();
+	location.href = "/member/profile?member_id=" + yourname;
+});
+
 $(function() {
 var anonymous = $("#anonymous").val();
 var member_id = $("#auth").val();
@@ -380,6 +390,7 @@ $(function() {
 								}
 								str_3+=	"</div>"
 									 +	"<div class='user_name'>"
+									 +  "<input type='hidden' id='member_id' value='"+this.member_id+"' >"
 									 +	"<div class='nick_name m_text'>" + this.member_nick + "</div>"
 									 +	"</div>"
 									 +	"</div>"

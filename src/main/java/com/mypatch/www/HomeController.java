@@ -20,6 +20,8 @@ import com.mypatch.www.board.domain.LikeDTO;
 import com.mypatch.www.board.domain.MainDTO;
 import com.mypatch.www.board.domain.ReplyDTO;
 import com.mypatch.www.board.mapper.BoardMapper;
+import com.mypatch.www.member.domain.MemberDTO;
+import com.mypatch.www.member.service.IMemberService;
 import com.mypatch.www.util.DeduplicationUtils;
 
 import lombok.Setter;
@@ -35,6 +37,9 @@ public class HomeController {
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper boardMapper;
 	
+	@Autowired
+	private IMemberService service;
+	
 	@GetMapping("/")
 	public String mainPage(Principal principal, Model model) throws ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -47,6 +52,9 @@ public class HomeController {
 			log.info(member_id);
 			mList = boardMapper.mainread(member_id, 6*(0+cnt)+1, 6*(1+cnt));
 			count = boardMapper.maincount(member_id);
+			// 내 정보
+			MemberDTO mDto = service.selectMe(member_id);
+			model.addAttribute("loginUser", mDto);
 		}
 		mList.forEach(mDto -> {
 			mDto.setBdate(simpleDateFormat.format(mDto.getBoard_date()));
@@ -57,8 +65,10 @@ public class HomeController {
 		});
 		mList = DeduplicationUtils.deduplication(mList, MainDTO::getBoard_num);
 		DeduplicationUtils.syso(mList);
+				
 		model.addAttribute("mList", mList);
 		model.addAttribute("count", count);
+
 		return "/main/index";
 	}
 	
