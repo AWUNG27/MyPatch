@@ -1,6 +1,8 @@
 package com.mypatch.www.board.domain;
 
-import java.util.Date;
+import java.util.List;
+
+import com.mypatch.www.member.domain.MemberDTO;
 
 import lombok.Data;
 
@@ -10,5 +12,7 @@ public class ReplyDTO {
 	private Integer board_num;
 	private String member_id;
 	private String reply_content;
-	private Date reply_date;
+	private String reply_date;
+	private MemberDTO member;
+	private List<ReReplyDTO> rereplyList;
 }

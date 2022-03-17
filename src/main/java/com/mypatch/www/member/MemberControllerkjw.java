@@ -86,6 +86,7 @@ public class MemberControllerkjw {
 		for (BoardDTO allList : bList) {
 			log.info(allList);
 		}
+		log.info(bimgList.toString());
 		model.addAttribute("bList", bList);
 		model.addAttribute("bimgList", bimgList);
 		model.addAttribute("bcnt", bcnt);
