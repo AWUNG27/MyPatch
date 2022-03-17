@@ -3,6 +3,7 @@ package com.mypatch.www.member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -127,6 +128,23 @@ public class MemberControllerjsh {
 			service.updatePwd(member);
 			result = 1;
 		}
+		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+	}
+	
+	@PostMapping("/exitMember")
+	public ResponseEntity<Integer> exitMember(MemberDTO mDto){
+		log.info("exit joinus..");
+		int result;
+		MemberDTO member = new MemberDTO();
+		member = service.selectMe(mDto.getMember_id());
+		if (!encoder.matches(mDto.getMember_pwd(), member.getMember_pwd())) {
+			result = 0;
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		} else {
+			result = service.deleteMember(mDto.getMember_id());
+			SecurityContextHolder.clearContext();
+		}
+		
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}
 }

@@ -3,6 +3,28 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mypatch.www.member.mapper.MemberMapper">
+	<select id="searchMemberList" resultMap="memberMap">
+		select member.member_id, 
+			   member.member_pwd, 
+			   member.member_name, 
+			   member.member_nick,
+			   member.member_alarm,
+			   pro.profile_uuid, 
+			   pro.profile_filename 
+		from joinus_member member
+		left outer join joinus_profile pro
+		on member.member_id = pro.member_id
+		where member.member_nick like '%'||#{searchKeyword}||'%' 
+		or member.member_name like '%'||#{searchKeyword}||'%'
+	</select>
+	<delete id="deleteAuth">
+		delete from joinus_auth
+		where member_id = #{member_id}
+	</delete>
+	<delete id="deleteMember">
+		delete from joinus_member
+		where member_id = #{member_id}
+	</delete>
 	<update id="updatePwd">
 		update joinus_member
 		set member_pwd = #{member_pwd}

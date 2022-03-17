@@ -30,6 +30,8 @@ public class MemberControllerkjw {
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper memberMapper;
 	
+	
+	
 	@RequestMapping(value = "/login")
 	public void login() {
 	}
@@ -82,6 +84,7 @@ public class MemberControllerkjw {
 		for (BoardDTO allList : bList) {
 			log.info(allList);
 		}
+		log.info(bimgList.toString());
 		model.addAttribute("bList", bList);
 		model.addAttribute("bimgList", bimgList);
 		model.addAttribute("bcnt", bcnt);
