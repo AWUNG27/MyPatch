@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.mypatch.www.member.domain.MemberDTO;
-import com.mypatch.www.member.domain.ProfileDTO;
 
 import lombok.Data;
 

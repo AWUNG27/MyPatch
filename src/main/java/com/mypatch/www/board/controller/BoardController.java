@@ -55,11 +55,14 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping("/read")
+	@PostMapping("/read")
 	public ResponseEntity<BoardDTO> board_read(int board_num) {
 		log.info("board read...");
+		log.info("BoardController board_read board_num : " + board_num);
+		
 		BoardDTO bDto = boardService.boardRead(board_num);
 		log.info("섹별자 : " + bDto.toString());
+		
 		return new ResponseEntity<BoardDTO>(bDto,HttpStatus.OK);
 	}
 	
