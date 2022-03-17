@@ -55,14 +55,18 @@ public class BoardController {
 		
 	}
 	
+	//게시물 상세 보기
 	@PostMapping("/read")
 	public ResponseEntity<BoardDTO> board_read(int board_num) {
 		log.info("board read...");
 		log.info("BoardController board_read board_num : " + board_num);
 		
 		BoardDTO bDto = boardService.boardRead(board_num);
-		log.info("섹별자 : " + bDto.toString());
-		
+
+		if (bDto == null) {
+			return new ResponseEntity<BoardDTO>(bDto,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 		return new ResponseEntity<BoardDTO>(bDto,HttpStatus.OK);
 	}
 	
@@ -327,7 +331,7 @@ public class BoardController {
 	}
 	
 	private boolean attachFileTypeCheck(File file) {
-		
+
 		try {
 			String contentType = Files.probeContentType(file.toPath());
 			log.info("FileTypeCheck : " + contentType);
