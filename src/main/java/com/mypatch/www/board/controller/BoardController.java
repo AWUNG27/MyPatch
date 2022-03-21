@@ -37,7 +37,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class BoardController {
 	
-	private String uploadPath = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload";
+	private String uploadPath = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/";
 	
 	@Autowired
 	private IBoardService boardService;
