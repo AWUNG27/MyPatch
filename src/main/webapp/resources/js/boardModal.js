@@ -3,6 +3,25 @@ function boardModal(result) {
 	console.log(result);
 	console.log(result.replyList);
 	console.log(result.blist);
+	
+	var user = "";
+	var board = "";
+	
+	board += result.board_content
+	
+	user += "<div class='profile_img'>";
+	user += "<img src='/resources/fileUPload/profile/" + result.member.profileDTO.profile_uuid + "_" + result.member.profileDTO.profile_fileName + "'>";
+	user += "</div>";
+	user += "<div class='user_name'>";
+	user += result.member.member_nick;
+	user += "</div>";
+	
+	
+	var user_container = $(".user_container_modal");
+	var board_content = $(".board_content");
+	
+	user_container.append(user);
+	board_content.append(board);
 		
 	$(result.blist).each(function(x, attachObj) {
 			
