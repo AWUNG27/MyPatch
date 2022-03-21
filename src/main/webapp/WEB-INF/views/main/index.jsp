@@ -326,8 +326,13 @@ width: 100%;
 					                        개
 					                    </div>
 				                    	<div class="comment_field" id="add-comment-post37">
-					                        <input type="text" placeholder="댓글달기..." name="reply_content" maxlength="200">
-					                        <div class="upload_btn m_text" data-name="comment">게시</div>
+				                    		<div class="reply_write_area">
+						                        <input type="text" placeholder="댓글달기..." name="reply_content" maxlength="200">
+						                        <div class="upload_btn m_text" data-name="comment">게시</div>
+				                    		</div>
+					                        <div class="reply_field">
+					                        	
+					                        </div>
 					                    </div>
 				                    </div>
 								</article>
@@ -577,7 +582,6 @@ $(document).on('click', '#detail-click, .sprite_bubble_icon', function() {
 	var boardNum = $(this).children('#this_board_num').val();
 	
 	console.log("csrf value : " + csrfHeaderName + ', ' + csrfTokenValue);
-	alert(boardNum);
 	
 	$.ajax({
 		
