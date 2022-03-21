@@ -298,17 +298,14 @@ width: 100%;
 							<div class="col">
 								<article class="contents" id="modal-contents">
 									<header class="top sticky-top">
-				                        <div class="user_container">
-				                            <div class="profile_img">
-				                                <img src="/resources/image/profile.png" alt="프로필사진">
-				                            </div>
-				                            <div class="user_name">
-				                                
-				                            </div>
+				                        <div class="user_container_modal">
+				                            
 				                        </div>
+					                    <div class="board_content">
+					                            
+					                    </div>										
 				                    </header>
 				                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px;">
-										
 				                    </div>
 				                    <div class="sticky-bottom">
 										<div class="bottom_icons">
