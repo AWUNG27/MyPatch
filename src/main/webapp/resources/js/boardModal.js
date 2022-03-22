@@ -33,7 +33,7 @@ function boardModal(result) {
 			
 		str += "<img src='/resources/fileUpload/board/" + fileCallPath + "'>";
 			
-		var modalBoardImage = $(".carousel-item");
+		var modalBoardImage = $(".carousel-item.active");
 		modalBoardImage.append(str);
 			
 	});
@@ -75,3 +75,16 @@ function boardModal(result) {
 	});
 	
 }
+
+$(document).ready(function(){       
+    $('.modal.fade').on('hidden.bs.modal', function () {
+            
+        $(".user_container_modal").empty();
+		$(".board_content").empty(); 
+		$(".carousel-item.active").empty();  
+		$(".reply_field").empty();
+		$(".replys").empty();
+         
+    });
+ 
+});
