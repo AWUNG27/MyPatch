@@ -279,6 +279,7 @@
 	});
 	
 	var fileList = []; //파일 정보를 담아 둘 배열
+	var fileList2 = [];
 	var originalFile = ""; // 원본이미지 이름 저장용 변수
 	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");

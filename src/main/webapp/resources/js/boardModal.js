@@ -42,6 +42,7 @@ function boardModal(result) {
 		
 		console.log("result reply : " + obj.reply_content);
 		var str = "";
+
 		var profileImg = "";
 		if (obj.member.profileDTO != null){
 			profileImg = obj.member.profileDTO.profile_uuid+"_"+obj.member.profileDTO.profile_fileName;			
@@ -72,7 +73,6 @@ function boardModal(result) {
 				if (reObj.member.profileDTO != null){
 					profileImg = reObj.member.profileDTO.profile_uuid+"_"+reObj.member.profileDTO.profile_fileName;			
 				}
-				
 				str2 += "<div class='rereplys' style='margin: 5px;'>";
 				str2 += '<div class="chat_img" style="margin:0 15px 0 50px; width:30px; height:30px; border-radius: 70%; overflow: hidden; float:left; position:relative; top:-2.5px;">';
 				if (reObj.member.profileDTO == null){
