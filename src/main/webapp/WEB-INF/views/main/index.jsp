@@ -24,6 +24,21 @@ padding: 0px;
 margin-bottom: 0px;
 width: 100%;
 }
+.chat_img {
+	margin: 0 auto; 
+	width:40px; 
+	height:40px; 
+	border-radius: 70%; 
+	overflow: hidden;
+}
+b {
+	color: navy;
+}
+b:hover {
+	text-decoration: underline;
+	color: blue;
+	cursor: pointer;
+}
 </style>
     <section id="main_container">
         <div class="inner">
@@ -269,7 +284,7 @@ width: 100%;
 				<div class="modal-body">
 					<div class="container">
 						<div class="row">
-							<div class="col" style="align-items:center; display: flex; background-color: black;">
+							<div class="col" style="padding-top: 130px; background-color: black;">
 								<div id="carouselExampleControls" class="carousel slide sticky-top" data-bs-ride="carousel">
 									<div class="carousel-inner">
 										<!-- <div class="carousel-item active">
@@ -303,6 +318,7 @@ width: 100%;
 				                        </div>
 				                    </header>
 				                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px; margin-top: 10px;">
+				                    	<hr>
 					                    <div class="board_content">
 					                    </div>				
 					                    <hr>						
