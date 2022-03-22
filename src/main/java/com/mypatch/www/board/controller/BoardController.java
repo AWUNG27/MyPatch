@@ -37,7 +37,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class BoardController {
 	
-	private String uploadPath = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/";
+	String uploadFolder = File.separator + "Users" + File.separator + "ung" + File.separator + "IDE" + File.separator + "workspace" + File.separator + "mypatch" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "resources" + File.separator + "fileUpload" + File.separator + "board";
 	
 	@Autowired
 	private IBoardService boardService;
@@ -100,7 +100,9 @@ public class BoardController {
 		log.info("fileUpload ajax POST--------------------");
 		log.info("BoardController fileUpload uploadFile : " + uploadFile);
 		
-		String uploadFolder = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/board";
+		
+		
+		
 		
 		String uploadFolderPath = getFolder();
 		
@@ -176,8 +178,6 @@ public class BoardController {
 		log.info("cropFileUpload ajax POST--------------------");
 		
 		log.info("BoardController cropFileUpload uploadFile : " + uploadFile);
-		
-		String uploadFolder = "/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/board";
 		
 		String uploadFolderPath = getFolder();
 		
@@ -256,7 +256,7 @@ public class BoardController {
 		
 		log.info("BoardController getFile fileName : " + fileName);
 		
-		File file = new File("/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/board" + "/" + fileName);
+		File file = new File(uploadFolder + "/" + fileName);
 		
 		log.info("BoardController getFile file : " + file);
 		
@@ -281,7 +281,7 @@ public class BoardController {
 		
 		log.info("BoardController getFile fileName : " + fileName);
 		
-		File file = new File("/Users/ung/IDE/workspace/mypatch/src/main/webapp/resources/fileUpload/board" + "/" + fileName);
+		File file = new File(uploadFolder + "/" + fileName);
 		
 		log.info("BoardController getFile file : " + file);
 		
@@ -311,7 +311,7 @@ public class BoardController {
 		File file;
 		
 		try {
-			file = new File(uploadPath + "/" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File(uploadFolder + "/" + URLDecoder.decode(fileName, "UTF-8"));
 			
 			file.delete();
 			
