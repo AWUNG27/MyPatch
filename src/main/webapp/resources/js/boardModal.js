@@ -31,7 +31,7 @@ function boardModal(result) {
 			
 		var str = "";
 			
-		str += "<img src='/resources/fileUpload/board/" + fileCallPath + "'>";
+		str += "<img style='width:100%; ' src='/resources/fileUpload/board/" + fileCallPath + "'>";
 			
 		var modalBoardImage = $(".carousel-item.active");
 		modalBoardImage.append(str);
@@ -43,7 +43,7 @@ function boardModal(result) {
 		console.log("result reply : " + obj.reply_content);
 		var str = "";
 		
-		str += "<div class='replys'";
+		str += "<div class='replys' style='margin:5px;'>";
 		str += "<p id='reply_content'>";
 		str += obj.member.member_nick + " " + obj.reply_content;
 		str += "</p>";
@@ -59,9 +59,9 @@ function boardModal(result) {
 				console.log("rereply_content : " + reObj.rereply_content);
 				var str2 = "";
 				
-				str2 += "<div class='rereplys'>";
+				str2 += "<div class='rereplys' style='margin:5px;'>";
 				str2 += "<p id='rereply_content'>";
-				str2 += "&nbsp&nbsp&nbsp" + reObj.member.member_nick + " " + reObj.rereply_content;
+				str2 += "&nbsp;&nbsp;&nbsp;└ " + reObj.member.member_nick + " " + reObj.rereply_content;
 				str2 += "</p>";
 				str2 += "</div>";
 				
