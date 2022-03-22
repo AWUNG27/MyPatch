@@ -21,6 +21,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,7 +38,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class BoardController {
 	
-	String uploadFolder = File.separator + "Users" + File.separator + "ung" + File.separator + "IDE" + File.separator + "workspace" + File.separator + "mypatch" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "resources" + File.separator + "fileUpload" + File.separator + "board";
+	private static final String uploadFolder = File.separator + "Users" + File.separator + "ung" + File.separator + "IDE" + File.separator + "workspace" + File.separator + "mypatch" + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "resources" + File.separator + "fileUpload" + File.separator + "board";
 	
 	@Autowired
 	private IBoardService boardService;
@@ -88,7 +89,7 @@ public class BoardController {
 		
 		boardService.register(bDto);
 		
-		return "/";
+		return "redirect:/";
 	}
 	
 	// 페이지 특성상 ajax비동기 통신으로 첨부파일 처리하기로 함

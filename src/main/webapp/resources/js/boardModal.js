@@ -44,8 +44,19 @@ function boardModal(result) {
 		var str = "";
 		
 		str += "<div class='replys' style='margin:5px;'>";
+		str += "<div class='reply_img' style='width:30px; margin:0 30px 0 70px;'>";
 		str += "<p id='reply_content'>";
-		str += obj.member.member_nick + " " + obj.reply_content;
+		if(obj.member.profileDTO == null) {
+					
+			str += '<img src="/resources/image/profile.png">';
+				
+		} else {
+			var profileImage = obj.member.profileDTO.profile_uuid + "_" + obj.member.profileDTO.profile_fileName;
+			str += "<img src='/resources/fileUpload/profile/" + profileImage + "'>'";
+					
+		}
+		str += "</div>";
+		str += obj.member.member_nick + " " + obj.rereply_content;
 		str += "</p>";
 		str += "</div>";
 		
@@ -61,7 +72,19 @@ function boardModal(result) {
 				
 				str2 += "<div class='rereplys' style='margin:5px;'>";
 				str2 += "<p id='rereply_content'>";
-				str2 += "&nbsp;&nbsp;&nbsp;└ " + reObj.member.member_nick + " " + reObj.rereply_content;
+				str2 += "<div class='rereply_img' style='width:30px; margin:0 30px 0 70px;'>";
+				if(reObj.member.profileDTO == null) {
+					
+					str2 += "&nbsp;&nbsp;&nbsp;└ "
+					str2 += '<img src="/resources/image/profile.png">'
+				
+				} else {
+					var profileImage = reObj.member.profileDTO.profile_uuid + "_" + reObj.member.profileDTO.profile_fileName;
+					str2 += "&nbsp;&nbsp;&nbsp;└ " + "<img src='/resources/fileUpload/profile/" + profileImage + "'>'";
+					
+				}
+				str2 += "</div>";
+				str2 += reObj.member.member_nick + " " + reObj.rereply_content;
 				str2 += "</p>";
 				str2 += "</div>";
 				
