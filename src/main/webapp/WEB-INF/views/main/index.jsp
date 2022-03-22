@@ -269,7 +269,7 @@ width: 100%;
 				<div class="modal-body">
 					<div class="container">
 						<div class="row">
-							<div class="col">
+							<div class="col" style="align-items:center; display: flex; background-color: black;">
 								<div id="carouselExampleControls" class="carousel slide sticky-top" data-bs-ride="carousel">
 									<div class="carousel-inner">
 										<!-- <div class="carousel-item active">
@@ -281,7 +281,7 @@ width: 100%;
 										<div class="carousel-item">
 											<img src="/resources/fileUpload/board/2022/02/17/12_곰돌이6.jpg" class="d-block w-100">
 										</div> -->
-										<div class="carousel-item">
+										<div class="carousel-item active" style="display:flex; margin: auto 0;">
 											
 										</div>
 									</div>
@@ -298,17 +298,16 @@ width: 100%;
 							<div class="col">
 								<article class="contents" id="modal-contents">
 									<header class="top sticky-top">
-				                        <div class="user_container">
-				                            <div class="profile_img">
-				                                <img src="/resources/image/profile.png" alt="프로필사진">
-				                            </div>
-				                            <div class="user_name">
-				                                
-				                            </div>
+				                        <div class="user_container_modal">
+				                            
 				                        </div>
 				                    </header>
-				                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px;">
-										
+				                    <div style="overflow-y:auto; overflow-x:hidden; width:100%; height: 400px; margin-top: 10px;">
+					                    <div class="board_content">
+					                    </div>				
+					                    <hr>						
+										<div class="reply_field">
+				                        </div>
 				                    </div>
 				                    <div class="sticky-bottom">
 										<div class="bottom_icons">
@@ -326,8 +325,11 @@ width: 100%;
 					                        개
 					                    </div>
 				                    	<div class="comment_field" id="add-comment-post37">
-					                        <input type="text" placeholder="댓글달기..." name="reply_content" maxlength="200">
-					                        <div class="upload_btn m_text" data-name="comment">게시</div>
+				                    		<div class="reply_write_area">
+						                        <input type="text" placeholder="댓글달기..." name="reply_content" maxlength="200">
+						                        <div class="upload_btn m_text" data-name="comment">게시</div>
+				                    		</div>
+
 					                    </div>
 				                    </div>
 								</article>
@@ -577,7 +579,6 @@ $(document).on('click', '#detail-click, .sprite_bubble_icon', function() {
 	var boardNum = $(this).children('#this_board_num').val();
 	
 	console.log("csrf value : " + csrfHeaderName + ', ' + csrfTokenValue);
-	alert(boardNum);
 	
 	$.ajax({
 		
