@@ -201,36 +201,6 @@ width: 100%;
 			</div>
         </section>
     </div>
-        
-	<div class="container">
-		<input type="hidden" value="${bcnt}" id="allcnt">
-		<div class="well well-sm">
-	        <strong>Display</strong>
-	        <div class="btn-group">
-	            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-	            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-	                class="glyphicon glyphicon-th"></span>Grid</a>
-	        </div>
-		</div>
-		<div id="products" class="row list-group flex-row">
-			<c:forEach items="${bimgList}" var="bimgList">
-		        <div class="item  col-xs-4 col-lg-6 col-xl-4">
-		            <div class="thumbnail">
-		            	<c:choose>
-		            		<c:when test="${bimgList.boardattach_type eq 'V'}">
-			                    <video src="/resources/fileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}" controls="controls"></video>
-		            		</c:when>
-		            		<c:when test="${bimgList.boardattach_type eq 'I'}">
-								<img class="group list-group-image" src="/resources/fileUpload/board/${bimgList.boardattach_path}/${bimgList.boardattach_uuid}_${bimgList.boardattach_filename}"/>
-		            		</c:when>
-		            	</c:choose>
-		            </div>
-				</div>
-		    </c:forEach>
-	    </div>
-	</div>
-
-	</div>
 	<!-- Button trigger modal -->
 <button type="button" id="modalOpen" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
   Launch demo modal
@@ -374,7 +344,6 @@ $(document).on("click",".thumbnail",function(){
 	//글 상세 목록이 세팅이 되면 modal open..
 	$("#modalOpen").click();
 });
->>>>>>> branch 'master' of https://github.com/AWUNG27/MyPatch.git
 
 $(document).ready(function() {
 
