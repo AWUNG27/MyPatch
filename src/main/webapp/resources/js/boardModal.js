@@ -31,7 +31,7 @@ function boardModal(result) {
 			
 		var str = "";
 			
-		str += "<img style='width:100%; ' src='/resources/fileUpload/board/" + fileCallPath + "'>";
+		str += "<img style='width:100%; max-width: none;' src='/resources/fileUpload/board/" + fileCallPath + "'>";
 			
 		var modalBoardImage = $(".carousel-item.active");
 		modalBoardImage.append(str);
@@ -42,21 +42,21 @@ function boardModal(result) {
 		
 		console.log("result reply : " + obj.reply_content);
 		var str = "";
-		
-		str += "<div class='replys' style='margin:5px;'>";
-		str += "<div class='reply_img' style='width:30px; margin:0 30px 0 70px;'>";
-		str += "<p id='reply_content'>";
-		if(obj.member.profileDTO == null) {
-					
-			str += '<img src="/resources/image/profile.png">';
-				
+
+		var profileImg = "";
+		if (obj.member.profileDTO != null){
+			profileImg = obj.member.profileDTO.profile_uuid+"_"+obj.member.profileDTO.profile_fileName;			
+		}
+		str += "<div class='replys' style='margin: 5px;'>";
+		str += '<div class="chat_img" style="margin:0 15px 0 10px; width:30px; height:30px; border-radius: 70%; overflow: hidden; float:left; position:relative; top:-2.5px;">';
+		if (obj.member.profileDTO == null){
+			str += "<img style='width: 100%; height: 100%; object-fit: cover;' src='/resources/image/profile.png'> ";
 		} else {
-			var profileImage = obj.member.profileDTO.profile_uuid + "_" + obj.member.profileDTO.profile_fileName;
-			str += "<img src='/resources/fileUpload/profile/" + profileImage + "'>'";
-					
+			str += "<img style='width: 100%; height: 100%; object-fit: cover;' src='/resources/fileUpload/profile/"+profileImg+"'> ";			
 		}
 		str += "</div>";
-		str += obj.member.member_nick + " " + obj.rereply_content;
+		str += "<p id='reply_content' style='height:30px; position: relative; top:2.5px;'>";
+		str += "<b>"+obj.member.member_nick+"</b>" + " " + obj.reply_content;
 		str += "</p>";
 		str += "</div>";
 		
@@ -69,22 +69,20 @@ function boardModal(result) {
 				
 				console.log("rereply_content : " + reObj.rereply_content);
 				var str2 = "";
-				
-				str2 += "<div class='rereplys' style='margin:5px;'>";
-				str2 += "<p id='rereply_content'>";
-				str2 += "<div class='rereply_img' style='width:30px; margin:0 30px 0 70px;'>";
-				if(reObj.member.profileDTO == null) {
-					
-					str2 += "&nbsp;&nbsp;&nbsp;└ "
-					str2 += '<img src="/resources/image/profile.png">'
-				
+				var profileImg = "";
+				if (reObj.member.profileDTO != null){
+					profileImg = reObj.member.profileDTO.profile_uuid+"_"+reObj.member.profileDTO.profile_fileName;			
+				}
+				str2 += "<div class='rereplys' style='margin: 5px;'>";
+				str2 += '<div class="chat_img" style="margin:0 15px 0 50px; width:30px; height:30px; border-radius: 70%; overflow: hidden; float:left; position:relative; top:-2.5px;">';
+				if (reObj.member.profileDTO == null){
+					str2 += "<img style='width: 100%; height: 100%; object-fit: cover;' src='/resources/image/profile.png'> ";
 				} else {
-					var profileImage = reObj.member.profileDTO.profile_uuid + "_" + reObj.member.profileDTO.profile_fileName;
-					str2 += "&nbsp;&nbsp;&nbsp;└ " + "<img src='/resources/fileUpload/profile/" + profileImage + "'>'";
-					
+					str2 += "<img style='width: 100%; height: 100%; object-fit: cover;' src='/resources/fileUpload/profile/"+profileImg+"'> ";			
 				}
 				str2 += "</div>";
-				str2 += reObj.member.member_nick + " " + reObj.rereply_content;
+				str2 += "<p id='rereply_content' style='height:30px; position: relative; top:2.5px;'>";
+				str2 += "<b>"+ reObj.member.member_nick+ "</b>" + " " + reObj.rereply_content;
 				str2 += "</p>";
 				str2 += "</div>";
 				
