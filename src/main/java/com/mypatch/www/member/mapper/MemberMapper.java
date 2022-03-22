@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.mypatch.www.board.domain.BoardAttachDTO;
 import com.mypatch.www.board.domain.BoardDTO;
+import com.mypatch.www.member.domain.FollowDTO;
 import com.mypatch.www.member.domain.MemberDTO;
 import com.mypatch.www.member.domain.ProfileDTO;
 
@@ -43,5 +44,7 @@ public interface MemberMapper {
 	
 	public List<ProfileDTO> followerProfile(String member_nick);
 	public List<MemberDTO> followerInfo(String member_nick);
+	
+	public int followChk(FollowDTO fDto);
 
 }

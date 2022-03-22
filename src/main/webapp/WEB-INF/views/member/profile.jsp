@@ -134,9 +134,9 @@ width: 100%;
 						<input type="hidden" id="member_id" value="${mDto.member_id}">	                
 		                <input type="hidden" id="member_nick" value="${mDto.member_nick}">
 		                
-                        <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit" style="font-size: 15px;">프로필편집</a>
+                        <!-- <a href="/member/modifyProfile?member_id=${user.username}" class="profile_edit" style="font-size: 15px;">프로필편집</a>
 
-                        <a href="#" class="logout">로그아웃</a>
+                        <a href="#" class="logout">로그아웃</a> -->
                     </div>
 
                     <ul class="middle">
@@ -155,7 +155,7 @@ width: 100%;
 							        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
 							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
-							      <div class="modal-body">
+							      <div class="modal-body" style="padding: 20px;">
 							        <table class="modal_table">
 							        	
 					          		</table>
@@ -201,6 +201,7 @@ width: 100%;
 			</div>
         </section>
     </div>
+
 	<!-- Button trigger modal -->
 <button type="button" id="modalOpen" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
   Launch demo modal
@@ -286,45 +287,112 @@ width: 100%;
 </body>
 <script>
 
-// window.onload = function(){
-// 	var user = "${user.username}";
-// 	var pageUser = $("#member_id").val();
-// 	var pageUserNick = $("#member_nick").val();
+window.onload = function(){
+	var user = "${user.username}";
+	var pageUser = $("#member_id").val();
+	var pageUserNick = $("#member_nick").val();
 	
-// 	console.log(user);
-// 	console.log(pageUser);
+	console.log(user);
+	console.log(pageUser);
+	console.log("닉네임!!!!!" + pageUserNick);
 	
-// 	if (user === pageUser) {
-// 		// 내 프로필 페이지
-// 		var str = '';
-// 		str += '<a href="/member/modifyProfile?member_id=' + user + '" class="profile_edit" style="font-size: 15px">프로필편집</a>';
-// 		str += '<a href="#" class="logout">로그아웃</a>';
+	if (user === pageUser) {
+		// 내 프로필 페이지
+		var str = '';
+		str += '<a href="/member/modifyProfile?member_id=' + user + '" class="profile_edit" style="font-size: 15px">프로필편집</a>';
+		str += '<a href="#" class="logout">로그아웃</a>';
 		
-// 		$(".top").append(str);
+		$(".top").append(str);
 		
-// 	} else {
-// // 		// 다른 계정 프로필 페이지
-// // 		if () {
-// // 			var str = '';
-			
-// // 			str += '<a href="/member/modifyProfile?member_id=' + user + '" class="profile_edit" style="font-size: 15px"><img src="/resources/image/following.png" style="width: 18px;"></a>';
-// // 			str += '<a href="#" class="logout">▼</a>';			
-// // 		}
-		
-// // 		$(".top").append(str);
-
-// 		$.ajax({
-// 			url : "/member/followChk",
-// 			type : "post",
-// 			data : {"member_id" : user,
-// 					"member_nick" : pageUserNick},
-// 			success : function(result) {
+	} else {
+		// 다른 계정 프로필 페이지
+		$.ajax({			
+			url : "/member/followChk",
+			type : "post",
+			data : {"member_id" : user,
+					"member_nick" : pageUserNick},
+			success : function(result) {
+				if (result > 0) {			
+					var str = '';
+					
+		 			str += '<button class="btn btn-outline-primary p-0 unfollowBtn" style="width:120px; height:25px;"><img src="/resources/image/following.png" style="width: 18px; padding-top: 3px;"></button>';
+		 			str += '<a href="#" class="logout">▼</a>';
+		 			
+		 			$(".top").append(str);
 				
-// 			}
-// 		});
+				} else if (result == 0){
+					var str = '';
+					
+		 			str += '<button class="btn btn-outline-primary p-0 followBtn" style="width:120px; height:25px;">팔로우</button>';
+		 			str += '<a href="#" class="logout">▼</a>';
+		 			
+		 			$(".top").append(str);
+				}
+			}
+		});
 		
-// 	}	
-// }
+	}	
+}
+
+$(document).on("click", ".unfollowBtn", function() {
+	var user = "${user.username}";		
+	var pageUserNick = $("#member_nick").val();
+	
+	console.log(user);
+	console.log(pageUserNick);
+
+	$.ajax({
+		url:"/member/unfollow",
+    	data:{"member_nick":pageUserNick,
+    		  "member_id":user},
+    	type:"get",
+    	success:function(result){
+    		if (result == "success") {
+    			console.log(result);
+    			
+    			$(".unfollowBtn").remove();
+    			$(".logout").remove();
+    			
+    			var str = '';
+				
+	 			str += '<button class="btn btn-outline-primary p-0 followBtn" style="width:120px; height:25px;">팔로우</button>';
+	 			str += '<a href="#" class="logout">▼</a>';
+	 			
+	 			$(".top").append(str);
+			}
+    	}
+	});
+});
+
+$(document).on("click", ".followBtn", function() {
+	var user = "${user.username}";		
+	var pageUserNick = $("#member_nick").val();
+	
+	console.log(user);
+	console.log(pageUserNick);
+
+	$.ajax({
+		url:"/member/follow",
+    	data:{"member_nick":pageUserNick,
+    		  "member_id":user},
+    	type:"get",
+    	success:function(result){
+    		if (result == "success") {
+    			console.log(result);
+    			
+    			$(".followBtn").remove();
+    			$(".logout").remove();
+    			
+    			var str = '';
+				
+    			str += '<button class="btn btn-outline-primary p-0 unfollowBtn" style="width:120px; height:25px;"><img src="/resources/image/following.png" style="width: 18px; padding-top: 3px;"></button>';
+     			str += '<a href="#" class="logout">▼</a>';
+	 			
+	 			$(".top").append(str);
+			}
+    	}
+	});
+});
 
 //게시물 클릭이벤트 감지
 $(document).on("click",".thumbnail",function(){

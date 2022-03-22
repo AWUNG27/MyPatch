@@ -204,4 +204,10 @@
 		WHERE jm.member_id = jf.member_id
 	</select>
 	
+	<select id="followChk" resultType="integer">
+		SELECT count(member_id)
+		FROM joinus_follow
+		WHERE member_id=#{member_id}
+		AND member_nick=#{member_nick}
+	</select>
 </mapper>

@@ -134,6 +134,4 @@ public class MemberControllerkjw {
 		return profiledata;
 	}
 	
-	
-	
 }

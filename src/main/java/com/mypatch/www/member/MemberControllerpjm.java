@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mypatch.www.member.domain.FollowDTO;
 import com.mypatch.www.member.domain.MemberDTO;
 import com.mypatch.www.member.service.IMemberService;
 
@@ -69,10 +71,10 @@ public class MemberControllerpjm {
 
 		List<MemberDTO> followingMemDto = service.following(member_id);
 	
-		for (MemberDTO memberDTO : followingMemDto) {
-			
-			log.info("팔로잉 리스트 memberDTO : " + memberDTO);
-		}
+//		for (MemberDTO memberDTO : followingMemDto) {
+//			
+//			log.info("팔로잉 리스트 memberDTO : " + memberDTO);
+//		}
 		
 		return followingMemDto;
 	}
@@ -87,11 +89,28 @@ public class MemberControllerpjm {
 
 		List<MemberDTO> followerMemDto = service.follower(member_nick);
 	
-		for (MemberDTO memberDTO : followerMemDto) {
-			
-			log.info("팔로워 리스트 memberDTO : " + memberDTO);
-		}
+//		for (MemberDTO memberDTO : followerMemDto) {
+//			
+//			log.info("팔로워 리스트 memberDTO : " + memberDTO);
+//		}
 		
 		return followerMemDto;
+	}
+	
+	@PostMapping("/followChk")
+	@ResponseBody
+	public int followChk(String member_id, String member_nick) {
+		
+		log.info("followChk..");
+		log.info("팔로우 체크 (아이디) : " + member_id);
+		log.info("팔로우 체크 (닉네임) : " + member_nick);
+
+		FollowDTO fDto = new FollowDTO();
+		fDto.setMember_id(member_id);
+		fDto.setMember_nick(member_nick);
+		
+		int result = service.followChk(fDto);
+		
+		return result;
 	}
 }
