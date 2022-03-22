@@ -2,6 +2,7 @@ package com.mypatch.www.member.service;
 
 import java.util.List;
 
+import com.mypatch.www.member.domain.FollowDTO;
 import com.mypatch.www.member.domain.MemberDTO;
 import com.mypatch.www.member.domain.ProfileDTO;
 
@@ -23,4 +24,6 @@ public interface IMemberService {
 
 	public List<MemberDTO> following(String member_id);
 	public List<MemberDTO> follower(String member_nick);
+	
+	public int followChk(FollowDTO fDto);
 }

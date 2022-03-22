@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mypatch.www.member.domain.FollowDTO;
 import com.mypatch.www.member.domain.MemberDTO;
 import com.mypatch.www.member.domain.ProfileDTO;
 import com.mypatch.www.member.mapper.MemberMapper;
@@ -145,5 +146,11 @@ public class MemberServiceImpl implements IMemberService{
 		mapper.deleteAuth(member_id);
 		mapper.deleteProfile(member_id);
 		return mapper.deleteMember(member_id);
+	}
+
+	@Override
+	public int followChk(FollowDTO fDto) {
+		
+		return mapper.followChk(fDto);
 	}
 }
