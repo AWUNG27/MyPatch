@@ -281,7 +281,7 @@ width: 100%;
 										<div class="carousel-item">
 											<img src="/resources/fileUpload/board/2022/02/17/12_곰돌이6.jpg" class="d-block w-100">
 										</div> -->
-										<div class="carousel-item">
+										<div class="carousel-item active">
 											
 										</div>
 									</div>

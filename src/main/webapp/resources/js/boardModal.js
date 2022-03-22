@@ -10,7 +10,7 @@ function boardModal(result) {
 	board += result.board_content
 	
 	user += "<div class='profile_img'>";
-	user += "<img src='/resources/fileUPload/profile/" + result.member.profileDTO.profile_uuid + "_" + result.member.profileDTO.profile_fileName + "'>";
+	user += "<img src='/resources/fileUpload/profile/" + result.member.profileDTO.profile_uuid + "_" + result.member.profileDTO.profile_fileName + "'>";
 	user += "</div>";
 	user += "<div class='user_name'>";
 	user += result.member.member_nick;
@@ -31,9 +31,9 @@ function boardModal(result) {
 			
 		var str = "";
 			
-		str += "<img src='/resources/fileUpload/board/'" + fileCallPath + "'>";
+		str += "<img src='/resources/fileUpload/board/" + fileCallPath + "'>";
 			
-		var modalBoardImage = $(".carousel-item");
+		var modalBoardImage = $(".carousel-item.active");
 		modalBoardImage.append(str);
 			
 	});
@@ -75,3 +75,16 @@ function boardModal(result) {
 	});
 	
 }
+
+$(document).ready(function(){       
+    $('.modal.fade').on('hidden.bs.modal', function () {
+            
+        $(".user_container_modal").empty();
+		$(".board_content").empty(); 
+		$(".carousel-item.active").empty();  
+		$(".reply_field").empty();
+		$(".replys").empty();
+         
+    });
+ 
+});
